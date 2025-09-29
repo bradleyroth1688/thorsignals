@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-black">
       {/* Navigation */}
-      <header className="px-4 lg:px-6 h-16 flex items-center justify-between bg-black text-white sticky top-0 z-50">
+      <header className="px-4 lg:px-6 h-16 flex items-center justify-between text-white sticky top-0 z-50 bg-[#1e293b]" style={{ borderBottom: "1px solid rgb(226 232 240)"}}>
         <Link className="flex items-center justify-center" href="/">
           <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Prime Aura Asset Management
@@ -64,9 +64,9 @@ export default function HomePage() {
         {/* Hero Section */}
         <section className="w-full min-h-screen bg-gray-900 relative overflow-hidden flex items-center">
           {/* Background Pattern */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900">
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23374151%22%20fill-opacity%3D%220.1%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
-          </div>
+          </div> */}
           <div className="container px-4 md:px-6 mx-auto relative z-10 w-full">
             <div className="flex flex-col items-center space-y-6 text-center">
               <div className="space-y-4 max-w-4xl">
