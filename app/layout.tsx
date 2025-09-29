@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Prime Aura Asset Management - Professional Trading Algorithms",
   description:
     "Access proprietary trading algorithms used to manage $1B+ in client assets. Professional-grade indicators for TradingView and Discord community.",
-    generator: 'v0.app'
+    generator: 'Raclaw'
 }
 
 export default function RootLayout({
