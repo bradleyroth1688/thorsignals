@@ -66,29 +66,29 @@ export function DynamicPricing() {
 
   if (loading) {
     return (
-      <section id="pricing" className="w-full py-8 md:py-16 lg:py-24 bg-gray-50">
+      <section id="pricing" className="w-full py-8 md:py-16 lg:py-24">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-12">
             <div className="animate-pulse">
-              <div className="h-8 bg-gray-200 rounded w-64 mb-4"></div>
-              <div className="h-4 bg-gray-200 rounded w-96"></div>
+              <div className="h-8 bg-gray-800 rounded w-64 mb-4"></div>
+              <div className="h-4 bg-gray-800 rounded w-96"></div>
             </div>
           </div>
           <div className="mx-auto grid max-w-5xl items-start gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {[...Array(3)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardHeader className="text-center pb-4">
-                  <div className="h-6 bg-gray-200 rounded w-20 mx-auto mb-2"></div>
-                  <div className="h-4 bg-gray-200 rounded w-32 mx-auto mb-4"></div>
-                  <div className="h-10 bg-gray-200 rounded w-24 mx-auto"></div>
+              <Card key={i} className="animate-pulse bg-slate-900">
+                <CardHeader className="text-center pb-4 bg-slate-900">
+                  <div className="h-6 bg-gray-800 rounded w-20 mx-auto mb-2"></div>
+                  <div className="h-4 bg-gray-800 rounded w-32 mx-auto mb-4"></div>
+                  <div className="h-10 bg-gray-800 rounded w-24 mx-auto"></div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     {[...Array(5)].map((_, j) => (
-                      <div key={j} className="h-4 bg-gray-200 rounded"></div>
+                      <div key={j} className="h-4 bg-gray-800 rounded"></div>
                     ))}
                   </div>
-                  <div className="h-10 bg-gray-200 rounded"></div>
+                  <div className="h-10 bg-gray-800 rounded"></div>
                 </CardContent>
               </Card>
             ))}

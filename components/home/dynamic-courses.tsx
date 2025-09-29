@@ -15,20 +15,20 @@ export function DynamicCourses() {
         <div className="container px-4 md:px-6 mx-auto">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-12">
             <div className="animate-pulse">
-              <div className="h-8 bg-gray-200 rounded w-64 mb-4"></div>
-              <div className="h-4 bg-gray-200 rounded w-96"></div>
+              <div className="h-8 bg-gray-800 rounded w-64 mb-4"></div>
+              <div className="h-4 bg-gray-800 rounded w-96"></div>
             </div>
           </div>
           <div className="mx-auto grid max-w-5xl items-center gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {[...Array(6)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardHeader className="pb-4">
-                  <div className="w-8 h-8 bg-gray-200 rounded mb-2"></div>
-                  <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+              <Card key={i} className="animate-pulse bg-slate-900">
+                <CardHeader className="pb-4 bg-slate-900">
+                  <div className="w-8 h-8 bg-gray-800 rounded mb-2 bg-gray-800"></div>
+                  <div className="h-6 bg-gray-800 rounded w-3/4 bg-gray-800"></div>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-                  <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                  <div className="h-4 bg-gray-200 rounded w-full mb-2 bg-gray-800 "></div>
+                  <div className="h-4 bg-gray-200 rounded w-2/3 bg-gray-800"></div>
                 </CardContent>
               </Card>
             ))}
@@ -41,7 +41,7 @@ export function DynamicCourses() {
   const featuredCourses = courses.slice(0, 6)
 
   return (
-    <section className="w-full py-8 md:py-16 lg:py-24">
+    <section className="w-full py-8 md:py-16 lg:py-24 ">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
