@@ -19,7 +19,7 @@ export default function HomePage() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-4 lg:gap-6">
+        <nav className="hidden md:flex gap-4 lg:gap-6 items-center">
           <Link className="text-sm font-medium hover:text-blue-400 transition-colors underline-offset-4" href="#about">
             About Our Algorithms
           </Link>
