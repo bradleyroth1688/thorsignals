@@ -57,19 +57,19 @@ export default function HomePage() {
 
       <main className="flex-1 bg-black">
         {/* Environment Check (Development Only) */}
-        <div className="container px-4 md:px-6 mx-auto pt-4">
+        {/* <div className="container px-4 md:px-6 mx-auto pt-4">
           <EnvCheck />
-        </div>
+        </div> */}
 
         {/* Hero Section */}
-        <section className="w-full py-8 md:py-16 lg:py-24 xl:py-32 bg-black relative overflow-hidden">
+        <section className="w-full min-h-screen bg-black relative overflow-hidden flex items-center">
           {/* Background Pattern */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23374151%22%20fill-opacity%3D%220.1%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
           </div>
-          <div className="container px-4 md:px-6 mx-auto relative z-10">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2 max-w-4xl">
+          <div className="container px-4 md:px-6 mx-auto relative z-10 w-full">
+            <div className="flex flex-col items-center space-y-6 text-center">
+              <div className="space-y-4 max-w-4xl">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tighter leading-tight text-white">
                   Professional Trading Algorithms
                 </h1>
@@ -78,7 +78,7 @@ export default function HomePage() {
                   Get professional-grade indicators for TradingView and join our exclusive Discord community.
                 </p>
               </div>
-              <div className="flex flex-col gap-4 mt-8 w-full max-w-md sm:max-w-none sm:flex-col">
+              <div className="flex flex-col gap-6 mt-10 w-full max-w-md sm:max-w-none sm:flex-col">
                 <Link href="/signup" className="w-full sm:w-auto">
                   <Button size="lg" className="bg-purple-600 hover:bg-purple-700 w-full sm:w-auto text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20">
                     Access Algorithms
@@ -92,7 +92,7 @@ export default function HomePage() {
               </div>
 
               {/* Trust Indicators */}
-              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-8 mt-8 sm:mt-12 text-sm text-gray-300 px-4">
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6 sm:gap-10 mt-12 sm:mt-16 text-sm text-gray-300 px-4">
                 <div className="flex items-center justify-center gap-2">
                   <DollarSign className="h-4 w-4 text-green-400" />
                   <span>$1B+ Assets Under Management</span>
