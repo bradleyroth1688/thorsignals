@@ -20,12 +20,12 @@ import {
 
 const navigation = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
-  { name: "Users", href: "/admin/users", icon: Users },
-  { name: "Courses", href: "/admin/courses", icon: BookOpen },
+  { name: "Subscribers", href: "/admin/users", icon: Users },
+  { name: "Algorithms", href: "/admin/courses", icon: BookOpen },
   { name: "Events", href: "/admin/events", icon: Calendar },
   { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { name: "Subscriptions", href: "/admin/subscriptions", icon: CreditCard },
-  { name: "Community", href: "/admin/community", icon: MessageSquare },
+  { name: "Discord", href: "/admin/community", icon: MessageSquare },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ]
 
@@ -55,7 +55,7 @@ export function AdminSidebar() {
         )}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-800">
-          <Link href="/admin" className="text-xl font-bold text-amber-400">
+          <Link href="/admin" className="text-xl font-bold text-purple-400">
             Admin Panel
           </Link>
           <Button
@@ -79,7 +79,7 @@ export function AdminSidebar() {
                   onClick={() => setSidebarOpen(false)}
                   className={cn(
                     "flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors",
-                    isActive ? "bg-amber-600 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white",
+                    isActive ? "bg-purple-600 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white",
                   )}
                 >
                   <item.icon className="mr-3 h-5 w-5" />

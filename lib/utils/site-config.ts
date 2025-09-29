@@ -1,14 +1,14 @@
 import { getSiteUrl } from "./env"
 
 export const siteConfig = {
-  name: "Prime Aura Trading Academy",
-  description: "Master the Art of Trading - Join 500+ successful traders worldwide",
+  name: "Prime Aura Asset Management",
+  description: "Professional Trading Algorithms - Access proprietary indicators used to manage $1B+ in client assets",
   url: getSiteUrl(),
   ogImage: "/og-image.png",
   links: {
     twitter: "https://twitter.com/primeaura",
     discord: "https://discord.gg/primeaura",
-    github: "https://github.com/primeaura/trading-academy",
+    github: "https://github.com/primeaura/trading-algorithms",
   },
 }
 

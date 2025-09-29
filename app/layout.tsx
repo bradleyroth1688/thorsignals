@@ -6,9 +6,9 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Prime Aura Trading Academy - Master the Art of Trading",
+  title: "Prime Aura Asset Management - Professional Trading Algorithms",
   description:
-    "Join 500+ successful traders. Get exclusive content, live sessions, and direct access to our expert community.",
+    "Access proprietary trading algorithms used to manage $1B+ in client assets. Professional-grade indicators for TradingView and Discord community.",
     generator: 'v0.app'
 }
 

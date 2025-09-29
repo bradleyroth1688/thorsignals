@@ -143,15 +143,15 @@ export function DynamicPricing() {
   }
 
   return (
-    <section id="pricing" className="w-full py-8 md:py-16 lg:py-24 bg-gray-50">
+    <section id="pricing" className="w-full py-8 md:py-16 lg:py-24 bg-gray-900">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white">
               Choose Your Plan
             </h2>
-            <p className="max-w-[900px] text-gray-500 text-base sm:text-lg md:text-xl px-4">
-              Start your trading journey with our flexible plans. All plans include Discord access and money-back
+            <p className="max-w-[900px] text-gray-300 text-base sm:text-lg md:text-xl px-4">
+              Access our algorithms with our flexible plans. All plans include Discord access and money-back
               guarantee.
             </p>
           </div>
@@ -160,7 +160,7 @@ export function DynamicPricing() {
           {plans.map((plan, index) => (
             <Card
               key={plan.id}
-              className={`w-full ${
+              className={`w-full bg-gray-800 border-gray-700 ${
                 plan.name === "pro"
                   ? "border-amber-500 relative"
                   : plan.name === "elite"
@@ -175,20 +175,20 @@ export function DynamicPricing() {
               )}
               <CardHeader className="text-center pb-4">
                 <CardTitle
-                  className={`text-lg sm:text-xl ${plan.name === "elite" ? "flex items-center justify-center gap-2" : ""}`}
+                  className={`text-lg sm:text-xl text-white ${plan.name === "elite" ? "flex items-center justify-center gap-2" : ""}`}
                 >
                   {plan.display_name}
                   {plan.name === "elite" && <Star className="h-4 w-4 text-yellow-500" />}
                 </CardTitle>
-                <CardDescription>{plan.description}</CardDescription>
+                <CardDescription className="text-gray-300">{plan.description}</CardDescription>
                 <div>
-                  <span className="text-3xl sm:text-4xl font-bold">{formatPrice(plan.price)}</span>
-                  <span className="text-gray-500 text-sm sm:text-base">
+                  <span className="text-3xl sm:text-4xl font-bold text-white">{formatPrice(plan.price)}</span>
+                  <span className="text-gray-400 text-sm sm:text-base">
                     {plan.billing_cycle === "lifetime" ? "" : `/${plan.billing_cycle}`}
                   </span>
-                  {plan.billing_cycle === "lifetime" && <div className="text-sm text-gray-500">One-time payment</div>}
+                  {plan.billing_cycle === "lifetime" && <div className="text-sm text-gray-400">One-time payment</div>}
                   {plan.name === "elite" && (
-                    <div className="text-xs text-green-600 font-semibold">Save $1,800+ vs Pro yearly</div>
+                    <div className="text-xs text-green-400 font-semibold">Save $1,800+ vs Pro yearly</div>
                   )}
                 </div>
               </CardHeader>
@@ -196,8 +196,8 @@ export function DynamicPricing() {
                 <ul className="space-y-2">
                   {plan.features?.features?.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">
-                      <Check className="h-4 w-4 text-green-600 mr-2 flex-shrink-0" />
-                      <span className="text-sm">{feature}</span>
+                      <Check className="h-4 w-4 text-green-400 mr-2 flex-shrink-0" />
+                      <span className="text-sm text-gray-300">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -205,10 +205,10 @@ export function DynamicPricing() {
                   <Button
                     className={`w-full ${
                       plan.name === "pro"
-                        ? "bg-amber-500 hover:bg-amber-600"
+                        ? "bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20"
                         : plan.name === "elite"
-                          ? "bg-yellow-500 hover:bg-yellow-600 text-black"
-                          : "bg-transparent"
+                          ? "bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20"
+                          : "bg-transparent border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
                     }`}
                     variant={plan.name === "basic" ? "outline" : "default"}
                   >

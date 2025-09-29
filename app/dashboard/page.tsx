@@ -134,7 +134,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <UserHeader />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
@@ -148,17 +148,17 @@ export default function DashboardPage() {
             {/* Latest Content */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg sm:text-xl">Latest Content</CardTitle>
-                <CardDescription className="text-sm">New materials added this week</CardDescription>
+                <CardTitle className="text-lg sm:text-xl">Latest Algorithms</CardTitle>
+                <CardDescription className="text-sm">New indicators added this week</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center py-8">
                   <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-4">New content is added regularly</p>
+                  <p className="text-gray-600 mb-4">New algorithms are added regularly</p>
                   <p className="text-sm text-gray-500 mb-4">
-                    Join our Discord community to get notified about new courses and materials
+                    Join our Discord community to get notified about new algorithms and TradingView indicators
                   </p>
-                  <Button className="bg-[#5865F2] hover:bg-[#4752C4]">
+                  <Button className="bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20">
                     <MessageCircle className="h-4 w-4 mr-2" />
                     Join Discord
                   </Button>

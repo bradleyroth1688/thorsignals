@@ -39,13 +39,13 @@ export function StatsCards() {
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs sm:text-sm font-medium">Courses Completed</CardTitle>
+          <CardTitle className="text-xs sm:text-sm font-medium">Algorithms Accessed</CardTitle>
           <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-lg sm:text-2xl font-bold">{stats.coursesCompleted}</div>
           <p className="text-xs text-muted-foreground">
-            {stats.coursesInProgress > 0 ? `${stats.coursesInProgress} in progress` : "Great progress!"}
+            {stats.coursesInProgress > 0 ? `${stats.coursesInProgress} active` : "Great progress!"}
           </p>
         </CardContent>
       </Card>
@@ -63,12 +63,12 @@ export function StatsCards() {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs sm:text-sm font-medium">Learning Progress</CardTitle>
+          <CardTitle className="text-xs sm:text-sm font-medium">Algorithm Usage</CardTitle>
           <Award className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-lg sm:text-2xl font-bold">{stats.overallProgress}%</div>
-          <p className="text-xs text-muted-foreground">Overall completion</p>
+          <p className="text-xs text-muted-foreground">Overall usage</p>
         </CardContent>
       </Card>
 

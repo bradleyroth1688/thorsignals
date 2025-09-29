@@ -78,27 +78,27 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-black py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
           <Link href="/" className="flex items-center justify-center mb-4 sm:mb-6">
-            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
-              Prime Aura Trading Academy
+            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Prime Aura Asset Management
             </span>
           </Link>
         </div>
 
-        <Card className="w-full">
+        <Card className="w-full bg-gray-800 border-gray-700">
           <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-xl sm:text-2xl text-center">Welcome Back</CardTitle>
-            <CardDescription className="text-center text-sm sm:text-base">
-              Sign in to access your trading dashboard
+            <CardTitle className="text-xl sm:text-2xl text-center text-white">Welcome Back</CardTitle>
+            <CardDescription className="text-center text-sm sm:text-base text-gray-300">
+              Sign in to access your algorithm dashboard
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm">
+                <Label htmlFor="email" className="text-sm text-gray-300">
                   Email
                 </Label>
                 <Input
@@ -108,12 +108,12 @@ export default function LoginPage() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
-                  className="h-10"
+                  className="h-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm">
+                <Label htmlFor="password" className="text-sm text-gray-300">
                   Password
                 </Label>
                 <Input
@@ -123,22 +123,22 @@ export default function LoginPage() {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
-                  className="h-10"
+                  className="h-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                 />
               </div>
 
               <div className="flex items-center justify-between">
-                <Link href="#" className="text-sm text-amber-500 hover:underline">
+                <Link href="#" className="text-sm text-purple-400 hover:underline">
                   Forgot password?
                 </Link>
               </div>
 
-              <Button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 h-10 sm:h-11" disabled={loading}>
+              <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20 h-10 sm:h-11" disabled={loading}>
                 {loading ? "Signing In..." : "Sign In"}
               </Button>
             </form>
 
-            <div className="mt-6 p-3 sm:p-4 bg-blue-50 rounded-lg">
+            {/* <div className="mt-6 p-3 sm:p-4 bg-blue-50 rounded-lg">
               <h3 className="text-sm font-semibold text-blue-800 mb-2">Demo Credentials</h3>
               <p className="text-xs text-blue-600 mb-3">Use these credentials to test the platform:</p>
               <div className="space-y-2 text-xs">
@@ -160,11 +160,11 @@ export default function LoginPage() {
               >
                 Use Demo Credentials
               </Button>
-            </div>
+            </div> */}
 
-            <div className="mt-6 text-center text-sm">
+            <div className="mt-6 text-center text-sm text-gray-300">
               {"Don't have an account? "}
-              <Link href="/signup" className="text-amber-500 hover:underline">
+              <Link href="/signup" className="text-purple-400 hover:underline">
                 Sign up
               </Link>
             </div>

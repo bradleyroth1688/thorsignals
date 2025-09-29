@@ -1,5 +1,4 @@
--- Prime Aura Trading Academy Database Schema
--- This script creates all the necessary tables for the trading academy platform
+
 
 -- Enable UUID extension for PostgreSQL
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

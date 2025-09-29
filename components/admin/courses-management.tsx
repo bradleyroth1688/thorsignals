@@ -76,7 +76,7 @@ export function CoursesManagement() {
       if (response.ok) {
         toast({
           title: "Success",
-          description: "Course created successfully",
+          description: "Algorithm created successfully",
         })
         setIsCreateDialogOpen(false)
         setNewCourse({
@@ -94,7 +94,7 @@ export function CoursesManagement() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to create course",
+        description: "Failed to create algorithm",
         variant: "destructive",
       })
     }
@@ -104,7 +104,7 @@ export function CoursesManagement() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Courses Management</CardTitle>
+          <CardTitle>Algorithm Management</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="animate-pulse space-y-4">
@@ -127,26 +127,26 @@ export function CoursesManagement() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Courses Management ({courses.length})</CardTitle>
+        <CardTitle>Algorithm Management ({courses.length})</CardTitle>
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
-              Add Course
+              Add Algorithm
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle>Create New Course</DialogTitle>
+              <DialogTitle>Create New Algorithm</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="title">Course Title</Label>
+                <Label htmlFor="title">Algorithm Name</Label>
                 <Input
                   id="title"
                   value={newCourse.title}
                   onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
-                  placeholder="Enter course title"
+                  placeholder="Enter algorithm name"
                 />
               </div>
               <div>
@@ -208,7 +208,7 @@ export function CoursesManagement() {
                 <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button onClick={handleCreateCourse}>Create Course</Button>
+                <Button onClick={handleCreateCourse}>Create Algorithm</Button>
               </div>
             </div>
           </DialogContent>

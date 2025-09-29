@@ -63,4 +63,4 @@ npm run dev
 
 3. **Update Supabase settings** with your live domain
 
-Your trading academy is now ready! 🎉
+Your trading is now ready! 🎉

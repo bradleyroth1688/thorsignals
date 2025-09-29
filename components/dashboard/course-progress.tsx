@@ -16,7 +16,7 @@ export function CourseProgress() {
       <Card>
         <CardHeader>
           <CardTitle className="text-lg sm:text-xl">Continue Learning</CardTitle>
-          <CardDescription className="text-sm">Pick up where you left off</CardDescription>
+          <CardDescription className="text-sm">Access your algorithm indicators</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {[...Array(2)].map((_, i) => (

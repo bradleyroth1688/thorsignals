@@ -104,32 +104,32 @@ export default function SignUpPage() {
 
   if (emailSent) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center justify-center bg-black py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-6 sm:space-y-8">
-          <Card className="w-full">
+          <Card className="w-full bg-gray-800 border-gray-700">
             <CardHeader className="text-center">
-              <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-              <CardTitle className="text-xl sm:text-2xl">Check Your Email</CardTitle>
-              <CardDescription className="text-sm sm:text-base">
-                We've sent a verification link to <strong>{formData.email}</strong>
+              <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
+              <CardTitle className="text-xl sm:text-2xl text-white">Check Your Email</CardTitle>
+              <CardDescription className="text-sm sm:text-base text-gray-300">
+                We've sent a verification link to <strong className="text-white">{formData.email}</strong>
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Alert>
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
+              <Alert className="bg-gray-700 border-gray-600">
+                <AlertCircle className="h-4 w-4 text-yellow-400" />
+                <AlertDescription className="text-gray-300">
                   Click the link in your email to verify your account and complete registration. The link will expire in
                   24 hours.
                 </AlertDescription>
               </Alert>
               <div className="text-center space-y-2">
-                <p className="text-sm text-gray-600">Didn't receive the email?</p>
-                <Button variant="outline" onClick={() => setEmailSent(false)} className="bg-transparent">
+                <p className="text-sm text-gray-300">Didn't receive the email?</p>
+                <Button variant="outline" onClick={() => setEmailSent(false)} className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
                   Try Again
                 </Button>
               </div>
               <div className="text-center">
-                <Link href="/login" className="text-amber-500 hover:underline text-sm">
+                <Link href="/login" className="text-purple-400 hover:underline text-sm">
                   Back to Login
                 </Link>
               </div>
@@ -141,20 +141,20 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-black py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
           <Link href="/" className="flex items-center justify-center mb-4 sm:mb-6">
-            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
-              Prime Aura Trading Academy
+            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Prime Aura Asset Management
             </span>
           </Link>
         </div>
 
-        <Card className="w-full">
+        <Card className="w-full bg-gray-800 border-gray-700">
           <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-xl sm:text-2xl text-center">Create Your Account</CardTitle>
-            <CardDescription className="text-center text-sm sm:text-base">
+            <CardTitle className="text-xl sm:text-2xl text-center text-white">Create Your Account</CardTitle>
+            <CardDescription className="text-center text-sm sm:text-base text-gray-300">
               Join thousands of successful traders today
             </CardDescription>
           </CardHeader>
@@ -162,7 +162,7 @@ export default function SignUpPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName" className="text-sm">
+                  <Label htmlFor="firstName" className="text-sm text-gray-300">
                     First Name
                   </Label>
                   <Input
@@ -172,11 +172,11 @@ export default function SignUpPage() {
                     value={formData.firstName}
                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                     required
-                    className="h-10"
+                    className="h-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lastName" className="text-sm">
+                  <Label htmlFor="lastName" className="text-sm text-gray-300">
                     Last Name
                   </Label>
                   <Input
@@ -186,13 +186,13 @@ export default function SignUpPage() {
                     value={formData.lastName}
                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                     required
-                    className="h-10"
+                    className="h-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm">
+                <Label htmlFor="email" className="text-sm text-gray-300">
                   Email
                 </Label>
                 <Input
@@ -202,12 +202,12 @@ export default function SignUpPage() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
-                  className="h-10"
+                  className="h-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm">
+                <Label htmlFor="password" className="text-sm text-gray-300">
                   Password
                 </Label>
                 <Input
@@ -218,12 +218,12 @@ export default function SignUpPage() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
                   minLength={6}
-                  className="h-10"
+                  className="h-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-sm">
+                <Label htmlFor="confirmPassword" className="text-sm text-gray-300">
                   Confirm Password
                 </Label>
                 <Input
@@ -233,16 +233,16 @@ export default function SignUpPage() {
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                   required
-                  className="h-10"
+                  className="h-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="plan" className="text-sm">
+                <Label htmlFor="plan" className="text-sm text-gray-300">
                   Subscription Plan
                 </Label>
                 <Select value={formData.plan} onValueChange={(value) => setFormData({ ...formData, plan: value })}>
-                  <SelectTrigger className="h-10">
+                  <SelectTrigger className="h-10 bg-gray-700 border-gray-600 text-white">
                     <SelectValue placeholder="Select a plan" />
                   </SelectTrigger>
                   <SelectContent>
@@ -253,14 +253,14 @@ export default function SignUpPage() {
                 </Select>
               </div>
 
-              <Button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 h-10 sm:h-11" disabled={loading}>
+              <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20 h-10 sm:h-11" disabled={loading}>
                 {loading ? "Creating Account..." : "Create Account & Subscribe"}
               </Button>
             </form>
 
-            <div className="mt-6 text-center text-sm">
+            <div className="mt-6 text-center text-sm text-gray-300">
               Already have an account?{" "}
-              <Link href="/login" className="text-amber-500 hover:underline">
+              <Link href="/login" className="text-purple-400 hover:underline">
                 Sign in
               </Link>
             </div>

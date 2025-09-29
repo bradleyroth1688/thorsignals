@@ -1,4 +1,4 @@
--- COMPLETE DATABASE SETUP FOR PRIME AURA TRADING ACADEMY
+
 -- Run this script in your Supabase SQL Editor
 
 -- Step 1: Enable Extensions

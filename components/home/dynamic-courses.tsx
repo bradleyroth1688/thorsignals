@@ -41,24 +41,24 @@ export function DynamicCourses() {
   const featuredCourses = courses.slice(0, 6)
 
   return (
-    <section className="w-full py-8 md:py-16 lg:py-24">
+    <section className="w-full py-8 md:py-16 lg:py-24 bg-gray-900">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
-              Featured Courses
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white">
+              Featured Algorithms
             </h2>
-            <p className="max-w-[900px] text-gray-500 text-base sm:text-lg md:text-xl px-4">
-              Master trading with our comprehensive course library designed by professional traders.
+            <p className="max-w-[900px] text-gray-300 text-base sm:text-lg md:text-xl px-4">
+              Access our comprehensive algorithm library designed by professional asset managers.
             </p>
           </div>
         </div>
         <div className="mx-auto grid max-w-6xl items-start gap-6 py-8 md:py-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {featuredCourses.map((course) => (
-            <Card key={course.id} className="hover:shadow-lg transition-shadow">
+            <Card key={course.id} className="hover:shadow-lg transition-shadow bg-gray-800 border-gray-700">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
-                  <BookOpen className="h-8 w-8 text-green-600" />
+                  <BookOpen className="h-8 w-8 text-green-400" />
                   <div className="flex gap-2">
                     <Badge className={`text-xs ${getDifficultyColor(course.difficulty_level)}`}>
                       {course.difficulty_level}
@@ -70,11 +70,11 @@ export function DynamicCourses() {
                     )}
                   </div>
                 </div>
-                <CardTitle className="text-lg sm:text-xl line-clamp-2">{course.title}</CardTitle>
-                <CardDescription className="line-clamp-3">{course.description}</CardDescription>
+                <CardTitle className="text-lg sm:text-xl line-clamp-2 text-white">{course.title}</CardTitle>
+                <CardDescription className="line-clamp-3 text-gray-300">{course.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-between text-sm text-gray-600">
+                <div className="flex items-center justify-between text-sm text-gray-300">
                   <div className="flex items-center gap-1">
                     <Clock className="h-4 w-4" />
                     <span>{formatDuration(course.estimated_duration || 0)}</span>
