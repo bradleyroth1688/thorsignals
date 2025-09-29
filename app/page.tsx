@@ -124,7 +124,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 md:mb-12">
-              <Card className="text-center bg-gray-800 border-gray-700">
+              <Card className="text-center bg-gray-800 border-gray-700 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 hover:border-purple-400/50">
                 <CardHeader className="pb-4">
                   <DollarSign className="h-10 w-10 sm:h-12 sm:w-12 text-green-400 mx-auto" />
                   <CardTitle className="text-lg sm:text-xl text-white">Proven Performance</CardTitle>
@@ -137,7 +137,7 @@ export default function HomePage() {
                 </CardContent>
               </Card>
 
-              <Card className="text-center bg-gray-800 border-gray-700">
+              <Card className="text-center bg-gray-800 border-gray-700 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 hover:border-purple-400/50">
                 <CardHeader className="pb-4">
                   <BarChart3 className="h-10 w-10 sm:h-12 sm:w-12 text-blue-400 mx-auto" />
                   <CardTitle className="text-lg sm:text-xl text-white">TradingView Integration</CardTitle>
@@ -150,7 +150,7 @@ export default function HomePage() {
                 </CardContent>
               </Card>
 
-              <Card className="text-center md:col-span-2 lg:col-span-1 bg-gray-800 border-gray-700">
+              <Card className="text-center md:col-span-2 lg:col-span-1 bg-gray-800 border-gray-700 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 hover:border-purple-400/50">
                 <CardHeader className="pb-4">
                   <MessageCircle className="h-10 w-10 sm:h-12 sm:w-12 text-purple-400 mx-auto" />
                   <CardTitle className="text-lg sm:text-xl text-white">Discord Community</CardTitle>
@@ -277,37 +277,37 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-8 md:py-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              <Card className="bg-gray-800 border-gray-700">
+            <div className="mx-auto grid max-w-5xl items-stretch gap-6 py-8 md:py-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <Card className="bg-gray-800 border-gray-700 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 hover:border-purple-400/50 h-full flex flex-col">
                 <CardHeader className="pb-4">
                   <BookOpen className="h-8 w-8 sm:h-10 sm:w-10 text-green-400" />
                   <CardTitle className="text-lg sm:text-xl text-white">Proven Strategies</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-1">
                   <p className="text-gray-300 text-sm sm:text-base">
                     Learn battle-tested trading strategies used by professional traders. Our methods have generated
                     consistent profits for over 5 years across all market conditions.
                   </p>
                 </CardContent>
               </Card>
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-gray-800 border-gray-700 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 hover:border-purple-400/50 h-full flex flex-col">
                 <CardHeader className="pb-4">
                   <Users className="h-8 w-8 sm:h-10 sm:w-10 text-green-400" />
                   <CardTitle className="text-lg sm:text-xl text-white">Expert Community</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-1">
                   <p className="text-gray-300 text-sm sm:text-base">
                     Join our exclusive Discord community with 500+ active traders. Get real-time market alerts, trade
                     ideas, and support from experienced professionals 24/7.
                   </p>
                 </CardContent>
               </Card>
-              <Card className="md:col-span-2 lg:col-span-1 bg-gray-800 border-gray-700">
+              <Card className="bg-gray-800 border-gray-700 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 hover:border-purple-400/50 h-full flex flex-col">
                 <CardHeader className="pb-4">
                   <Target className="h-8 w-8 sm:h-10 sm:w-10 text-green-400" />
                   <CardTitle className="text-lg sm:text-xl text-white">Personalized Mentoring</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-1">
                   <p className="text-gray-300 text-sm sm:text-base">
                     Get one-on-one guidance from professional traders. Review your trades, refine your strategy, and
                     accelerate your learning with personalized feedback.
