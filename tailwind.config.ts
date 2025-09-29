@@ -1,6 +1,5 @@
 import type { Config } from 'tailwindcss'
-
-// all in fixtures is set to tailwind v3 as interims solutions
+import colors from 'tailwindcss/colors'
 
 const config: Config = {
   darkMode: ['class'],
@@ -13,6 +12,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // ✅ keep Tailwind defaults like slate, gray, etc.
+        ...colors,
+
+        // ✅ your custom palette
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -71,20 +74,12 @@ const config: Config = {
       },
       keyframes: {
         'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
       },
       animation: {
@@ -95,4 +90,5 @@ const config: Config = {
   },
   plugins: [require('tailwindcss-animate')],
 }
+
 export default config

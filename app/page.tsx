@@ -55,14 +55,14 @@ export default function HomePage() {
         <MobileNav />
       </header>
 
-      <main className="flex-1 bg-black">
+      <main className="flex-1 bg-gradient-to-b to-slate-900 from-slate-950">
         {/* Environment Check (Development Only) */}
         {/* <div className="container px-4 md:px-6 mx-auto pt-4">
           <EnvCheck />
         </div> */}
 
         {/* Hero Section */}
-        <section className="w-full min-h-screen bg-gray-900 relative overflow-hidden flex items-center">
+        <section className="w-full min-h-screen relative overflow-hidden flex items-center">
           {/* Background Pattern */}
           {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23374151%22%20fill-opacity%3D%220.1%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
@@ -111,7 +111,7 @@ export default function HomePage() {
         </section>
 
         {/* About Our Algorithms Section */}
-        <section id="about" className="w-full py-8 md:py-16 lg:py-24 bg-gray-900">
+        <section id="about" className="w-full py-8 md:py-16 lg:py-24">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-12">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white">
@@ -190,7 +190,7 @@ export default function HomePage() {
         </section>
 
         {/* Success Stories */}
-        <section className="w-full py-8 md:py-16 lg:py-24 bg-gray-900">
+        <section className="w-full py-8 md:py-16 lg:py-24">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-12">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white">
@@ -264,7 +264,7 @@ export default function HomePage() {
         <DynamicCourses />
 
         {/* Features Section */}
-        <section id="features" className="w-full py-8 md:py-16 lg:py-24 bg-gray-900">
+        <section id="features" className="w-full py-8 md:py-16 lg:py-24">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -322,7 +322,7 @@ export default function HomePage() {
         <DynamicPricing />
 
         {/* CTA Section */}
-        <section className="w-full py-8 md:py-16 lg:py-24 bg-gradient-to-r bg-gray-900">
+        <section className="w-full py-8 md:py-16 lg:py-24 ">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">

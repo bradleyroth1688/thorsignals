@@ -143,7 +143,7 @@ export function DynamicPricing() {
   }
 
   return (
-    <section id="pricing" className="w-full py-8 md:py-16 lg:py-24 bg-gray-900">
+    <section id="pricing" className="w-full py-8 md:py-16 lg:py-24 ">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
