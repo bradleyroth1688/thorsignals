@@ -60,17 +60,19 @@ export function FAQSection() {
   }
 
   return (
-    <section className="w-full py-8 md:py-16 lg:py-24">
+    <section className="w-full pt-20">
       <div className="container px-4 md:px-6 mx-auto max-w-6xl">
         <div className="flex flex-col items-center text-center mb-12 space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-900/30 rounded-full text-sm text-purple-300 border border-purple-700/50">
-            We're Here to Help
-            <span className="text-purple-400">→</span>
+          <div className="our-tracker">
+            <div className="our-tracker1">
+              We're Here to Help
+            </div>
+            <span className="our-tracker1">→</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
+          <h2 className="text-[42px] font-bold tracking-tight text-white">
             Frequently Asked Questions
           </h2>
-          <p className="max-w-3xl text-gray-400 text-base md:text-lg">
+          <p className="max-w-xl text-gray-400 text-base md:text-lg">
             Don't see your question? Don't worry. Join our free Discord community below and one of our team members can assist you immediately!
           </p>
         </div>
