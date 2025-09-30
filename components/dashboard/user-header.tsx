@@ -59,7 +59,7 @@ export function UserHeader() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 sm:py-6 gap-4">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Welcome back, {firstName}!</h1>
-            <p className="text-gray-600 text-sm sm:text-base">Continue your algorithm journey</p>
+            <p className="text-gray-600 text-sm sm:text-base">Access your THOR Signal Indicator</p>
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
             <Badge variant="secondary" className={`text-xs sm:text-sm ${getPlanColor(planName)}`}>

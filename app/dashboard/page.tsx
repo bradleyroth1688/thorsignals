@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { CardDescription } from "@/components/ui/card"
 import { StatsCards } from "@/components/dashboard/stats-cards"
-import { CourseProgress } from "@/components/dashboard/course-progress"
 import { UpcomingEvents } from "@/components/dashboard/upcoming-events"
 import { UserHeader } from "@/components/dashboard/user-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -143,20 +142,18 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-            <CourseProgress />
-
             {/* Latest Content */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg sm:text-xl">Latest Algorithms</CardTitle>
-                <CardDescription className="text-sm">New indicators added this week</CardDescription>
+                <CardTitle className="text-lg sm:text-xl">THOR Signal Indicator</CardTitle>
+                <CardDescription className="text-sm">Your institutional-grade trading indicator</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center py-8">
                   <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-4">New algorithms are added regularly</p>
+                  <p className="text-gray-600 mb-4">Get the THOR Signal Indicator for TradingView</p>
                   <p className="text-sm text-gray-500 mb-4">
-                    Join our Discord community to get notified about new algorithms and TradingView indicators
+                    Join our Discord community to get access to the THOR Signal Indicator and connect with our trading team
                   </p>
                   <Button className="bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20">
                     <MessageCircle className="h-4 w-4 mr-2" />

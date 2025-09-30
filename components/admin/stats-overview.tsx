@@ -82,12 +82,12 @@ export function StatsOverview() {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Courses</CardTitle>
+          <CardTitle className="text-sm font-medium">THOR Signal Indicator</CardTitle>
           <BookOpen className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{stats.totalCourses}</div>
-          <p className="text-xs text-muted-foreground">Published courses</p>
+          <div className="text-2xl font-bold">1</div>
+          <p className="text-xs text-muted-foreground">Active indicator</p>
         </CardContent>
       </Card>
 

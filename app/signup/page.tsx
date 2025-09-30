@@ -8,14 +8,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useToast } from "@/hooks/use-toast"
 import { CheckCircle, AlertCircle } from "lucide-react"
 
 export default function SignUpPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
@@ -25,7 +23,7 @@ export default function SignUpPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    plan: searchParams.get("plan") || "basic",
+    plan: "thor",
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,11 +94,6 @@ export default function SignUpPage() {
     }
   }
 
-  const planPrices = {
-    basic: "$14.99/month",
-    pro: "$24.99/month",
-    elite: "$499.99 (Lifetime)",
-  }
 
   if (emailSent) {
     return (
@@ -237,20 +230,20 @@ export default function SignUpPage() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="plan" className="text-sm text-gray-300">
+              <div className="space-y-2 bg-gray-700 p-4 rounded-lg border border-purple-500">
+                <Label className="text-sm text-gray-300">
                   Subscription Plan
                 </Label>
-                <Select value={formData.plan} onValueChange={(value) => setFormData({ ...formData, plan: value })}>
-                  <SelectTrigger className="h-10 bg-gray-700 border-gray-600 text-white">
-                    <SelectValue placeholder="Select a plan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="basic">Basic - {planPrices.basic}</SelectItem>
-                    <SelectItem value="pro">Pro - {planPrices.pro}</SelectItem>
-                    <SelectItem value="elite">Elite - {planPrices.elite}</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-white font-semibold">THOR Signal Indicator</p>
+                    <p className="text-sm text-gray-400">Full access to institutional-grade signals</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-white">$99</p>
+                    <p className="text-sm text-gray-400">/month</p>
+                  </div>
+                </div>
               </div>
 
               <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20 h-10 sm:h-11" disabled={loading}>

@@ -1,223 +1,66 @@
-"use client"
-
-import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Check, Star } from "lucide-react"
-import { formatPrice } from "@/lib/utils/format"
-import { createClient } from "@/lib/supabase/client"
-
-interface SubscriptionPlan {
-  id: string
-  name: string
-  display_name: string
-  description: string
-  price: number
-  billing_cycle: string
-  features: {
-    features: string[]
-  }
-}
+import { Check } from "lucide-react"
 
 export function DynamicPricing() {
-  const [plans, setPlans] = useState<SubscriptionPlan[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const supabase = createClient()
-
-  useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        console.log("Fetching subscription plans...")
-
-        const { data, error } = await supabase
-          .from("subscription_plans")
-          .select("*")
-          .eq("is_active", true)
-          .order("price")
-
-        console.log("Subscription plans response:", { data, error })
-
-        if (error) {
-          console.error("Error fetching plans:", error)
-          setError(error.message)
-          throw error
-        }
-
-        if (data && data.length > 0) {
-          console.log(`Found ${data.length} subscription plans`)
-          setPlans(data || [])
-        } else {
-          console.warn("No subscription plans found")
-          setError("No subscription plans available")
-        }
-      } catch (err) {
-        console.error("Exception fetching plans:", err)
-        setError(err instanceof Error ? err.message : "Failed to fetch plans")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchPlans()
-  }, [supabase])
-
-  if (loading) {
-    return (
-      <section id="pricing" className="w-full py-8 md:py-16 lg:py-24">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-12">
-            <div className="animate-pulse">
-              <div className="h-8 bg-gray-800 rounded w-64 mb-4"></div>
-              <div className="h-4 bg-gray-800 rounded w-96"></div>
-            </div>
-          </div>
-          <div className="mx-auto grid max-w-5xl items-start gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {[...Array(3)].map((_, i) => (
-              <Card key={i} className="animate-pulse bg-slate-900">
-                <CardHeader className="text-center pb-4 bg-slate-900">
-                  <div className="h-6 bg-gray-800 rounded w-20 mx-auto mb-2"></div>
-                  <div className="h-4 bg-gray-800 rounded w-32 mx-auto mb-4"></div>
-                  <div className="h-10 bg-gray-800 rounded w-24 mx-auto"></div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    {[...Array(5)].map((_, j) => (
-                      <div key={j} className="h-4 bg-gray-800 rounded"></div>
-                    ))}
-                  </div>
-                  <div className="h-10 bg-gray-800 rounded"></div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  if (error) {
-    return (
-      <section id="pricing" className="w-full py-8 md:py-16 lg:py-24 bg-gray-50">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
-                Choose Your Plan
-              </h2>
-              <p className="max-w-[900px] text-gray-500 text-base sm:text-lg md:text-xl px-4">
-                Start your trading journey with our flexible plans.
-              </p>
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4 mt-4">
-                <p className="text-red-600 text-sm">Error loading plans: {error}</p>
-                <Button onClick={() => window.location.reload()} variant="outline" size="sm" className="mt-2">
-                  Retry
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  if (plans.length === 0) {
-    return (
-      <section id="pricing" className="w-full py-8 md:py-16 lg:py-24 bg-gray-50">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
-                Choose Your Plan
-              </h2>
-              <p className="max-w-[900px] text-gray-500 text-base sm:text-lg md:text-xl px-4">
-                Plans are being set up. Please check back soon!
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
+  const features = [
+    "Access to THOR Signal Indicator for TradingView",
+    "Institutional-grade trading signals",
+    "Real-time market analysis",
+    "Exclusive Discord community access",
+    "Direct support from our trading team",
+    "Algorithm updates and improvements",
+    "Educational resources and workshops",
+    "30-day money-back guarantee"
+  ]
 
   return (
-    <section id="pricing" className="w-full py-8 md:py-16 lg:py-24 ">
+    <section id="pricing" className="w-full py-8 md:py-16 lg:py-24">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white">
-              Choose Your Plan
+              Simple, Transparent Pricing
             </h2>
             <p className="max-w-[900px] text-gray-300 text-base sm:text-lg md:text-xl px-4">
-              Access our algorithms with our flexible plans. All plans include Discord access and money-back
-              guarantee.
+              Get full access to the THOR Signal Indicator and our exclusive trading community for one simple monthly price.
             </p>
           </div>
         </div>
-        <div className="mx-auto grid max-w-5xl items-start gap-6 py-8 md:py-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {plans.map((plan, index) => (
-            <Card
-              key={plan.id}
-              className={`w-full bg-gray-800 border-gray-700 ${
-                plan.name === "pro"
-                  ? "border-amber-500 relative"
-                  : plan.name === "elite"
-                    ? "border-2 border-yellow-400"
-                    : ""
-              }`}
-            >
-              {plan.name === "pro" && (
-                <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-amber-500 text-xs sm:text-sm">
-                  Most Popular
-                </Badge>
-              )}
-              <CardHeader className="text-center pb-4">
-                <CardTitle
-                  className={`text-lg sm:text-xl text-white ${plan.name === "elite" ? "flex items-center justify-center gap-2" : ""}`}
-                >
-                  {plan.display_name}
-                  {plan.name === "elite" && <Star className="h-4 w-4 text-yellow-500" />}
-                </CardTitle>
-                <CardDescription className="text-gray-300">{plan.description}</CardDescription>
-                <div>
-                  <span className="text-3xl sm:text-4xl font-bold text-white">{formatPrice(plan.price)}</span>
-                  <span className="text-gray-400 text-sm sm:text-base">
-                    {plan.billing_cycle === "lifetime" ? "" : `/${plan.billing_cycle}`}
-                  </span>
-                  {plan.billing_cycle === "lifetime" && <div className="text-sm text-gray-400">One-time payment</div>}
-                  {plan.name === "elite" && (
-                    <div className="text-xs text-green-400 font-semibold">Save $1,800+ vs Pro yearly</div>
-                  )}
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <ul className="space-y-2">
-                  {plan.features?.features?.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center">
-                      <Check className="h-4 w-4 text-green-400 mr-2 flex-shrink-0" />
-                      <span className="text-sm text-gray-300">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href={`/signup?plan=${plan.name}`} className="w-full block">
-                  <Button
-                    className={`w-full ${
-                      plan.name === "pro"
-                        ? "bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20"
-                        : plan.name === "elite"
-                          ? "bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20"
-                          : "bg-transparent border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
-                    }`}
-                    variant={plan.name === "basic" ? "outline" : "default"}
-                  >
-                    {plan.name === "elite" ? "Get Lifetime Access" : "Get Started"}
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="mx-auto max-w-md py-8 md:py-12">
+          <Card className="w-full bg-gray-800 border-2 border-purple-500 relative">
+            <CardHeader className="text-center pb-4">
+              <CardTitle className="text-2xl sm:text-3xl text-white">
+                THOR Signal Indicator
+              </CardTitle>
+              <CardDescription className="text-gray-300">
+                Full access to institutional-grade trading signals
+              </CardDescription>
+              <div className="pt-4">
+                <span className="text-5xl sm:text-6xl font-bold text-white">$99</span>
+                <span className="text-gray-400 text-lg">/month</span>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <ul className="space-y-3">
+                {features.map((feature, index) => (
+                  <li key={index} className="flex items-start">
+                    <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm sm:text-base text-gray-300">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link href="/signup" className="w-full block">
+                <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white text-lg py-6 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20">
+                  Get Started Now
+                </Button>
+              </Link>
+              <p className="text-center text-sm text-gray-400">
+                Cancel anytime • No setup fees • 30-day money-back guarantee
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>

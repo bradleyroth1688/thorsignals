@@ -39,13 +39,13 @@ export function StatsCards() {
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs sm:text-sm font-medium">Algorithms Accessed</CardTitle>
+          <CardTitle className="text-xs sm:text-sm font-medium">THOR Signal Indicator</CardTitle>
           <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-lg sm:text-2xl font-bold">{stats.coursesCompleted}</div>
+          <div className="text-lg sm:text-2xl font-bold">Active</div>
           <p className="text-xs text-muted-foreground">
-            {stats.coursesInProgress > 0 ? `${stats.coursesInProgress} active` : "Great progress!"}
+            Ready to use
           </p>
         </CardContent>
       </Card>
@@ -63,23 +63,23 @@ export function StatsCards() {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs sm:text-sm font-medium">Algorithm Usage</CardTitle>
+          <CardTitle className="text-xs sm:text-sm font-medium">Indicator Status</CardTitle>
           <Award className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-lg sm:text-2xl font-bold">{stats.overallProgress}%</div>
-          <p className="text-xs text-muted-foreground">Overall usage</p>
+          <div className="text-lg sm:text-2xl font-bold">100%</div>
+          <p className="text-xs text-muted-foreground">Full access</p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs sm:text-sm font-medium">Total Courses</CardTitle>
+          <CardTitle className="text-xs sm:text-sm font-medium">Trading Days</CardTitle>
           <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-lg sm:text-2xl font-bold">{stats.totalCourses}</div>
-          <p className="text-xs text-muted-foreground">Enrolled courses</p>
+          <div className="text-lg sm:text-2xl font-bold">0</div>
+          <p className="text-xs text-muted-foreground">Days active</p>
         </CardContent>
       </Card>
     </div>

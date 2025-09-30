@@ -21,7 +21,6 @@ import {
 const navigation = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
   { name: "Subscribers", href: "/admin/users", icon: Users },
-  { name: "Algorithms", href: "/admin/courses", icon: BookOpen },
   { name: "Events", href: "/admin/events", icon: Calendar },
   { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { name: "Subscriptions", href: "/admin/subscriptions", icon: CreditCard },

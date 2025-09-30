@@ -7,7 +7,7 @@ export default function AdminDashboard() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-        <p className="text-gray-600">Manage your asset management platform and algorithm subscriptions</p>
+        <p className="text-gray-600">Manage your asset management platform and THOR Signal Indicator subscriptions</p>
       </div>
 
       <StatsOverview />
@@ -32,7 +32,7 @@ export default function AdminDashboard() {
               <div className="flex items-center space-x-3">
                 <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium">Algorithm accessed</p>
+                  <p className="text-sm font-medium">THOR Signal Indicator accessed</p>
                   <p className="text-xs text-gray-500">5 minutes ago</p>
                 </div>
               </div>
@@ -59,11 +59,11 @@ export default function AdminDashboard() {
               <button className="p-4 text-left border rounded-lg hover:bg-gray-50 transition-colors">
                 <Users className="h-8 w-8 text-blue-500 mb-2" />
                 <p className="font-medium">Manage Subscribers</p>
-                <p className="text-sm text-gray-500">View algorithm subscribers</p>
+                <p className="text-sm text-gray-500">View THOR Signal Indicator subscribers</p>
               </button>
               <button className="p-4 text-left border rounded-lg hover:bg-gray-50 transition-colors">
                 <DollarSign className="h-8 w-8 text-green-500 mb-2" />
-                <p className="font-medium">Algorithm Revenue</p>
+                <p className="font-medium">Indicator Revenue</p>
                 <p className="text-sm text-gray-500">View subscription earnings</p>
               </button>
             </div>
