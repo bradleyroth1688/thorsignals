@@ -10,10 +10,6 @@ import { createClient } from "@/lib/supabase/client"
 interface DatabaseStatus {
   connection: boolean
   profiles: boolean
-  subscriptionPlans: boolean
-  courses: boolean
-  events: boolean
-  sampleData: boolean
   errors: string[]
 }
 
@@ -21,10 +17,6 @@ export function DatabaseCheck() {
   const [status, setStatus] = useState<DatabaseStatus>({
     connection: false,
     profiles: false,
-    subscriptionPlans: false,
-    courses: false,
-    events: false,
-    sampleData: false,
     errors: [],
   })
   const [loading, setLoading] = useState(false)
@@ -53,59 +45,13 @@ export function DatabaseCheck() {
         }
       } else {
         results.push("✅ Database connection successful")
-      }
-
-      // Test 2: Check subscription plans
-      results.push("🔍 Testing subscription plans table...")
-      const { data: plansData, error: plansError } = await supabase.from("subscription_plans").select("*").limit(1)
-
-      if (plansError) {
-        errors.push(`Subscription plans error: ${plansError.message}`)
-        results.push("❌ Subscription plans table not found")
-      } else {
-        results.push(`✅ Subscription plans table exists (${plansData?.length || 0} records)`)
-      }
-
-      // Test 3: Check courses
-      results.push("🔍 Testing courses table...")
-      const { data: coursesData, error: coursesError } = await supabase.from("courses").select("*").limit(1)
-
-      if (coursesError) {
-        errors.push(`Courses error: ${coursesError.message}`)
-        results.push("❌ Courses table not found")
-      } else {
-        results.push(`✅ Courses table exists (${coursesData?.length || 0} records)`)
-      }
-
-      // Test 4: Check events
-      results.push("🔍 Testing events table...")
-      const { data: eventsData, error: eventsError } = await supabase.from("events").select("*").limit(1)
-
-      if (eventsError) {
-        errors.push(`Events error: ${eventsError.message}`)
-        results.push("❌ Events table not found")
-      } else {
-        results.push(`✅ Events table exists (${eventsData?.length || 0} records)`)
-      }
-
-      // Test 5: Check for sample data
-      results.push("🔍 Checking for sample data...")
-      const { data: samplePlans, error: sampleError } = await supabase.from("subscription_plans").select("*")
-
-      if (!sampleError && samplePlans && samplePlans.length > 0) {
-        results.push(`✅ Sample data found (${samplePlans.length} subscription plans)`)
-      } else {
-        results.push("⚠️ No sample data found - need to run seed scripts")
+        results.push("✅ Profiles table exists")
       }
 
       // Update status
       setStatus({
         connection: !connectionError,
         profiles: !connectionError,
-        subscriptionPlans: !plansError,
-        courses: !coursesError,
-        events: !eventsError,
-        sampleData: !sampleError && samplePlans && samplePlans.length > 0,
         errors,
       })
     } catch (error) {
@@ -122,8 +68,7 @@ export function DatabaseCheck() {
     runDatabaseTests()
   }, [])
 
-  const allTablesExist = status.profiles && status.subscriptionPlans && status.courses && status.events
-  const hasData = status.sampleData
+  const allTablesExist = status.profiles
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
@@ -154,34 +99,11 @@ export function DatabaseCheck() {
             ) : (
               <AlertTriangle className="h-4 w-4 text-yellow-600" />
             )}
-            <AlertTitle>Database Tables</AlertTitle>
+            <AlertTitle>Profiles Table</AlertTitle>
             <AlertDescription>
-              {allTablesExist ? "All required tables exist" : "Some tables are missing"}
+              {allTablesExist ? "Profiles table exists" : "Profiles table is missing"}
             </AlertDescription>
           </Alert>
-        </div>
-
-        {/* Detailed Status */}
-        <div className="space-y-2">
-          <h3 className="font-semibold">Table Status:</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-            <div className={`flex items-center gap-2 ${status.profiles ? "text-green-600" : "text-red-600"}`}>
-              {status.profiles ? <CheckCircle className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
-              Profiles
-            </div>
-            <div className={`flex items-center gap-2 ${status.subscriptionPlans ? "text-green-600" : "text-red-600"}`}>
-              {status.subscriptionPlans ? <CheckCircle className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
-              Plans
-            </div>
-            <div className={`flex items-center gap-2 ${status.courses ? "text-green-600" : "text-red-600"}`}>
-              {status.courses ? <CheckCircle className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
-              Courses
-            </div>
-            <div className={`flex items-center gap-2 ${status.events ? "text-green-600" : "text-red-600"}`}>
-              {status.events ? <CheckCircle className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
-              Events
-            </div>
-          </div>
         </div>
 
         {/* Test Results */}

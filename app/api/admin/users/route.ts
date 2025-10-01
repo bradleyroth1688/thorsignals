@@ -1,42 +1,21 @@
 import { createServerClient } from "@/lib/supabase/server"
-import { checkAdminPermission } from "@/lib/auth/admin"
+import { checkAdminAccess } from "@/lib/auth/admin"
 import { NextResponse } from "next/server"
 
 export async function GET() {
   try {
-    const { hasPermission, error } = await checkAdminPermission("users", "read")
+    const { isAdmin, error } = await checkAdminAccess()
 
-    if (!hasPermission) {
-      return NextResponse.json({ error: error || "Insufficient permissions" }, { status: 403 })
+    if (!isAdmin) {
+      return NextResponse.json({ error: error || "Admin access required" }, { status: 403 })
     }
 
     const supabase = await createServerClient()
 
-    // Fetch users with their profiles, subscriptions, and course progress
+    // Fetch users with their profiles
     const { data: users, error: usersError } = await supabase
       .from("profiles")
-      .select(`
-        *,
-        user_subscriptions (
-          id,
-          status,
-          current_period_start,
-          current_period_end,
-          subscription_plans (
-            display_name,
-            name,
-            price
-          )
-        ),
-        user_course_progress (
-          id,
-          status,
-          progress_percentage,
-          courses (
-            title
-          )
-        )
-      `)
+      .select("*")
       .order("created_at", { ascending: false })
 
     if (usersError) {
@@ -66,10 +45,10 @@ export async function GET() {
 
 export async function PATCH(request: Request) {
   try {
-    const { hasPermission, error } = await checkAdminPermission("users", "update")
+    const { isAdmin, error } = await checkAdminAccess()
 
-    if (!hasPermission) {
-      return NextResponse.json({ error: error || "Insufficient permissions" }, { status: 403 })
+    if (!isAdmin) {
+      return NextResponse.json({ error: error || "Admin access required" }, { status: 403 })
     }
 
     const { userId, updates } = await request.json()

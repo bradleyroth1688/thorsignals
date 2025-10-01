@@ -12,15 +12,9 @@ interface User {
   id: string
   first_name: string
   last_name: string
+  email: string
   created_at: string
-  user_subscriptions: Array<{
-    status: string
-    current_period_end: string
-    subscription_plans: {
-      display_name: string
-      name: string
-    }
-  }>
+  is_admin: boolean
 }
 
 export function UsersTable() {
@@ -45,27 +39,8 @@ export function UsersTable() {
   }, [])
 
   const filteredUsers = users.filter((user) =>
-    `${user.first_name} ${user.last_name}`.toLowerCase().includes(searchTerm.toLowerCase()),
+    `${user.first_name} ${user.last_name} ${user.email}`.toLowerCase().includes(searchTerm.toLowerCase()),
   )
-
-  const getSubscriptionStatus = (user: User) => {
-    const subscription = user.user_subscriptions?.[0]
-    if (!subscription) return { status: "Free", color: "bg-gray-100 text-gray-800" }
-
-    switch (subscription.status) {
-      case "active":
-        return {
-          status: subscription.subscription_plans?.display_name || "Active",
-          color: "bg-green-100 text-green-800",
-        }
-      case "cancelled":
-        return { status: "Cancelled", color: "bg-red-100 text-red-800" }
-      case "expired":
-        return { status: "Expired", color: "bg-yellow-100 text-yellow-800" }
-      default:
-        return { status: "Unknown", color: "bg-gray-100 text-gray-800" }
-    }
-  }
 
   if (loading) {
     return (
@@ -110,7 +85,6 @@ export function UsersTable() {
       <CardContent>
         <div className="space-y-4">
           {filteredUsers.map((user) => {
-            const subscription = getSubscriptionStatus(user)
             return (
               <div key={user.id} className="flex items-center justify-between p-4 border rounded-lg">
                 <div className="flex items-center space-x-4">
@@ -124,11 +98,12 @@ export function UsersTable() {
                     <p className="font-medium">
                       {user.first_name} {user.last_name}
                     </p>
-                    <p className="text-sm text-gray-500">Joined {formatDate(user.created_at)}</p>
+                    <p className="text-sm text-gray-500">{user.email}</p>
+                    <p className="text-xs text-gray-400">Joined {formatDate(user.created_at)}</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Badge className={`text-xs ${subscription.color}`}>{subscription.status}</Badge>
+                  {user.is_admin && <Badge className="text-xs bg-purple-100 text-purple-800">Admin</Badge>}
                   <div className="flex space-x-1">
                     <Button size="sm" variant="ghost">
                       <Mail className="h-4 w-4" />

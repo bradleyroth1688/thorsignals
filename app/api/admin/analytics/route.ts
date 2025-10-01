@@ -1,13 +1,13 @@
 import { createServerClient } from "@/lib/supabase/server"
-import { checkAdminPermission } from "@/lib/auth/admin"
+import { checkAdminAccess } from "@/lib/auth/admin"
 import { NextResponse } from "next/server"
 
 export async function GET() {
   try {
-    const { hasPermission, error } = await checkAdminPermission("analytics", "read")
+    const { isAdmin, error } = await checkAdminAccess()
 
-    if (!hasPermission) {
-      return NextResponse.json({ error: error || "Insufficient permissions" }, { status: 403 })
+    if (!isAdmin) {
+      return NextResponse.json({ error: error || "Admin access required" }, { status: 403 })
     }
 
     const supabase = await createServerClient()
@@ -27,35 +27,6 @@ export async function GET() {
       .from("profiles")
       .select("*", { count: "exact", head: true })
 
-    // Get active subscriptions
-    const { count: activeSubscriptions, error: activeSubsError } = await supabase
-      .from("user_subscriptions")
-      .select("*", { count: "exact", head: true })
-      .eq("status", "active")
-
-    // Get total events
-    const { count: totalEvents, error: totalEventsError } = await supabase
-      .from("events")
-      .select("*", { count: "exact", head: true })
-
-    // Get revenue data (mock calculation based on active subscriptions)
-    const { data: revenueData, error: revenueError } = await supabase
-      .from("user_subscriptions")
-      .select(`
-        status,
-        current_period_start,
-        subscription_plans (
-          price
-        )
-      `)
-      .eq("status", "active")
-
-    // Calculate monthly revenue
-    const monthlyRevenue =
-      revenueData?.reduce((total, sub: any) => {
-        return total + (sub.subscription_plans?.price || 0)
-      }, 0) || 0
-
     // Process user growth data by day
     const userGrowthByDay =
       userGrowth?.reduce((acc: any, user) => {
@@ -67,9 +38,6 @@ export async function GET() {
     const analytics = {
       overview: {
         totalUsers: totalUsers || 0,
-        activeSubscriptions: activeSubscriptions || 0,
-        totalEvents: totalEvents || 0,
-        monthlyRevenue,
       },
       userGrowth: userGrowthByDay,
       recentActivity: userGrowth?.slice(-10) || [],

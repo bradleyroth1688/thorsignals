@@ -25,36 +25,3 @@ export async function checkAdminAccess() {
 
   return { isAdmin: true, user, error: null }
 }
-
-export async function checkAdminPermission(permission: string, action: string) {
-  const { isAdmin, user, error } = await checkAdminAccess()
-
-  if (!isAdmin || error) {
-    return { hasPermission: false, error }
-  }
-
-  const supabase = await createServerClient()
-
-  // Get user's admin roles and permissions
-  const { data: userRoles, error: rolesError } = await supabase
-    .from("user_admin_roles")
-    .select(`
-      admin_roles (
-        name,
-        permissions
-      )
-    `)
-    .eq("user_id", user.id)
-
-  if (rolesError) {
-    return { hasPermission: false, error: rolesError.message }
-  }
-
-  // Check if user has the required permission
-  const hasPermission = userRoles?.some((userRole: any) => {
-    const permissions = userRole.admin_roles?.permissions
-    return permissions?.[permission]?.includes(action)
-  })
-
-  return { hasPermission: hasPermission || false, error: null }
-}

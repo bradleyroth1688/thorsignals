@@ -1,12 +1,12 @@
-import { checkAdminPermission } from "@/lib/auth/admin"
+import { checkAdminAccess } from "@/lib/auth/admin"
 import { NextResponse } from "next/server"
 
 export async function GET() {
   try {
-    const { hasPermission, error } = await checkAdminPermission("settings", "read")
+    const { isAdmin, error } = await checkAdminAccess()
 
-    if (!hasPermission) {
-      return NextResponse.json({ error: error || "Insufficient permissions" }, { status: 403 })
+    if (!isAdmin) {
+      return NextResponse.json({ error: error || "Admin access required" }, { status: 403 })
     }
 
     // For now, return default settings
@@ -54,10 +54,10 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { hasPermission, error } = await checkAdminPermission("settings", "update")
+    const { isAdmin, error } = await checkAdminAccess()
 
-    if (!hasPermission) {
-      return NextResponse.json({ error: error || "Insufficient permissions" }, { status: 403 })
+    if (!isAdmin) {
+      return NextResponse.json({ error: error || "Admin access required" }, { status: 403 })
     }
 
     const { category, settings } = await request.json()
