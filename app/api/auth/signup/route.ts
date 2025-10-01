@@ -42,26 +42,61 @@ export async function POST(request: NextRequest) {
 
     if (authError) {
       console.error("Signup error:", authError)
-      return NextResponse.json({ error: authError.message }, { status: 400 })
+      
+      // Provide user-friendly error messages
+      let errorMessage = "Failed to create account. Please try again."
+      
+      if (authError.message.includes("already registered")) {
+        errorMessage = "This email is already registered. Please try logging in instead."
+      } else if (authError.message.includes("Password should be")) {
+        errorMessage = "Password is too weak. Please use a stronger password."
+      } else if (authError.message.includes("valid email")) {
+        errorMessage = "Please enter a valid email address."
+      }
+      
+      return NextResponse.json({ error: errorMessage }, { status: 400 })
     }
 
     if (!authData.user) {
-      return NextResponse.json({ error: "Failed to create user" }, { status: 400 })
+      return NextResponse.json({ error: "Failed to create account. Please try again." }, { status: 400 })
     }
 
-    // Store email and plain password in profiles table
+    // Insert user data into profiles table
     // WARNING: Storing plain text passwords is NOT recommended for security reasons
-    const { error: profileUpdateError } = await supabase
+    const { error: profileInsertError } = await supabase
       .from("profiles")
-      .update({
+      .insert({
+        id: authData.user.id,
         email: email.toLowerCase(),
-        password_hash: password, // Storing plain text password
+        password: password, // Storing plain text password
+        first_name: firstName,
+        last_name: lastName,
+        is_admin: false, // Default to non-admin
       })
-      .eq("id", authData.user.id)
 
-    if (profileUpdateError) {
-      console.error("Profile update error:", profileUpdateError)
-      // Don't fail the signup if profile update fails, but log it
+    if (profileInsertError) {
+      console.error("Profile insert error:", profileInsertError)
+      // If profile creation fails, we should probably delete the auth user
+      // But for now, just log the error
+      return NextResponse.json(
+        { error: "Failed to create user profile. Please try again." },
+        { status: 500 }
+      )
+    }
+
+    // Create default subscription entry if user_subscriptions table exists
+    // You can modify this to assign a specific plan
+    const { error: subscriptionError } = await supabase
+      .from("user_subscriptions")
+      .insert({
+        user_id: authData.user.id,
+        status: "free", // or "active" if you have a default plan
+        // plan_id: "your-default-plan-id", // Add if you have a default plan
+      })
+
+    if (subscriptionError) {
+      console.error("Subscription insert error:", subscriptionError)
+      // Continue even if subscription insert fails
     }
 
     console.log("User created successfully:", authData.user.id)

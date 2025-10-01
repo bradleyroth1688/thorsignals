@@ -17,6 +17,7 @@ export default function SignUpPage() {
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
+  const [error, setError] = useState("")
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -28,20 +29,25 @@ export default function SignUpPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError("")
 
     if (formData.password !== formData.confirmPassword) {
+      const errorMsg = "Passwords do not match"
+      setError(errorMsg)
       toast({
         title: "Error",
-        description: "Passwords do not match",
+        description: errorMsg,
         variant: "destructive",
       })
       return
     }
 
     if (formData.password.length < 6) {
+      const errorMsg = "Password must be at least 6 characters long"
+      setError(errorMsg)
       toast({
         title: "Error",
-        description: "Password must be at least 6 characters long",
+        description: errorMsg,
         variant: "destructive",
       })
       return
@@ -84,9 +90,11 @@ export default function SignUpPage() {
         router.push("/")
       }
     } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : "Failed to create account"
+      setError(errorMsg)
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to create account",
+        description: errorMsg,
         variant: "destructive",
       })
     } finally {
@@ -148,6 +156,13 @@ export default function SignUpPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <Alert className="bg-red-900/20 border-red-500">
+                  <AlertCircle className="h-4 w-4 text-red-500" />
+                  <AlertDescription className="text-red-200">{error}</AlertDescription>
+                </Alert>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="firstName" className="text-sm text-gray-300">

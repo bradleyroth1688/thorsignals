@@ -7,7 +7,7 @@ export interface Database {
         Row: {
           id: string
           email: string
-          password_hash: string
+          password: string
           first_name: string
           last_name: string
           phone: string | null
@@ -23,7 +23,7 @@ export interface Database {
         Insert: {
           id?: string
           email: string
-          password_hash: string
+          password: string
           first_name: string
           last_name: string
           phone?: string | null
@@ -39,7 +39,7 @@ export interface Database {
         Update: {
           id?: string
           email?: string
-          password_hash?: string
+          password?: string
           first_name?: string
           last_name?: string
           phone?: string | null

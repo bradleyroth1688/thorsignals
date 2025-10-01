@@ -18,11 +18,22 @@ export async function POST(request: NextRequest) {
     })
 
     if (authError) {
-      return NextResponse.json({ error: authError.message }, { status: 401 })
+      // Provide user-friendly error messages
+      let errorMessage = "Invalid email or password"
+      
+      if (authError.message.includes("Invalid login credentials")) {
+        errorMessage = "Invalid email or password. Please check your credentials and try again."
+      } else if (authError.message.includes("Email not confirmed")) {
+        errorMessage = "Please verify your email address before signing in."
+      } else if (authError.message.includes("User not found")) {
+        errorMessage = "No account found with this email address. Please check your email or sign up."
+      }
+      
+      return NextResponse.json({ error: errorMessage }, { status: 401 })
     }
 
     if (!authData.user) {
-      return NextResponse.json({ error: "Failed to sign in" }, { status: 401 })
+      return NextResponse.json({ error: "Failed to sign in. Please try again." }, { status: 401 })
     }
 
     // Check if user is admin
