@@ -197,10 +197,10 @@ export default function HomePage() {
         </section>
 
         {/* Seamless Integrations for a Smarter Workflow */}
-        <section className="w-full py-8 md:py-16 lg:py-24 bg-[#020204]">
+        {/* <section className="w-full py-8 md:py-16 lg:py-24 bg-[#020204]">
           <div className="border-[#262626] border rounded-xl bg-[#0a0a0a] container px-4 md:px-6 mx-auto max-w-7xl">
             <div className="flex flex-row gap-8 items-start">
-              {/* Left Side - Content */}
+             
               <div className="px-8 w-[40%] space-y-6 h-[600px] flex flex-col justify-center items-start">
                 <div className="our-tracker min-w-[136px] max-h-[32px] hover:bg-gray-800 transition-colors border border-gray-700">
                   <div className="our-tracker1">
@@ -216,10 +216,10 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* Right Side - Animated Bento Cards */}
+           
               <div className="w-[60%] relative h-[600px] py-8 px-8 overflow-hidden">
                 <div className="absolute inset-0 flex gap-6">
-                  {/* Column 1 - Scrolling Up */}
+                  
                   <div className="flex-1 flex flex-col gap-6 animate-scroll-up will-change-transform">
                     {[...Array(2)].map((_, setIndex) => (
                       <div key={setIndex} className="flex flex-col gap-6">
@@ -276,7 +276,7 @@ export default function HomePage() {
                     ))}
                   </div>
 
-                  {/* Column 2 - Scrolling Down */}
+                
                   <div className="flex-1 flex flex-col gap-6 animate-scroll-down will-change-transform">
                     {[...Array(2)].map((_, setIndex) => (
                       <div key={setIndex} className="flex flex-col gap-6">
@@ -324,13 +324,13 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Gradient Overlays for Fade Effect */}
+             
                 <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black to-transparent pointer-events-none z-10"></div>
                 <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent pointer-events-none z-10"></div>
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         <div className="w-full flex items-center justify-center">
           <div className="mark-point"></div>
         </div>
@@ -471,7 +471,7 @@ export default function HomePage() {
         </div>
 
         {/* Results, Directly From Our Clients */}
-        <section className="results-section w-fit py-8 mx-24 overflow-hidden">
+        {/* <section className="results-section w-fit py-8 mx-24 overflow-hidden">
           <div className="flex flex-col items-center text-center mb-12 space-y-4">
             <div className="our-tracker">
               <div className="our-tracker1">
@@ -484,10 +484,10 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {/* First Row - Scrolling Right */}
+        
           <div className="relative mb-6">
             <div className="flex gap-6 animate-scroll-right will-change-transform">
-              {/* Triple duplicate for seamless loop */}
+           
               {[...Array(6)].map((_, setIndex) => (
                 <div key={setIndex} className="flex gap-6 shrink-0 h-[282px]">
                   <img width={308} height={282} src="./testimonials/1.avif" className="rounded-2xl"></img>
@@ -501,10 +501,10 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Second Row - Scrolling Left */}
+          
           <div className="relative">
             <div className="flex gap-6 animate-scroll-left will-change-transform">
-              {/* Triple duplicate for seamless loop */}
+            
               {[...Array(6)].map((_, setIndex) => (
                 <div key={setIndex} className="flex gap-6 shrink-0 h-[136px]">
                   <img width={276} height={136} src="./testimonials/11.avif" className="rounded-2xl"></img>
@@ -517,7 +517,7 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
         <div className="w-full flex items-center justify-center">
           <div className="mark-point"></div>
         </div>
@@ -635,14 +635,14 @@ export default function HomePage() {
                 <Link href="/privacy" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
-                <Link href="/terms" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link href="/terms-and-conditions" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Terms
                 </Link>
               </nav>
 
               {/* Copyright */}
               <p className="text-sm text-gray-500">
-                Copyright © 2025 Startup.io
+                Copyright © 2025 THOR Signals
               </p>
             </div>
           </div>

@@ -40,13 +40,6 @@ export function MobileNav() {
           >
             Pricing
           </Link>
-          <Link
-            href="/login"
-            className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
-            onClick={() => setOpen(false)}
-          >
-            Login
-          </Link>
           <div className="pt-4">
             <Link href="/signup" onClick={() => setOpen(false)}>
               <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20">Get Started</Button>

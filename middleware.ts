@@ -24,11 +24,33 @@ export async function middleware(request: NextRequest) {
     error: error?.message,
   })
 
+  // Allow access to admin login page without authentication
+  if (request.nextUrl.pathname === "/admin-login") {
+    // If already authenticated, check if admin and redirect accordingly
+    if (session) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("is_admin")
+        .eq("id", session.user.id)
+        .single()
+
+      if (profile?.is_admin) {
+        // Already an admin, redirect to admin panel
+        return NextResponse.redirect(new URL("/admin", request.url))
+      } else {
+        // Not an admin, redirect to home
+        return NextResponse.redirect(new URL("/", request.url))
+      }
+    }
+    // Not authenticated, allow access to login page
+    return response
+  }
+
   // Check if accessing admin routes
   if (request.nextUrl.pathname.startsWith("/admin")) {
     if (!session) {
-      console.log("Middleware - No session, redirecting to login")
-      return NextResponse.redirect(new URL("/login", request.url))
+      console.log("Middleware - No session, redirecting to admin login")
+      return NextResponse.redirect(new URL("/admin-login", request.url))
     }
 
     // Check if user is admin
@@ -39,23 +61,9 @@ export async function middleware(request: NextRequest) {
       .single()
 
     if (profileError || !profile?.is_admin) {
-      console.log("Middleware - Not admin, redirecting to dashboard")
-      return NextResponse.redirect(new URL("/dashboard", request.url))
+      console.log("Middleware - Not admin, redirecting to home")
+      return NextResponse.redirect(new URL("/", request.url))
     }
-  }
-
-  // Protect dashboard route
-  if (request.nextUrl.pathname.startsWith("/dashboard")) {
-    if (!session) {
-      console.log("Middleware - No session for dashboard, redirecting to login")
-      return NextResponse.redirect(new URL("/login", request.url))
-    }
-  }
-
-  // Redirect authenticated users away from auth pages
-  if (session && (request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/signup")) {
-    console.log("Middleware - Authenticated user on auth page, redirecting to dashboard")
-    return NextResponse.redirect(new URL("/dashboard", request.url))
   }
 
   return response

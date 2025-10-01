@@ -90,9 +90,9 @@ export function AdminSidebar() {
         </nav>
 
         <div className="absolute bottom-0 w-full p-4 border-t border-gray-800">
-          <Link href="/dashboard" className="block">
+          <Link href="/" className="block">
             <Button variant="outline" className="w-full bg-transparent border-gray-600 text-gray-300 hover:bg-gray-800">
-              Back to Dashboard
+              Back to Home
             </Button>
           </Link>
         </div>

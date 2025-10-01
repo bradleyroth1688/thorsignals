@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server"
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get("code")
-  const next = requestUrl.searchParams.get("next") ?? "/dashboard"
+  const next = requestUrl.searchParams.get("next") ?? "/"
 
   console.log("Auth callback - Code:", !!code, "Next:", next)
 
@@ -27,15 +27,15 @@ export async function GET(request: NextRequest) {
       } else {
         console.error("Auth callback error:", error)
         return NextResponse.redirect(
-          new URL(`/login?error=${encodeURIComponent(error?.message || "Authentication failed")}`, request.url),
+          new URL(`/signup?error=${encodeURIComponent(error?.message || "Authentication failed")}`, request.url),
         )
       }
     } catch (error) {
       console.error("Auth callback exception:", error)
-      return NextResponse.redirect(new URL("/login?error=authentication_failed", request.url))
+      return NextResponse.redirect(new URL("/signup?error=authentication_failed", request.url))
     }
   }
 
   console.log("Auth callback - No code present")
-  return NextResponse.redirect(new URL("/login?error=no_code_present", request.url))
+  return NextResponse.redirect(new URL("/signup?error=no_code_present", request.url))
 }

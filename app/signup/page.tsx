@@ -81,7 +81,7 @@ export default function SignUpPage() {
           title: "Success!",
           description: "Account created successfully!",
         })
-        router.push("/dashboard")
+        router.push("/")
       }
     } catch (error) {
       toast({
@@ -120,11 +120,6 @@ export default function SignUpPage() {
                 <Button variant="outline" onClick={() => setEmailSent(false)} className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
                   Try Again
                 </Button>
-              </div>
-              <div className="text-center">
-                <Link href="/login" className="text-purple-400 hover:underline text-sm">
-                  Back to Login
-                </Link>
               </div>
             </CardContent>
           </Card>
@@ -250,13 +245,6 @@ export default function SignUpPage() {
                 {loading ? "Creating Account..." : "Create Account & Subscribe"}
               </Button>
             </form>
-
-            <div className="mt-6 text-center text-sm text-gray-300">
-              Already have an account?{" "}
-              <Link href="/login" className="text-purple-400 hover:underline">
-                Sign in
-              </Link>
-            </div>
           </CardContent>
         </Card>
       </div>

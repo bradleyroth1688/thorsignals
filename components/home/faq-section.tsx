@@ -43,7 +43,7 @@ const rightColumnFAQs: FAQItem[] = [
   },
   {
     question: "What payment methods do you take?",
-    answer: "We accept credit cards, debit cards, PayPal, bank wires, and cryptocurrency (email us). Financing options such as AfterPay and Klarna are also available."
+    answer: "We accept credit cards, debit cards, PayPal."
   }
 ]
 

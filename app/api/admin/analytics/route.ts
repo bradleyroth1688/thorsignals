@@ -33,24 +33,10 @@ export async function GET() {
       .select("*", { count: "exact", head: true })
       .eq("status", "active")
 
-    // Get total courses
-    const { count: totalCourses, error: totalCoursesError } = await supabase
-      .from("courses")
-      .select("*", { count: "exact", head: true })
-
     // Get total events
     const { count: totalEvents, error: totalEventsError } = await supabase
       .from("events")
       .select("*", { count: "exact", head: true })
-
-    // Get course completion rates
-    const { data: courseProgress, error: courseProgressError } = await supabase.from("user_course_progress").select(`
-        status,
-        progress_percentage,
-        courses (
-          title
-        )
-      `)
 
     // Get revenue data (mock calculation based on active subscriptions)
     const { data: revenueData, error: revenueError } = await supabase
@@ -66,7 +52,7 @@ export async function GET() {
 
     // Calculate monthly revenue
     const monthlyRevenue =
-      revenueData?.reduce((total, sub) => {
+      revenueData?.reduce((total, sub: any) => {
         return total + (sub.subscription_plans?.price || 0)
       }, 0) || 0
 
@@ -78,30 +64,14 @@ export async function GET() {
         return acc
       }, {}) || {}
 
-    // Calculate course completion rates
-    const completionRates =
-      courseProgress?.reduce((acc: any, progress) => {
-        const courseTitle = progress.courses?.title || "Unknown Course"
-        if (!acc[courseTitle]) {
-          acc[courseTitle] = { total: 0, completed: 0 }
-        }
-        acc[courseTitle].total += 1
-        if (progress.status === "completed") {
-          acc[courseTitle].completed += 1
-        }
-        return acc
-      }, {}) || {}
-
     const analytics = {
       overview: {
         totalUsers: totalUsers || 0,
         activeSubscriptions: activeSubscriptions || 0,
-        totalCourses: totalCourses || 0,
         totalEvents: totalEvents || 0,
         monthlyRevenue,
       },
       userGrowth: userGrowthByDay,
-      completionRates,
       recentActivity: userGrowth?.slice(-10) || [],
     }
 

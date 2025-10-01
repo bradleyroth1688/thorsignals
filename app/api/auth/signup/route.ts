@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, firstName, lastName, plan } = await request.json()
+    const { email, password, firstName, lastName } = await request.json()
 
     const supabase = await createServerClient()
     const baseUrl = getBaseUrl()
@@ -18,11 +18,12 @@ export async function POST(request: NextRequest) {
           first_name: firstName,
           last_name: lastName,
         },
-        emailRedirectTo: `${baseUrl}/auth/callback?next=/dashboard`,
+        emailRedirectTo: `${baseUrl}/auth/callback?next=/`,
       },
     })
 
     if (authError) {
+      console.error("Signup error:", authError)
       return NextResponse.json({ error: authError.message }, { status: 400 })
     }
 
@@ -30,30 +31,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Failed to create user" }, { status: 400 })
     }
 
-    // Get the selected plan
-    const { data: planData, error: planError } = await supabase
-      .from("subscription_plans")
-      .select("id")
-      .eq("name", plan)
-      .single()
-
-    if (planError || !planData) {
-      return NextResponse.json({ error: "Invalid subscription plan" }, { status: 400 })
-    }
-
-    // Create user subscription (in a real app, this would be handled after payment)
-    const { error: subscriptionError } = await supabase.from("user_subscriptions").insert({
-      user_id: authData.user.id,
-      plan_id: planData.id,
-      status: "active",
-      current_period_start: new Date().toISOString(),
-      current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days
-    })
-
-    if (subscriptionError) {
-      console.error("Subscription creation error:", subscriptionError)
-      // Don't fail the signup if subscription creation fails
-    }
+    console.log("User created successfully:", authData.user.id)
 
     return NextResponse.json({
       message: "User created successfully. Please check your email to verify your account.",
