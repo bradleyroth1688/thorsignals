@@ -15,7 +15,7 @@ export default function TermsAndConditionsPage() {
                 </div>
 
                 {/* Content Section */}
-                <div className="container px-4 md:px-6 mx-auto max-w-5xl relative z-10 flex flex-col items-center">
+                <div className="container px-4 md:px-6 mx-auto max-w-6xl relative z-10 flex flex-col items-center">
                     {/* Badge */}
                     <div className="our-tracker mb-6">
                         <div className="our-tracker1">
@@ -42,7 +42,7 @@ export default function TermsAndConditionsPage() {
 
                     {/* Terms Content Card */}
                     <div className="w-full pt-[50px] border-t border-t-white">
-                        <div className="w-full max-w-5xl bg-gray-900 to-black/50 border border-gray-800 rounded-3xl p-8 md:p-12 backdrop-blur-sm mb-16">
+                        <div className="w-full max-w-6xl bg-[#070708] border border-[#0e122e] rounded-3xl p-8 md:p-12 backdrop-blur-sm mb-16">
                             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                                 TERMS AND CONDITIONS
                             </h2>

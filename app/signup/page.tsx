@@ -22,6 +22,7 @@ export default function SignUpPage() {
     firstName: "",
     lastName: "",
     email: "",
+    tradingviewUsername: "",
     password: "",
     confirmPassword: "",
     plan: "thor",
@@ -66,6 +67,7 @@ export default function SignUpPage() {
           password: formData.password,
           firstName: formData.firstName,
           lastName: formData.lastName,
+          tradingviewUsername: formData.tradingviewUsername,
           plan: formData.plan,
         }),
       })
@@ -207,6 +209,22 @@ export default function SignUpPage() {
                   required
                   className="h-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="tradingviewUsername" className="text-sm text-gray-300">
+                  TradingView Username
+                </Label>
+                <Input
+                  id="tradingviewUsername"
+                  type="text"
+                  placeholder="your_tradingview_username"
+                  value={formData.tradingviewUsername}
+                  onChange={(e) => setFormData({ ...formData, tradingviewUsername: e.target.value })}
+                  required
+                  className="h-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                />
+                <p className="text-xs text-gray-400">Enter your TradingView username for signal access</p>
               </div>
 
               <div className="space-y-2">

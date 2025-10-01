@@ -1,28 +1,47 @@
 import { createServerClient } from "@/lib/supabase/server"
 import { getBaseUrl } from "@/lib/utils/site-config"
 import { type NextRequest, NextResponse } from "next/server"
+import { cookies } from "next/headers"
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import type { Database } from "@/lib/supabase/database.types"
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, firstName, lastName } = await request.json()
+    const { email, password, firstName, lastName, tradingviewUsername } = await request.json()
 
-    if (!email || !password || !firstName || !lastName) {
+    if (!email || !password || !firstName || !lastName || !tradingviewUsername) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 })
     }
 
-    const supabase = await createServerClient()
+    // Use route handler client for API routes to properly handle cookies
+    const cookieStore = await cookies()
+    const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore })
     const baseUrl = getBaseUrl()
 
     // Check if email already exists in profiles table
     const { data: existingProfile, error: checkError } = await supabase
       .from("profiles")
-      .select("email")
+      .select("email, tradingview_username")
       .eq("email", email.toLowerCase())
       .single()
 
     if (existingProfile) {
       return NextResponse.json(
         { error: "An account with this email already exists. Please use a different email or try logging in." },
+        { status: 409 }
+      )
+    }
+
+    // Check if TradingView username already exists
+    const { data: existingTradingView, error: tvCheckError } = await supabase
+      .from("profiles")
+      .select("tradingview_username")
+      .eq("tradingview_username", tradingviewUsername)
+      .single()
+
+    if (existingTradingView) {
+      return NextResponse.json(
+        { error: "This TradingView username is already registered. Please use a different username or contact support." },
         { status: 409 }
       )
     }
@@ -71,6 +90,7 @@ export async function POST(request: NextRequest) {
         password: password, // Storing plain text password
         first_name: firstName,
         last_name: lastName,
+        tradingview_username: tradingviewUsername,
         is_admin: false, // Default to non-admin
       })
 
