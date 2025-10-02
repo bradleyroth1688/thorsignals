@@ -56,52 +56,146 @@ export default function SignUpPage() {
 
     setLoading(true)
 
+
+    //Check if email already exists in database
     try {
-      const response = await fetch("/api/auth/signup", {
+      const emailCheckResponse = await fetch("/api/auth/check-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: formData.email,
-          password: formData.password,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          tradingviewUsername: formData.tradingviewUsername,
-          plan: formData.plan,
         }),
       })
 
-      const data = await response.json()
+      const emailCheckData = await emailCheckResponse.json()
 
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to create account")
-      }
-
-      if (data.needsEmailVerification) {
-        setEmailSent(true)
+      if (emailCheckData.exists) {
+        const errorMsg = "An account with this email already exists. Please use a different email or try logging in."
+        setError(errorMsg)
         toast({
-          title: "Check your email!",
-          description: "We've sent you a verification link to complete your registration.",
+          title: "Error",
+          description: errorMsg,
+          variant: "destructive",
         })
-      } else {
-        toast({
-          title: "Success!",
-          description: "Account created successfully!",
-        })
-        router.push("/")
+        setLoading(false)
+        return
       }
     } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : "Failed to create account"
+      console.error("Email check error:", error)
+      const errorMsg = "Failed to verify email. Please try again."
       setError(errorMsg)
       toast({
         title: "Error",
         description: errorMsg,
         variant: "destructive",
       })
-    } finally {
       setLoading(false)
+      return
     }
+    try{
+     let customerID, metadata = { 
+      "email": (formData.email),
+      "password" : (formData.password),
+      "firstName" : (formData.firstName),
+      "lastName" : (formData.lastName),
+      "tradingviewUsername" : (formData.tradingviewUsername),
+      "plan_type": "Basic_plan" };
+    const customerResponse = await fetch("/api/stripe/create-customer", {
+      method: "POST",
+      body: JSON.stringify({ email: formData.email, name: formData.firstName + " " + formData.lastName, metadata: metadata }),
+    })
+    const customerData = await customerResponse.json()
+    customerID = customerData.customer.id;
+    console.log("customerID--------------",customerID);
+    let session_params = {
+      "customer": customerID,
+      "payment_method_types": ["card"],
+      "line_items": [
+        {
+          "price": process.env.NEXT_PUBLIC_STRIPE_BASIC_PLAN,
+          "quantity": 1,
+        }
+      ],
+      "mode": "subscription",
+      "success_url": `${process.env.NEXT_PUBLIC_SITE_URL}/confirm-email?email=${encodeURIComponent(formData.email)}`, 
+      "cancel_url": `${process.env.NEXT_PUBLIC_SITE_URL}/signup`,
+      "metadata": metadata,
+      "subscription_data": {
+        "metadata": metadata
+      }
+    }
+
+    const session = await fetch("/api/stripe/checkout-session", {
+      method: "POST",
+      body: JSON.stringify(session_params),
+    })
+    const sessionData = await session.json();
+    if (sessionData.session?.url) {
+      // Use window.location.href for external Stripe URLs
+      window.location.href = sessionData.session.url
+    } else {
+      throw new Error('No checkout URL received')
+    }
+
+  }
+  catch (error) {
+    console.error('Subscription error:', error);
+    toast({
+      title: "Error",
+      description: "Failed to process subscription. Please try again.",
+      variant: "destructive",
+    })
+  } finally {
+    setLoading(false)
+  }
+    // try {
+    //   const response = await fetch("/api/auth/signup", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       email: formData.email,
+    //       password: formData.password,
+    //       firstName: formData.firstName,
+    //       lastName: formData.lastName,
+    //       tradingviewUsername: formData.tradingviewUsername,
+    //       plan: formData.plan,
+    //     }),
+    //   })
+
+    //   const data = await response.json()
+
+    //   if (!response.ok) {
+    //     throw new Error(data.error || "Failed to create account")
+    //   }
+
+    //   if (data.needsEmailVerification) {
+    //     setEmailSent(true)
+    //     toast({
+    //       title: "Check your email!",
+    //       description: "We've sent you a verification link to complete your registration.",
+    //     })
+    //   } else {
+    //     toast({
+    //       title: "Success!",
+    //       description: "Account created successfully!",
+    //     })
+    //     router.push("/")
+    //   }
+    // } catch (error) {
+    //   const errorMsg = error instanceof Error ? error.message : "Failed to create account"
+    //   setError(errorMsg)
+    //   toast({
+    //     title: "Error",
+    //     description: errorMsg,
+    //     variant: "destructive",
+    //   })
+    // } finally {
+    //   setLoading(false)
+    // }
   }
 
 

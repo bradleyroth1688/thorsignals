@@ -32,7 +32,7 @@ export async function GET() {
       },
       email: {
         provider: "resend",
-        fromEmail: "noreply@primeaura.com",
+        fromEmail: "onboarding@resend.dev",
         fromName: "Prime Aura Asset Management",
         smtpHost: "",
         smtpPort: 587,
