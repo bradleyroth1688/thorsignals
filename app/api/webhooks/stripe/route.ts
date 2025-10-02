@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import type { Database } from "@/lib/supabase/database.types"
 import { cookies } from "next/headers"
-import { sendWelcomeEmail, sendPaymentNotificationEmail } from "@/lib/email"
+import { sendPaymentNotificationEmail } from "@/lib/email"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-08-27.basil",
@@ -162,12 +162,12 @@ export async function POST(req: Request) {
           console.log("✅ Account created successfully for:", customerEmail);
           
           // Send welcome email to user
-          const emailResult = await sendWelcomeEmail(customerEmail, metadata.firstName);
-          if (emailResult.success) {
-            console.log("✅ Welcome email sent successfully to:", customerEmail);
-          } else {
-            console.error("❌ Failed to send welcome email:", emailResult.error);
-          }
+          // const emailResult = await sendWelcomeEmail(customerEmail, metadata.firstName);
+          // if (emailResult.success) {
+          //   console.log("✅ Welcome email sent successfully to:", customerEmail);
+          // } else {
+          //   console.error("❌ Failed to send welcome email:", emailResult.error);
+          // }
           
           // Send payment notification to server email
           const notificationResult = await sendPaymentNotificationEmail(
