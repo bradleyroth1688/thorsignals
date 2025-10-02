@@ -2,6 +2,9 @@ import { createServerClient } from "@/lib/supabase/server"
 import { checkAdminAccess } from "@/lib/auth/admin"
 import { NextResponse } from "next/server"
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     const { isAdmin, error } = await checkAdminAccess()
