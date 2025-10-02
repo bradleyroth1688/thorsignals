@@ -188,7 +188,7 @@ export default function HomePage() {
             {/* Laptop Image */}
             <div className="relative w-full max-w-5xl mx-auto">
               <img
-                src="/computer.png"
+                src="/chart.png"
                 alt="Trading Platform Interface"
                 className="w-full h-auto rounded-2xl"
               />

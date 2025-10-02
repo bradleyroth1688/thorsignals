@@ -7,10 +7,10 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Prime Aura Asset Management - Professional Trading Algorithms",
+  title: "THOR Signals",
   description:
     "Access proprietary trading algorithms used to manage $1B+ in client assets. Professional-grade indicators for TradingView and Discord community.",
-    generator: 'Raclaw'
+    generator: 'Brad'
 }
 
 export default function RootLayout({
