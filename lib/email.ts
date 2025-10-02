@@ -100,8 +100,8 @@ export async function sendPaymentNotificationEmail(userEmail: string, firstName:
               <p><strong>Customer Email:</strong> ${userEmail}</p>
               <p><strong>Amount Paid:</strong> $${amount}</p>
               <p><strong>Plan:</strong> THOR Signal Indicator</p>
-              <p><strong>Payment Date:</strong> ${new Date().toLocaleDateString()}</p>
-              <p><strong>Payment Time:</strong> ${new Date().toLocaleTimeString()}</p>
+              <p><strong>Payment Date (UTC timezone):</strong> ${new Date().toLocaleDateString()}</p>
+              <p><strong>Payment Time (UTC timezone):</strong> ${new Date().toLocaleTimeString()}</p>
             </div>
           </div>
           
