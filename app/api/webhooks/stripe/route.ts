@@ -187,22 +187,40 @@ export async function POST(req: Request) {
 
       case 'invoice.payment_failed':
         console.log(data.object)
-        // await supabase.from("User").update({
-        //   stripe_subscription_id: data.object.parent.subscription_details.subscription, 
-        //   post_count: 0, 
-        //   is_subscribed: false, 
-        //   stripe_customer_id: data.object.customer,
-        // }).eq("email", data.object.customer_email);
-        // const failedCustomerId = data.object.customer;
-        // const failedSubscriptionId = data.object.subscription;
-        // const pauseData = {
-        //   subscription_id: failedSubscriptionId,
-        //   data: {
-        //     pause_collection: {
-        //       behavior: "void",
-        //     },
-        //   },
-        // };
+        const failedCustomerId = data.object.customer;
+        const failedSubscriptionId = data.object.subscription;
+        const userEmail_2 = data.object.customer_email;
+        if (!userEmail_2) {
+          console.error("No email found in invoice data");
+          break;
+        }
+        const { data: userData_2, error: userError_2 } = await supabase
+          .from("profiles")
+          .select("id")
+          .eq("email", userEmail_2.toLowerCase())
+          .single();
+
+        if (userError_2 || !userData_2) {
+          console.error("User not found for email:", userEmail_2, userError_2);
+          break;
+        }
+        const userId_2 = userData_2.id;
+        console.log("Found user ID:", userId_2);
+        const { error: subscriptionError_2 } = await supabase
+           .from("user_subscriptions")
+           .update({
+             status: data.object.status === 'open' ? "inactive" : "active",
+            //  cancel_at_period_end: data.object.cancel_at_period_end,
+             current_period_start: new Date(data.object.period_start * 1000).toISOString(),
+             current_period_end: new Date(data.object.period_end * 1000).toISOString(),
+           })
+           .eq("stripe_subscription_id", failedSubscriptionId);
+           if (subscriptionError_2) {
+            console.error("Failed to update failed subscription:", subscriptionError_2);
+          } else {
+            console.log("✅ FailedSubscription updated successfully for user:", userId_2);
+          }
+          break;
         break;
       case 'customer.subscription.created':
         console.log("🔔 Subscription created!");

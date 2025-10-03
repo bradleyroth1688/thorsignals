@@ -135,3 +135,61 @@ export async function sendPaymentNotificationEmail(userEmail: string, firstName:
     return { success: false, error };
   }
 }
+
+export async function sendContactEmail(payload: {
+  firstName: string
+  lastName: string
+  email: string
+  subject: string
+  message: string
+}) {
+  try {
+    // Basic email validation to surface client issues earlier
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailPattern.test(payload.email)) {
+      const error = new Error('Invalid email address format') as any
+      ;(error as any).statusCode = 422
+      throw error
+    }
+    if (!resend) {
+      console.log('Resend not configured, skipping contact email')
+      return { success: true, data: null }
+    }
+
+    const serverEmail = process.env.SERVER_EMAIL || 'admin@primeaura.com'
+
+    const { data, error } = await resend.emails.send({
+      from: 'Prime Aura Asset Management <onboarding@resend.dev>',
+      to: [serverEmail],
+      replyTo: `${payload.firstName} ${payload.lastName} <${payload.email}>`,
+      subject: `📬 Contact Form: ${payload.subject || 'New Message'} from ${payload.firstName} ${payload.lastName}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <h1 style="color: #7c3aed; font-size: 24px; margin: 0;">New Contact Message</h1>
+            <p style="color: #666; font-size: 14px;">Received via website contact form</p>
+          </div>
+          <div style="background: #0f172a; color: #e5e7eb; border: 1px solid #1f2937; padding: 16px; border-radius: 8px;">
+            <p><strong>Name:</strong> ${payload.firstName} ${payload.lastName}</p>
+            <p><strong>Email:</strong> ${payload.email}</p>
+            <p><strong>Subject:</strong> ${payload.subject}</p>
+            <p><strong>Message:</strong></p>
+            <div style="white-space: pre-wrap; background:#111827; padding:12px; border-radius:8px; border:1px solid #1f2937;">${payload.message}</div>
+          </div>
+          <p style="color:#6b7280; font-size:12px; text-align:center; margin-top:16px;">© 2025 THOR Signals</p>
+        </div>
+      `,
+    })
+
+    if (error) {
+      console.error('Failed to send contact email:', error)
+      return { success: false, error }
+    }
+
+    console.log('Contact email sent to:', serverEmail)
+    return { success: true, data }
+  } catch (error) {
+    console.error('Error sending contact email:', error)
+    return { success: false, error }
+  }
+}
