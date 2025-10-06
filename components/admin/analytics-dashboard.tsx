@@ -74,7 +74,9 @@ export function AnalyticsDashboard() {
     )
   }
 
-  const { overview, userGrowth, completionRates } = analytics
+  const overview = analytics.overview
+  const userGrowth = analytics.userGrowth || {}
+  const completionRates = analytics.completionRates || {}
 
   // Calculate growth percentage (mock calculation)
   const userGrowthArray = Object.values(userGrowth)

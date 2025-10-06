@@ -19,30 +19,35 @@ interface User {
 
 export function UsersTable() {
   const [users, setUsers] = useState<User[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [initialLoad, setInitialLoad] = useState(true)
   const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("/api/admin/users")
-        const data = await response.json()
-        setUsers(data.users || [])
-      } catch (error) {
-        console.error("Error fetching users:", error)
-      } finally {
-        setLoading(false)
+    if (initialLoad) {
+      const fetchUsers = async () => {
+        try {
+          setLoading(true)
+          const response = await fetch("/api/admin/users")
+          const data = await response.json()
+          setUsers(data.users || [])
+        } catch (error) {
+          console.error("Error fetching users:", error)
+        } finally {
+          setLoading(false)
+          setInitialLoad(false)
+        }
       }
-    }
 
-    fetchUsers()
-  }, [])
+      fetchUsers()
+    }
+  }, [initialLoad])
 
   const filteredUsers = users.filter((user) =>
     `${user.first_name} ${user.last_name} ${user.email}`.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  if (loading) {
+  if (loading && initialLoad) {
     return (
       <Card>
         <CardHeader>

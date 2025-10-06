@@ -13,11 +13,13 @@ import {
   MessageSquare,
   Menu,
   X,
+  CreditCard,
 } from "lucide-react"
 
 const navigation = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
-  { name: "Subscribers", href: "/admin/users", icon: Users },
+  { name: "Users", href: "/admin/users", icon: Users },
+  { name: "Subscriptions", href: "/admin/subscriptions", icon: CreditCard },
   { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { name: "Discord", href: "/admin/community", icon: MessageSquare },
   { name: "Settings", href: "/admin/settings", icon: Settings },
