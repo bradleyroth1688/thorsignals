@@ -157,9 +157,9 @@ export function NotificationsManagement() {
           <h2 className="text-2xl font-bold text-gray-900">Notifications</h2>
           <p className="text-gray-600">View all system notifications and user activities</p>
         </div> */}
-        <Badge variant="secondary" className="text-sm">
+        {/* <Badge variant="secondary" className="text-sm">
           {notifications.length} notifications
-        </Badge>
+        </Badge> */}
       </div>
 
       <div className="space-y-4">
