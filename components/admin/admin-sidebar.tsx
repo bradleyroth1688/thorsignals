@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import {
@@ -23,13 +23,70 @@ const navigation = [
   { name: "Subscriptions", href: "/admin/subscriptions", icon: CreditCard },
   { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { name: "Discord", href: "/admin/community", icon: MessageSquare },
-  { name: "Notifications", href: "/admin/notifications", icon: Bell },
+  { name: "Notifications", href: "/admin/notifications", icon: Bell, hasNotification: true },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ]
 
 export function AdminSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [unreadCount, setUnreadCount] = useState(0)
+  const [optimisticPath, setOptimisticPath] = useState<string | null>(null)
+
+  // Fetch unread notifications count
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await fetch('/api/notifications?unread=true')
+        if (response.ok) {
+          const data = await response.json()
+          setUnreadCount(data.unreadCount || 0)
+        }
+      } catch (error) {
+        console.error('Failed to fetch unread notifications count:', error)
+      }
+    }
+
+    fetchUnreadCount()
+    
+    // Poll for updates every 30 seconds
+    const interval = setInterval(fetchUnreadCount, 30000)
+    
+    // Listen for notification read events to update immediately
+    const handleNotificationRead = () => {
+      fetchUnreadCount()
+    }
+    window.addEventListener('notification-read', handleNotificationRead)
+    
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('notification-read', handleNotificationRead)
+    }
+  }, [])
+
+  // Prefetch all routes on mount for instant navigation
+  useEffect(() => {
+    navigation.forEach((item) => {
+      router.prefetch(item.href)
+    })
+  }, [router])
+
+  // Reset optimistic path when actual pathname changes
+  useEffect(() => {
+    if (optimisticPath && pathname === optimisticPath) {
+      setOptimisticPath(null)
+    }
+  }, [pathname, optimisticPath])
+
+  const handleNavClick = (href: string, e: React.MouseEvent) => {
+    e.preventDefault()
+    // Optimistic update: change active tab immediately
+    setOptimisticPath(href)
+    setSidebarOpen(false)
+    // Then navigate
+    router.push(href)
+  }
 
   return (
     <>
@@ -69,19 +126,28 @@ export function AdminSidebar() {
         <nav className="mt-8">
           <div className="px-4 space-y-2">
             {navigation.map((item) => {
-              const isActive = pathname === item.href
+              // Use optimistic path if set, otherwise use actual pathname
+              const currentPath = optimisticPath || pathname
+              const isActive = currentPath === item.href
+              const showBadge = item.hasNotification && unreadCount > 0
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={() => setSidebarOpen(false)}
+                  onClick={(e) => handleNavClick(item.href, e)}
                   className={cn(
-                    "flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors",
+                    "flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-150 relative",
                     isActive ? "bg-purple-600 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white",
                   )}
                 >
                   <item.icon className="mr-3 h-5 w-5" />
                   {item.name}
+                  {showBadge && (
+                    <span className="ml-auto flex h-2 w-2 relative">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                    </span>
+                  )}
                 </Link>
               )
             })}

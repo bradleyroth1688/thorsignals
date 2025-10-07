@@ -62,6 +62,19 @@ export function NotificationsManagement() {
   }
 
   const markAsViewed = async (notificationId: string) => {
+    // Optimistic update: Update UI immediately
+    setNotifications(prev => 
+      prev.map(notification => 
+        notification.id === notificationId 
+          ? { ...notification, viewed: true }
+          : notification
+      )
+    )
+
+    // Trigger event to update badge count in sidebar
+    window.dispatchEvent(new CustomEvent('notification-read'))
+
+    // Then sync with backend
     try {
       const response = await fetch('/api/notifications', {
         method: 'PATCH',
@@ -73,20 +86,31 @@ export function NotificationsManagement() {
 
       const data = await response.json()
 
-      if (data.success) {
-        // Update the notification in the local state
+      if (!data.success) {
+        console.error('Failed to mark notification as viewed:', data.error)
+        // Rollback on failure
         setNotifications(prev => 
           prev.map(notification => 
             notification.id === notificationId 
-              ? { ...notification, viewed: true }
+              ? { ...notification, viewed: false }
               : notification
           )
         )
-      } else {
-        console.error('Failed to mark notification as viewed:', data.error)
+        // Trigger event to revert badge count
+        window.dispatchEvent(new CustomEvent('notification-read'))
       }
     } catch (error) {
       console.error('Error marking notification as viewed:', error)
+      // Rollback on error
+      setNotifications(prev => 
+        prev.map(notification => 
+          notification.id === notificationId 
+            ? { ...notification, viewed: false }
+            : notification
+        )
+      )
+      // Trigger event to revert badge count
+      window.dispatchEvent(new CustomEvent('notification-read'))
     }
   }
 

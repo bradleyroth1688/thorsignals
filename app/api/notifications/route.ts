@@ -53,9 +53,32 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
+    const unreadOnly = searchParams.get('unread') === 'true'
     const limit = parseInt(searchParams.get('limit') || '10')
     const offset = parseInt(searchParams.get('offset') || '0')
 
+    // If requesting unread count only
+    if (unreadOnly) {
+      const { count, error } = await supabase
+        .from('notifications')
+        .select('*', { count: 'exact', head: true })
+        .eq('viewed', false)
+
+      if (error) {
+        console.error('Error fetching unread count:', error)
+        return NextResponse.json(
+          { error: 'Failed to fetch unread count' },
+          { status: 500 }
+        )
+      }
+
+      return NextResponse.json({ 
+        success: true, 
+        unreadCount: count || 0 
+      })
+    }
+
+    // Regular fetch all notifications
     const { data, error } = await supabase
       .from('notifications')
       .select('*')
