@@ -17,12 +17,13 @@ export async function middleware(request: NextRequest) {
     error,
   } = await supabase.auth.getSession()
 
-  console.log("Middleware - Session check:", {
-    hasSession: !!session,
-    userId: session?.user?.id,
-    path: request.nextUrl.pathname,
-    error: error?.message,
-  })
+  // Only log errors that are not "refresh token not found" (expected for non-logged-in users)
+  if (error && !error.message.includes("Invalid Refresh Token") && !error.message.includes("Refresh Token Not Found")) {
+    console.log("Middleware - Session error:", {
+      path: request.nextUrl.pathname,
+      error: error.message,
+    })
+  }
 
   // Allow access to admin login page without authentication
   if (request.nextUrl.pathname === "/admin-login") {

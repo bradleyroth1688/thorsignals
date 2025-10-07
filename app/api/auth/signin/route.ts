@@ -1,5 +1,7 @@
-import { supabase } from "@/lib/supabase/admin"
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import type { Database } from "@/lib/supabase/database.types"
 import { type NextRequest, NextResponse } from "next/server"
+import { cookies } from "next/headers"
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,6 +10,10 @@ export async function POST(request: NextRequest) {
     if (!email || !password) {
       return NextResponse.json({ error: "Email and password are required" }, { status: 400 })
     }
+
+    // Use route handler client to properly set session cookies
+    const cookieStore = await cookies()
+    const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore })
 
     // Sign in the user
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
