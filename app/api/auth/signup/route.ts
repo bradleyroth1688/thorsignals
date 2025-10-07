@@ -1,9 +1,6 @@
-import { createServerClient } from "@/lib/supabase/server"
+import { supabase } from "@/lib/supabase/admin"
 import { getBaseUrl } from "@/lib/utils/site-config"
 import { type NextRequest, NextResponse } from "next/server"
-import { cookies } from "next/headers"
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
-import type { Database } from "@/lib/supabase/database.types"
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,9 +10,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 })
     }
 
-    // Use route handler client for API routes to properly handle cookies
-    const cookieStore = await cookies()
-    const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore })
     const baseUrl = getBaseUrl()
 
     // Check if email already exists in profiles table
