@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
-import type { Database } from "@/lib/supabase/database.types"
-import { cookies } from "next/headers"
+import { supabase } from "@/lib/supabase/admin"
 import { sendPaymentNotificationEmail } from "@/lib/email"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -14,9 +12,6 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 // const endpointSecret = "whsec_567df1c5518fec2aeb599299c96d33b3d7ac1935a15d7f8ffaf59b371dfdf386";
 
 export async function POST(req: Request) {
-  const cookieStore = await cookies()
-  const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore })
-
   const body = await req.text();
   const signature = req.headers.get('stripe-signature');
 
@@ -106,7 +101,7 @@ export async function POST(req: Request) {
             .eq("user_id", existingUser.id);
           break;
         }
-
+        console.log("create new user account")
         // Create new user account
         const { data: authData, error: authError } = await supabase.auth.signUp({
           email: customerEmail,
@@ -180,6 +175,23 @@ export async function POST(req: Request) {
             console.log("✅ Payment notification sent successfully to server email");
           } else {
             console.error("❌ Failed to send payment notification:", notificationResult.error);
+          }
+
+          // Insert notification into database
+          const { error: notificationError } = await supabase
+            .from('notifications')
+            .insert([
+              {
+                title: `New $99 Payment Received`,
+                content: `User ${metadata.firstName} ${metadata.lastName} (${customerEmail}) has successfully paid $99 and signed up for the service.`,
+                viewed: false
+              }
+            ]);
+
+          if (notificationError) {
+            console.error("❌ Failed to insert payment notification:", notificationError);
+          } else {
+            console.log("✅ Payment notification inserted into database");
           }
         }
 

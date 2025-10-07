@@ -53,6 +53,41 @@ export interface Database {
           updated_at?: string
         }
       }
+      profiles: {
+        Row: {
+          id: string
+          email: string
+          password: string
+          first_name: string
+          last_name: string
+          tradingview_username: string
+          is_admin: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          email: string
+          password: string
+          first_name: string
+          last_name: string
+          tradingview_username: string
+          is_admin?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          password?: string
+          first_name?: string
+          last_name?: string
+          tradingview_username?: string
+          is_admin?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
       subscription_plans: {
         Row: {
           id: string
@@ -306,6 +341,29 @@ export interface Database {
           status?: string
           created_at?: string
           updated_at?: string
+        }
+      }
+      notifications: {
+        Row: {
+          id: string
+          created_at: string
+          title: string
+          content: string
+          viewed: boolean
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          title: string
+          content: string
+          viewed?: boolean
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          title?: string
+          content?: string
+          viewed?: boolean
         }
       }
     }

@@ -166,7 +166,9 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="mx-auto w-[200px] rounded-xl h-[50px] gain_instant_access">Gain Instant Access</div>
+            <Link href="/signup" className="w-full sm:w-auto">
+                  <div className="mx-auto w-[200px] rounded-xl h-[50px] gain_instant_access">Gain Instant Access</div>
+            </Link>
           </div>
         </section>
         <div className="w-full flex items-center justify-center">

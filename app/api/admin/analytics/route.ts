@@ -1,4 +1,4 @@
-import { createServerClient } from "@/lib/supabase/server"
+import { supabase } from "@/lib/supabase/admin"
 import { checkAdminAccess } from "@/lib/auth/admin"
 import { NextResponse } from "next/server"
 
@@ -12,8 +12,6 @@ export async function GET() {
     if (!isAdmin) {
       return NextResponse.json({ error: error || "Admin access required" }, { status: 403 })
     }
-
-    const supabase = await createServerClient()
 
     // Get user growth data (last 30 days)
     const thirtyDaysAgo = new Date()

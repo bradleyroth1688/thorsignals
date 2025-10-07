@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { sendContactEmail } from '@/lib/email'
+import { supabase } from "@/lib/supabase/admin"
 
 export async function POST(request: Request) {
   try {
@@ -16,6 +17,23 @@ export async function POST(request: Request) {
       const status = raw.statusCode && Number.isInteger(raw.statusCode) ? raw.statusCode : 500
       const message = raw?.message || 'Failed to send email'
       return NextResponse.json({ error: message }, { status })
+    }
+
+    // Insert notification into database
+    const { error: notificationError } = await supabase
+      .from('notifications')
+      .insert([
+        {
+          title: `New Contact Form Message`,
+          content: `User ${firstName} ${lastName} (${email}) sent a message with subject: "${subject || 'No subject'}". Message: ${message.substring(0, 200)}${message.length > 200 ? '...' : ''}`,
+          viewed: false
+        }
+      ]);
+
+    if (notificationError) {
+      console.error("❌ Failed to insert contact notification:", notificationError);
+    } else {
+      console.log("✅ Contact notification inserted into database");
     }
 
     return NextResponse.json({ ok: true })

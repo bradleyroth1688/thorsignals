@@ -14,6 +14,7 @@ import {
   Menu,
   X,
   CreditCard,
+  Bell,
 } from "lucide-react"
 
 const navigation = [
@@ -22,6 +23,7 @@ const navigation = [
   { name: "Subscriptions", href: "/admin/subscriptions", icon: CreditCard },
   { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { name: "Discord", href: "/admin/community", icon: MessageSquare },
+  { name: "Notifications", href: "/admin/notifications", icon: Bell },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ]
 
