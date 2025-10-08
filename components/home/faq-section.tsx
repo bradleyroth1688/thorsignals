@@ -201,14 +201,14 @@ export function FAQSection() {
         {/* Discord CTA */}
         <div className="flex items-center justify-center gap-4 flex-wrap">
           <div className="flex items-center gap-2 text-white">
-            <MessageCircle className="h-5 w-5" />
-            <span className="text-base md:text-lg">Have More Questions?</span>
+            {/* <MessageCircle className="h-5 w-5" /> */}
+            {/* <span className="text-base md:text-lg">Have More Questions?</span> */}
           </div>
-          <Link href="https://discord.gg/your-discord-link" target="_blank">
+          {/* <Link href="https://discord.gg/your-discord-link" target="_blank">
             <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 rounded-xl text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300">
               Join Our Free Discord
             </button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </section>
