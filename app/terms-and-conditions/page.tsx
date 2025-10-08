@@ -10,7 +10,7 @@ export default function TermsAndConditionsPage() {
             <section className="w-full min-h-screen relative overflow-hidden flex flex-col pt-5">
                 <div className="container mx-auto max-w-[600px] max-h-[65px] flex justify-center mb-28  ">
                     <div className="flex items-center justify-center header-container rounded-2xl border border-gray-800 px-8 py-4 hover:border-gray-700 transition-colors">
-                        <img src="/ico.png" alt="Prime Aura Asset Management" className="h-10 w-auto object-contain" />
+                        <img src="/ico.png" alt="THOR Signals" className="h-10 w-auto object-contain" />
                     </div>
                 </div>
 
@@ -61,7 +61,7 @@ export default function TermsAndConditionsPage() {
                         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                             {/* Logo */}
                             <div className="flex items-center">
-                                <img src="/ico.png" alt="Prime Aura" className="w-8 h-8 object-contain" />
+                                <img src="/ico.png" alt="THOR Signals" className="w-8 h-8 object-contain" />
                             </div>
 
                             {/* Navigation Links */}

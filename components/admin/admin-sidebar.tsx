@@ -18,13 +18,13 @@ import {
 } from "lucide-react"
 
 const navigation = [
-  { name: "Overview", href: "/admin", icon: LayoutDashboard },
+ // { name: "Overview", href: "/admin", icon: LayoutDashboard },
   { name: "Users", href: "/admin/users", icon: Users },
   { name: "Subscriptions", href: "/admin/subscriptions", icon: CreditCard },
   { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
-  { name: "Discord", href: "/admin/community", icon: MessageSquare },
+ // { name: "Discord", href: "/admin/community", icon: MessageSquare },
   { name: "Notifications", href: "/admin/notifications", icon: Bell, hasNotification: true },
-  { name: "Settings", href: "/admin/settings", icon: Settings },
+ // { name: "Settings", href: "/admin/settings", icon: Settings }, 
 ]
 
 export function AdminSidebar() {
@@ -110,7 +110,7 @@ export function AdminSidebar() {
         )}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-800">
-          <Link href="/admin" className="text-xl font-bold text-purple-400">
+          <Link href="/admin/users" className="text-xl font-bold text-purple-400">
             Admin Panel
           </Link>
           <Button

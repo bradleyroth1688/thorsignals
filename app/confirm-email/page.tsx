@@ -77,7 +77,7 @@ function ConfirmEmailContent() {
         <div className="text-center">
           <Link href="/" className="flex items-center justify-center mb-4 sm:mb-6">
             <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Prime Aura Asset Management
+            THOR Signals
             </span>
           </Link>
         </div>

@@ -79,7 +79,7 @@ export async function sendPaymentNotificationEmail(userEmail: string, firstName:
     const serverEmail = process.env.SERVER_EMAIL || 'admin@primeaura.com';
     
     const { data, error } = await resend.emails.send({
-      from: 'Prime Aura Asset Management <onboarding@resend.dev>',
+      from: 'THOR Signals <onboarding@resend.dev>',
       to: [serverEmail],
       subject: `💰 New Payment Received - $${amount} from ${firstName} ${lastName}`,
       html: `
@@ -116,8 +116,8 @@ export async function sendPaymentNotificationEmail(userEmail: string, firstName:
           </div>
           
           <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px;">
-            <p>This is an automated notification from Prime Aura Asset Management.</p>
-            <p>© 2025 Prime Aura Asset Management. All rights reserved.</p>
+            <p>This is an automated notification from THOR Signals.</p>
+            <p>© 2025 THOR Signals. All rights reserved.</p>
           </div>
         </div>
       `,
@@ -159,7 +159,7 @@ export async function sendContactEmail(payload: {
     const serverEmail = process.env.SERVER_EMAIL || 'admin@primeaura.com'
 
     const { data, error } = await resend.emails.send({
-      from: 'Prime Aura Asset Management <onboarding@resend.dev>',
+      from: 'THOR Signals <onboarding@resend.dev>',
       to: [serverEmail],
       replyTo: `${payload.firstName} ${payload.lastName} <${payload.email}>`,
       subject: `📬 Contact Form: ${payload.subject || 'New Message'} from ${payload.firstName} ${payload.lastName}`,

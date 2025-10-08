@@ -28,6 +28,16 @@ export async function GET() {
       .from("profiles")
       .select("*", { count: "exact", head: true })
 
+    // Get active subscriptions from user_subscriptions table
+    const { count: activeSubscriptionsCount, error: subscriptionsError } = await supabase
+      .from("user_subscriptions")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "active")
+
+    // Calculate monthly revenue (single Thor Signals plan)
+    const THOR_SIGNALS_PRICE = 99 // Update this to match your actual plan price
+    const monthlyRevenue = (activeSubscriptionsCount || 0) * THOR_SIGNALS_PRICE
+
     // Process user growth data by day
     const userGrowthByDay =
       userGrowth?.reduce((acc: any, user) => {
@@ -39,9 +49,10 @@ export async function GET() {
     const analytics = {
       overview: {
         totalUsers: totalUsers || 0,
+        activeSubscriptions: activeSubscriptionsCount || 0,
+        monthlyRevenue: monthlyRevenue,
       },
       userGrowth: userGrowthByDay,
-      recentActivity: userGrowth?.slice(-10) || [],
     }
 
     return NextResponse.json({ analytics })

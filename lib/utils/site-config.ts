@@ -1,7 +1,7 @@
 import { getSiteUrl } from "./env"
 
 export const siteConfig = {
-  name: "Prime Aura Asset Management",
+  name: "THOR Signals",
   description: "Professional Trading Algorithms - Access proprietary indicators used to manage $1B+ in client assets",
   url: getSiteUrl(),
   ogImage: "/og-image.png",

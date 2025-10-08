@@ -2,22 +2,17 @@
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
 import { formatCurrency, formatDate } from "@/lib/utils/format"
-import { Users, DollarSign, BookOpen, Calendar, TrendingUp, Activity } from "lucide-react"
+import { Users, DollarSign, TrendingUp } from "lucide-react"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 
 interface AnalyticsData {
   overview: {
     totalUsers: number
     activeSubscriptions: number
-    totalCourses: number
-    totalEvents: number
     monthlyRevenue: number
   }
   userGrowth: Record<string, number>
-  completionRates: Record<string, { total: number; completed: number }>
-  recentActivity: Array<{ created_at: string }>
 }
 
 export function AnalyticsDashboard() {
@@ -48,8 +43,8 @@ export function AnalyticsDashboard() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {[...Array(4)].map((_, i) => (
+        <div className="grid gap-4 md:grid-cols-2">
+          {[...Array(2)].map((_, i) => (
             <Card key={i}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
@@ -76,7 +71,6 @@ export function AnalyticsDashboard() {
 
   const overview = analytics.overview
   const userGrowth = analytics.userGrowth || {}
-  const completionRates = analytics.completionRates || {}
 
   // Calculate growth percentage (mock calculation)
   const userGrowthArray = Object.values(userGrowth)
@@ -84,10 +78,18 @@ export function AnalyticsDashboard() {
   const previousGrowth = userGrowthArray.slice(-14, -7).reduce((a, b) => a + b, 0)
   const growthPercentage = previousGrowth > 0 ? Math.round(((recentGrowth - previousGrowth) / previousGrowth) * 100) : 0
 
+  // Prepare data for chart
+  const chartData = Object.entries(userGrowth)
+    .slice(-30)
+    .map(([date, count]) => ({
+      date: formatDate(date),
+      users: count,
+    }))
+
   return (
     <div className="space-y-6">
       {/* Overview Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Users</CardTitle>
@@ -113,89 +115,50 @@ export function AnalyticsDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{overview.activeSubscriptions}</div>
-            <p className="text-xs text-muted-foreground">{formatCurrency(overview.monthlyRevenue)} monthly revenue</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Courses</CardTitle>
-            <BookOpen className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{overview.totalCourses}</div>
-            <p className="text-xs text-muted-foreground">Available for students</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Events</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{overview.totalEvents}</div>
-            <p className="text-xs text-muted-foreground">Scheduled events</p>
+            <p className="text-xs text-muted-foreground">{formatCurrency(overview.monthlyRevenue || 0)} monthly revenue</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Course Completion Rates */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Activity className="h-5 w-5" />
-            Course Completion Rates
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {Object.entries(completionRates).map(([courseTitle, data]) => {
-              const completionRate = data.total > 0 ? (data.completed / data.total) * 100 : 0
-              return (
-                <div key={courseTitle} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">{courseTitle}</span>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs">
-                        {data.completed}/{data.total}
-                      </Badge>
-                      <span className="text-sm text-muted-foreground">{Math.round(completionRate)}%</span>
-                    </div>
-                  </div>
-                  <Progress value={completionRate} className="h-2" />
-                </div>
-              )
-            })}
-            {Object.keys(completionRates).length === 0 && (
-              <p className="text-sm text-muted-foreground text-center py-4">No course completion data available</p>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* User Growth Chart (Simple visualization) */}
+      {/* User Growth Chart */}
       <Card>
         <CardHeader>
           <CardTitle>User Growth (Last 30 Days)</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            {Object.entries(userGrowth)
-              .slice(-10)
-              .map(([date, count]) => (
-                <div key={date} className="flex items-center justify-between">
-                  <span className="text-sm">{formatDate(date)}</span>
-                  <div className="flex items-center gap-2">
-                    <div className="bg-blue-500 h-2 rounded" style={{ width: `${Math.max(count * 10, 4)}px` }}></div>
-                    <span className="text-sm font-medium">{count}</span>
-                  </div>
-                </div>
-              ))}
-            {Object.keys(userGrowth).length === 0 && (
-              <p className="text-sm text-muted-foreground text-center py-4">No user growth data available</p>
-            )}
-          </div>
+          {chartData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis 
+                  dataKey="date" 
+                  className="text-xs"
+                  tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                />
+                <YAxis 
+                  className="text-xs"
+                  tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '6px'
+                  }}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="users" 
+                  stroke="hsl(var(--primary))" 
+                  strokeWidth={2}
+                  dot={{ fill: 'hsl(var(--primary))', r: 4 }}
+                  activeDot={{ r: 6 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            <p className="text-sm text-muted-foreground text-center py-8">No user growth data available</p>
+          )}
         </CardContent>
       </Card>
     </div>

@@ -13,7 +13,7 @@ export async function GET() {
     // In production, you'd store these in a settings table
     const settings = {
       general: {
-        siteName: "Prime Aura Asset Management",
+        siteName: "THOR Signals",
         siteDescription: "Professional Trading Algorithms for Institutional-Grade Performance",
         maintenanceMode: false,
         registrationEnabled: true,
@@ -33,7 +33,7 @@ export async function GET() {
       email: {
         provider: "resend",
         fromEmail: "onboarding@resend.dev",
-        fromName: "Prime Aura Asset Management",
+        fromName: "THOR Signals",
         smtpHost: "",
         smtpPort: 587,
       },
