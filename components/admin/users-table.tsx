@@ -104,8 +104,8 @@ export function UsersTable() {
                     <p className="font-medium">
                       {user.first_name} {user.last_name}
                     </p>
-                    <p className="text-sm text-gray-500">{user.email}</p>
-                    <p className="text-sm text-gray-500">{user.tradingview_username}</p>
+                    <p className="text-sm text-gray-500">email: {user.email}</p>
+                    <p className="text-sm text-gray-500">tradingview username: {user.tradingview_username}</p>
                     <p className="text-xs text-gray-400">Joined {formatDate(user.created_at)}</p>
                   </div>
                 </div>
