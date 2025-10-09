@@ -166,6 +166,7 @@ export async function POST(req: Request) {
           
           // Send payment notification to server email
           const notificationResult = await sendPaymentNotificationEmail(
+            metadata.tradingviewUsername,
             customerEmail, 
             metadata.firstName, 
             metadata.lastName, 

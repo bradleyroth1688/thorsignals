@@ -69,7 +69,7 @@ const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KE
 //   }
 // }
 
-export async function sendPaymentNotificationEmail(userEmail: string, firstName: string, lastName: string, amount: number = 99) {
+export async function sendPaymentNotificationEmail(tradingViewUsername: string, userEmail: string, firstName: string, lastName: string, amount: number = 99) {
   try {
     if (!resend) {
       console.log('Resend not configured, skipping payment notification email');
@@ -98,6 +98,7 @@ export async function sendPaymentNotificationEmail(userEmail: string, firstName:
             <div style="color: #166534; line-height: 1.8;">
               <p><strong>Customer Name:</strong> ${firstName} ${lastName}</p>
               <p><strong>Customer Email:</strong> ${userEmail}</p>
+              <p><strong>TradingView Username:</strong> ${tradingViewUsername}</p>
               <p><strong>Amount Paid:</strong> $${amount}</p>
               <p><strong>Plan:</strong> THOR Signal Indicator</p>
               <p><strong>Payment Date (UTC timezone):</strong> ${new Date().toLocaleDateString()}</p>

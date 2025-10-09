@@ -15,6 +15,7 @@ interface User {
   email: string
   created_at: string
   is_admin: boolean
+  tradingview_username?: string
 }
 
 export function UsersTable() {
@@ -104,6 +105,7 @@ export function UsersTable() {
                       {user.first_name} {user.last_name}
                     </p>
                     <p className="text-sm text-gray-500">{user.email}</p>
+                    <p className="text-sm text-gray-500">{user.tradingview_username}</p>
                     <p className="text-xs text-gray-400">Joined {formatDate(user.created_at)}</p>
                   </div>
                 </div>
