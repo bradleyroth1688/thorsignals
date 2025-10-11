@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useToast } from "@/hooks/use-toast"
+import { RedirectToastHandler } from "@/components/redirect-toast-handler"
 import { AlertCircle, ShieldCheck } from "lucide-react"
 
 export default function AdminLoginPage() {
@@ -41,21 +42,28 @@ export default function AdminLoginPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        // Check if user is not admin
-        if (data.isNotAdmin) {
+        // Check the reason for failure
+        if (data.reason === "account_deactivated") {
+          setError(data.error)
           toast({
-            title: "Access Denied",
-            description: "You do not have admin privileges. Redirecting to home page...",
+            title: "Account Deactivated",
+            description: data.error || "Your account has been deactivated by an administrator. Please contact support for assistance.",
             variant: "destructive",
           })
-          // Redirect to home page for non-admin users
-          setTimeout(() => {
-            router.push("/")
-          }, 2000)
           return
         }
 
-        // Invalid credentials
+        if (data.reason === "not_admin") {
+          setError(data.error)
+          toast({
+            title: "Access Denied",
+            description: data.error || "You don't have administrator privileges to access this area.",
+            variant: "destructive",
+          })
+          return
+        }
+
+        // Invalid credentials or other errors
         setError(data.error || "Invalid email or password")
         toast({
           title: "Sign In Failed",
@@ -104,6 +112,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black py-8 px-4 sm:px-6 lg:px-8">
+      <RedirectToastHandler />
       <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
           <a href="/" className="flex items-center justify-center mb-4 sm:mb-6">

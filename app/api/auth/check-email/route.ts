@@ -10,6 +10,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if email already exists in profiles table
+    // Note: We check ALL users regardless of flag status (including soft-deleted users)
+    // This prevents reusing emails from deleted accounts
     const { data: existingProfile, error: checkError } = await supabase
       .from("profiles")
       .select("email")

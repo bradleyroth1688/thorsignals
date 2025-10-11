@@ -78,10 +78,10 @@ export async function POST(req: Request) {
           break;
         }
 
-        // Check if user already exists
+        // Check if user already exists (including soft-deleted users)
         const { data: existingUser } = await supabase
           .from("profiles")
-          .select("id")
+          .select("id, flag")
           .eq("email", customerEmail.toLowerCase())
           .single();
 
@@ -130,7 +130,7 @@ export async function POST(req: Request) {
             last_name: metadata.lastName,
             tradingview_username: metadata.tradingviewUsername,
             is_admin: false,
-            
+            flag: true, // Active user by default
           });
 
         if (profileError) {
@@ -211,6 +211,7 @@ export async function POST(req: Request) {
           .from("profiles")
           .select("id")
           .eq("email", userEmail_2.toLowerCase())
+          .eq("flag", true)
           .single();
 
         if (userError_2 || !userData_2) {
@@ -259,6 +260,7 @@ export async function POST(req: Request) {
           .from("profiles")
           .select("id")
           .eq("email", userEmail_1.toLowerCase())
+          .eq("flag", true)
           .single();
 
         if (userError_1 || !userData_1) {

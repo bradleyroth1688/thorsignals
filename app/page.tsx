@@ -5,12 +5,14 @@ import { MobileNav } from "@/components/mobile-nav"
 import { DynamicPricing } from "@/components/home/dynamic-pricing"
 import { EnvCheck } from "@/components/env-check"
 import { FAQSection } from "@/components/home/faq-section"
+import { RedirectToastHandler } from "@/components/redirect-toast-handler"
 import { Users, BookOpen, Shield, Award, BarChart3, Target, Clock, DollarSign, MessageCircle } from "lucide-react"
 import "./page.css";
 
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-black">
+      <RedirectToastHandler />
       {/* Header with Logo Only */}
 
       <main className="flex-1 bg-[#020204]">

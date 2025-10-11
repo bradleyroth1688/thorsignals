@@ -27,44 +27,41 @@ export async function middleware(request: NextRequest) {
 
   // Allow access to admin login page without authentication
   if (request.nextUrl.pathname === "/admin-login") {
-    // If already authenticated, check if admin and redirect accordingly
-    if (session) {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("is_admin")
-        .eq("id", session.user.id)
-        .single()
-
-      if (profile?.is_admin) {
-        // Already an admin, redirect to admin panel
-        return NextResponse.redirect(new URL("/admin", request.url))
-      } else {
-        // Not an admin, redirect to home
-        return NextResponse.redirect(new URL("/", request.url))
-      }
-    }
-    // Not authenticated, allow access to login page
+    // Allow everyone to access login page
     return response
   }
 
   // Check if accessing admin routes
   if (request.nextUrl.pathname.startsWith("/admin")) {
+    // First check if user has a session
     if (!session) {
       console.log("Middleware - No session, redirecting to admin login")
       return NextResponse.redirect(new URL("/admin-login", request.url))
     }
 
-    // Check if user is admin
+    // User has session, now verify they are admin and account is active
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("is_admin")
+      .select("is_admin, flag")
       .eq("id", session.user.id)
       .single()
 
-    if (profileError || !profile?.is_admin) {
-      console.log("Middleware - Not admin, redirecting to home")
-      return NextResponse.redirect(new URL("/", request.url))
+    // Check if account is deactivated
+    if (profile?.flag === false) {
+      console.log("Middleware - Account deactivated, signing out")
+      await supabase.auth.signOut()
+      return NextResponse.redirect(new URL("/admin-login", request.url))
     }
+
+    // Check if user is not an admin
+    if (profileError || !profile?.is_admin) {
+      console.log("Middleware - Not admin, signing out")
+      await supabase.auth.signOut()
+      return NextResponse.redirect(new URL("/admin-login", request.url))
+    }
+
+    // User is authenticated admin with active account, allow access
+    return response
   }
 
   return response
@@ -74,11 +71,12 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
+     * - api (API routes handle auth separately)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public folder
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 }

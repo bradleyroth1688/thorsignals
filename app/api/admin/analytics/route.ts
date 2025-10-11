@@ -13,20 +13,22 @@ export async function GET() {
       return NextResponse.json({ error: error || "Admin access required" }, { status: 403 })
     }
 
-    // Get user growth data (last 30 days)
+    // Get user growth data (last 30 days, only active users with flag=true)
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
 
     const { data: userGrowth, error: userGrowthError } = await supabase
       .from("profiles")
       .select("created_at")
+      .eq("flag", true)
       .gte("created_at", thirtyDaysAgo.toISOString())
       .order("created_at", { ascending: true })
 
-    // Get total users
+    // Get total users (only active users with flag=true)
     const { count: totalUsers, error: totalUsersError } = await supabase
       .from("profiles")
       .select("*", { count: "exact", head: true })
+      .eq("flag", true)
 
     // Get active subscriptions from user_subscriptions table
     const { count: activeSubscriptionsCount, error: subscriptionsError } = await supabase

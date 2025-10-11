@@ -13,10 +13,11 @@ export async function GET() {
       return NextResponse.json({ error: error || "Admin access required" }, { status: 403 })
     }
 
-    // Fetch users with their profiles
+    // Fetch users with their profiles (only users with flag=true, i.e., not deleted)
     const { data: users, error: usersError } = await supabase
       .from("profiles")
       .select("*")
+      .eq("flag", true)
       .order("created_at", { ascending: false })
 
     if (usersError) {
@@ -68,6 +69,39 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ user: data })
   } catch (error) {
     console.error("Admin user update error:", error)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { isAdmin, error } = await checkAdminAccess()
+
+    if (!isAdmin) {
+      return NextResponse.json({ error: error || "Admin access required" }, { status: 403 })
+    }
+
+    const { userId } = await request.json()
+
+    if (!userId) {
+      return NextResponse.json({ error: "User ID is required" }, { status: 400 })
+    }
+
+    // Soft delete: set flag to false instead of actually deleting the user
+    const { data, error: updateError } = await supabase
+      .from("profiles")
+      .update({ flag: false })
+      .eq("id", userId)
+      .select()
+      .single()
+
+    if (updateError) {
+      return NextResponse.json({ error: updateError.message }, { status: 400 })
+    }
+
+    return NextResponse.json({ success: true, user: data })
+  } catch (error) {
+    console.error("Admin user delete error:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

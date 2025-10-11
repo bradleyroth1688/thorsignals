@@ -40,10 +40,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Failed to sign in. Please try again." }, { status: 401 })
     }
 
-    // Check if user is admin
+    // Check if user is admin and not deleted (flag=true)
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("is_admin")
+      .select("is_admin, flag")
       .eq("id", authData.user.id)
       .single()
 
@@ -52,10 +52,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Failed to fetch user profile" }, { status: 500 })
     }
 
+    // Check if user has been soft-deleted
+    if (profile?.flag === false) {
+      await supabase.auth.signOut()
+      return NextResponse.json({ 
+        error: "Your account has been deactivated by an administrator. Please contact support for assistance.",
+        reason: "account_deactivated"
+      }, { status: 403 })
+    }
+
     if (!profile?.is_admin) {
       // Sign out the user since they're not an admin
       await supabase.auth.signOut()
-      return NextResponse.json({ error: "Access denied. Admin privileges required.", isNotAdmin: true }, { status: 403 })
+      return NextResponse.json({ 
+        error: "Access denied. You don't have administrator privileges to access this area.",
+        reason: "not_admin"
+      }, { status: 403 })
     }
 
     return NextResponse.json({

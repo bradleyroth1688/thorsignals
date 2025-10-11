@@ -12,7 +12,8 @@ export async function POST(request: NextRequest) {
 
     const baseUrl = getBaseUrl()
 
-    // Check if email already exists in profiles table
+    // Check if email already exists in profiles table (including soft-deleted users)
+    // We check all users regardless of flag to prevent email reuse
     const { data: existingProfile, error: checkError } = await supabase
       .from("profiles")
       .select("email, tradingview_username")
@@ -26,7 +27,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check if TradingView username already exists
+    // Check if TradingView username already exists (including soft-deleted users)
+    // We check all users regardless of flag to prevent username reuse
     const { data: existingTradingView, error: tvCheckError } = await supabase
       .from("profiles")
       .select("tradingview_username")
@@ -49,7 +51,7 @@ export async function POST(request: NextRequest) {
           first_name: firstName,
           last_name: lastName,
         },
-        emailRedirectTo: `${baseUrl}/auth/callback?next=/`,
+        emailRedirectTo: `${baseUrl}/auth/callback?next=/welcome`,
       },
     })
 
@@ -86,6 +88,7 @@ export async function POST(request: NextRequest) {
         last_name: lastName,
         tradingview_username: tradingviewUsername,
         is_admin: false, // Default to non-admin
+        flag: true, // Active user by default
       })
 
     if (profileInsertError) {

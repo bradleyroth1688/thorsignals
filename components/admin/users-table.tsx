@@ -5,8 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { formatDate } from "@/lib/utils/format"
-import { Search, MoreHorizontal, Mail, Ban } from "lucide-react"
+import { Search, MoreHorizontal, Mail, Trash2 } from "lucide-react"
 
 interface User {
   id: string
@@ -16,6 +26,7 @@ interface User {
   created_at: string
   is_admin: boolean
   tradingview_username?: string
+  flag?: boolean
 }
 
 export function UsersTable() {
@@ -23,6 +34,9 @@ export function UsersTable() {
   const [loading, setLoading] = useState(false)
   const [initialLoad, setInitialLoad] = useState(true)
   const [searchTerm, setSearchTerm] = useState("")
+  const [deletingUserId, setDeletingUserId] = useState<string | null>(null)
+  const [userToDelete, setUserToDelete] = useState<User | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
     if (initialLoad) {
@@ -44,12 +58,50 @@ export function UsersTable() {
     }
   }, [initialLoad])
 
+  const handleDeleteClick = (user: User) => {
+    setUserToDelete(user)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (!userToDelete) return
+
+    try {
+      setIsDeleting(true)
+      setDeletingUserId(userToDelete.id)
+      const response = await fetch("/api/admin/users", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: userToDelete.id }),
+      })
+
+      if (response.ok) {
+        // Remove the user from the list
+        setUsers(users.filter((user) => user.id !== userToDelete.id))
+        setUserToDelete(null)
+      } else {
+        const data = await response.json()
+        alert(`Failed to delete user: ${data.error}`)
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error)
+      alert("Failed to delete user")
+    } finally {
+      setIsDeleting(false)
+      setDeletingUserId(null)
+    }
+  }
+
+  const handleCancelDelete = () => {
+    setUserToDelete(null)
+  }
+
   const filteredUsers = users.filter((user) =>
     `${user.first_name} ${user.last_name} ${user.email}`.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   if (loading && initialLoad) {
     return (
+      <>
       <Card>
         <CardHeader>
           <CardTitle>Users</CardTitle>
@@ -69,10 +121,12 @@ export function UsersTable() {
           </div>
         </CardContent>
       </Card>
+      </>
     )
   }
 
   return (
+    <>
     <Card>
       <CardHeader>
         <CardTitle>Users ({users.length})</CardTitle>
@@ -115,8 +169,13 @@ export function UsersTable() {
                     <Button size="sm" variant="ghost">
                       <Mail className="h-4 w-4" />
                     </Button>
-                    <Button size="sm" variant="ghost">
-                      <Ban className="h-4 w-4" />
+                    <Button 
+                      size="sm" 
+                      variant="ghost"
+                      onClick={() => handleDeleteClick(user)}
+                      disabled={deletingUserId === user.id}
+                    >
+                      <Trash2 className="h-4 w-4 text-red-500" />
                     </Button>
                     <Button size="sm" variant="ghost">
                       <MoreHorizontal className="h-4 w-4" />
@@ -129,5 +188,31 @@ export function UsersTable() {
         </div>
       </CardContent>
     </Card>
+
+    {/* Delete Confirmation Dialog */}
+    <AlertDialog open={!!userToDelete} onOpenChange={(open) => !open && handleCancelDelete()}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure you want to delete this user?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action will remove <strong>{userToDelete?.first_name} {userToDelete?.last_name}</strong> ({userToDelete?.email}) from the system.
+            The user data will be preserved in the database but marked as deleted.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={handleCancelDelete} disabled={isDeleting}>
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction 
+            onClick={handleConfirmDelete}
+            disabled={isDeleting}
+            className="bg-red-600 hover:bg-red-700"
+          >
+            {isDeleting ? "Deleting..." : "OK"}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  </>
   )
 }
