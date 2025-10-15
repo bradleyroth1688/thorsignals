@@ -56,7 +56,7 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6 sm:gap-10 mt-12 sm:mt-16 text-sm text-gray-300 px-4">
                 <div className="flex items-center justify-center gap-2">
                   <DollarSign className="h-4 w-4 text-green-400" />
-                  <span>$1B+ Assets Under Management</span>
+                  <span>$1B+ Assets Under Advisement</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <BarChart3 className="h-4 w-4 text-blue-400" />
@@ -83,7 +83,7 @@ export default function HomePage() {
                 THOR Signal Indicator
               </h2>
               <p className="max-w-4xl text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed">
-                Our proprietary THOR Signal Indicator is the same one we use to manage over $1 billion in client assets and two publicly traded ETFs. Get institutional-grade performance indicators that give you the edge of professional asset management.
+              Our proprietary THOR Signal Indicator is used to advise on over $1 billion in client assets and two publicly traded ETFs. Get institutional-grade performance indicators that give you the edge of professional asset management.
               </p>
             </div>
 
