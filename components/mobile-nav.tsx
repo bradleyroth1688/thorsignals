@@ -20,25 +20,32 @@ export function MobileNav() {
       <SheetContent side="right" className="w-[300px] bg-black text-white border-gray-800">
         <div className="flex flex-col space-y-4 mt-8">
           <Link
-            href="#about"
+            href="/"
             className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
             onClick={() => setOpen(false)}
           >
-            About Our Algorithms
+            Home
           </Link>
           <Link
-            href="#features"
+            href="/about"
             className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
             onClick={() => setOpen(false)}
           >
-            Features
+            About
           </Link>
           <Link
-            href="#pricing"
+            href="/pricing"
             className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
             onClick={() => setOpen(false)}
           >
             Pricing
+          </Link>
+          <Link
+            href="/login"
+            className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
+            onClick={() => setOpen(false)}
+          >
+            Login
           </Link>
           <div className="pt-4">
             <Link href="/signup" onClick={() => setOpen(false)}>

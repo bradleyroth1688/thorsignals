@@ -6,31 +6,61 @@ import { DynamicPricing } from "@/components/home/dynamic-pricing"
 import { EnvCheck } from "@/components/env-check"
 import { FAQSection } from "@/components/home/faq-section"
 import { RedirectToastHandler } from "@/components/redirect-toast-handler"
-import { Users, BookOpen, Shield, Award, BarChart3, Target, Clock, DollarSign, MessageCircle } from "lucide-react"
+import { Users, BookOpen, Shield, Award, BarChart3, Target, Clock, DollarSign, MessageCircle, Menu } from "lucide-react"
 import "./page.css";
 
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-black">
       <RedirectToastHandler />
-      {/* Header with Logo Only */}
+      {/* Header with Navigation */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <img src="/ico.png" alt="THOR Signals" className="h-8 w-8 object-contain" />
+            <span className="ml-2 text-lg font-bold text-white">THOR Signals</span>
+          </Link>
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link href="/" className="text-gray-300 hover:text-white transition-colors">
+              Home
+            </Link>
+            <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
+              About
+            </Link>
+            <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">
+              Pricing
+            </Link>
+            <Link href="/login" className="text-gray-300 hover:text-white transition-colors">
+              Login
+            </Link>
+            <Link href="/signup">
+              <Button className="bg-purple-600 hover:bg-purple-700 text-white">Get Started</Button>
+            </Link>
+          </nav>
+          
+          {/* Mobile Navigation */}
+          <div className="md:hidden">
+            <MobileNav />
+          </div>
+        </div>
+      </header>
 
-      <main className="flex-1 bg-[#020204]">
+      <main className="flex-1 bg-[#020204] pt-16">
         {/* Environment Check (Development Only) */}
         {/* <div className="container px-4 md:px-6 mx-auto pt-4">
           <EnvCheck />
         </div> */}
+        {/* Environment Check (Development Only) */}
+        {/* <div className="container px-4 md:px-6 mx-auto pt-4">
+          <EnvCheck />
+        </div> */}
+        
         {/* Hero Section */}
-        <section className="main-bacground w-full min-h-[80vh] relative overflow-hidden flex items-center flex-col pt-14 gap-40">
-          <div className="container mx-auto max-w-[406px] max-h-[65px] flex justify-center">
-            <Link href="/" className="flex items-center justify-center header-container rounded-2xl border border-gray-800 px-8 py-4 hover:border-gray-700 transition-colors">
-              <img src="/ico.png" alt="THOR Signals" className="h-10 w-auto object-contain" />
-            </Link>
-          </div>
-          {/* Background Pattern */}
-          {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900">
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23374151%22%20fill-opacity%3D%220.1%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
-          </div> */}
+        <section className="main-bacground w-full min-h-[80vh] relative overflow-hidden flex items-center justify-center pt-14">
+          {/* Clean hero content */}
           <div className="container px-4 md:px-6 mx-auto relative z-10 w-full">
             <div className="flex flex-col items-center space-y-6 text-center">
               <div className="space-y-4 max-w-4xl">
@@ -38,18 +68,13 @@ export default function HomePage() {
                   THOR Signal Indicator
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-300 text-base sm:text-lg md:text-xl px-4">
-                  Access our custom built proprietary THOR Signal Indicator used to manage our institutional clients and suite of ETFs. Get our indicator for Tradingview to use for your style of trading.
+                  The same proprietary indicator suite used to manage $1B+ in institutional assets and two publicly traded ETFs — now available on TradingView.
                 </p>
               </div>
               <div className="flex flex-col gap-6 mt-10 w-full max-w-md sm:max-w-none sm:flex-col">
                 <Link href="/signup" className="w-full sm:w-auto">
                   <div className="mx-auto w-[200px] rounded-xl h-[50px] gain_instant_access">Gain Instant Access</div>
                 </Link>
-                {/* <Link href="#about" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20">
-                    View THOR Signal Indicator
-                  </Button>
-                </Link> */}
               </div>
 
               {/* Trust Indicators */}
@@ -200,141 +225,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Seamless Integrations for a Smarter Workflow */}
-        {/* <section className="w-full py-8 md:py-16 lg:py-24 bg-[#020204]">
-          <div className="border-[#262626] border rounded-xl bg-[#0a0a0a] container px-4 md:px-6 mx-auto max-w-7xl">
-            <div className="flex flex-row gap-8 items-start">
-             
-              <div className="px-8 w-[40%] space-y-6 h-[600px] flex flex-col justify-center items-start">
-                <div className="our-tracker min-w-[136px] max-h-[32px] hover:bg-gray-800 transition-colors border border-gray-700">
-                  <div className="our-tracker1">
-                    Our Trackers
-                  </div>
-                  <span className="our-tracker1">→</span>
-                </div>
-                <h2 className="text-[36px] font-bold tracking-tight text-white leading-tight">
-                  Seamless Integrations for a Smarter Workflow
-                </h2>
-                <p className="text-gray-400 text-base leading-relaxed">
-                  Our indicator suite features 10 unique trackers, each designed for a specific purpose. Powered by advanced algorithms for precision, combined with price-action and order flow indicators for reliability:
-                </p>
-              </div>
-
-           
-              <div className="w-[60%] relative h-[600px] py-8 px-8 overflow-hidden">
-                <div className="absolute inset-0 flex gap-6">
-                  
-                  <div className="flex-1 flex flex-col gap-6 animate-scroll-up will-change-transform">
-                    {[...Array(2)].map((_, setIndex) => (
-                      <div key={setIndex} className="flex flex-col gap-6">
-                        <div className="bg-[#0a0a0f] border border-gray-800 rounded-2xl p-6 space-y-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                            <Target className="h-6 w-6 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">SUSTAIN</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            Our momentum gauge that assesses whether current order flow and price action can sustain and hold strong. A go-to tool for timing trade entries and exits.
-                          </p>
-                        </div>
-
-                        <div className="bg-[#0a0a0f] border border-gray-800 rounded-2xl p-6 space-y-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-                            <BarChart3 className="h-6 w-6 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">SYNC</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            Our goal-tracker that signals when the algorithm's max or min target is reached and in sync within your chosen timeframe. Built for pinpoint accuracy.
-                          </p>
-                        </div>
-
-                        <div className="bg-[#0a0a0f] border border-gray-800 rounded-2xl p-6 space-y-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center">
-                            <Award className="h-6 w-6 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">CYCLE</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            Our rhythm tracker that visually maps the current phase of the market cycle. Pinpoints potential tops and bottoms with striking precision.
-                          </p>
-                        </div>
-
-                        <div className="bg-[#0a0a0f] border border-gray-800 rounded-2xl p-6 space-y-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center">
-                            <DollarSign className="h-6 w-6 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">SURGE</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            Our vital indicator that instantly reveals whether the current trend is nearing a critical turning point. A must-have for precision trading.
-                          </p>
-                        </div>
-
-                        <div className="bg-[#0a0a0f] border border-gray-800 rounded-2xl p-6 space-y-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                            <BookOpen className="h-6 w-6 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">SHIFT</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            Our strength sensor that provides sharp insights into market power and vulnerability. For beginners and pros—save time, protect capital.
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                
-                  <div className="flex-1 flex flex-col gap-6 animate-scroll-down will-change-transform">
-                    {[...Array(2)].map((_, setIndex) => (
-                      <div key={setIndex} className="flex flex-col gap-6">
-                        <div className="bg-[#0a0a0f] border border-gray-800 rounded-2xl p-6 space-y-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center">
-                            <Clock className="h-6 w-6 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">SCOUT</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            Our dynamic indicator that swiftly detects surges in buying and selling pressure. Designed to align with our suite's other tools for powerful trade confirmation.
-                          </p>
-                        </div>
-
-                        <div className="bg-[#0a0a0f] border border-gray-800 rounded-2xl p-6 space-y-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center">
-                            <Shield className="h-6 w-6 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">SHIELD</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            Our stability tool that uncovers hidden support and resistance levels. Provides calm, reliable reference points, shielding you in wild market swings.
-                          </p>
-                        </div>
-
-                        <div className="bg-[#0a0a0f] border border-gray-800 rounded-2xl p-6 space-y-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
-                            <Users className="h-6 w-6 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">PEAK</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            Our vigilance tool flags makes it easy and fast to see dynamic zones of interest to watch relentlessly. Driven by real-time volatility calculations.
-                          </p>
-                        </div>
-
-                        <div className="bg-[#0a0a0f] border border-gray-800 rounded-2xl p-6 space-y-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
-                            <MessageCircle className="h-6 w-6 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">SPARK</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            Our decisive indicator that delivers a clear in-or-out call, ensuring fast, confident decisions. The cornerstone of our personal trading arsenal.
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-             
-                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black to-transparent pointer-events-none z-10"></div>
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent pointer-events-none z-10"></div>
-              </div>
-            </div>
-          </div>
-        </section> */}
+        {/* Removed large commented section - Seamless Integrations for a Smarter Workflow */}
         <div className="w-full flex items-center justify-center">
           <div className="mark-point"></div>
         </div>
@@ -526,6 +417,64 @@ export default function HomePage() {
           <div className="mark-point"></div>
         </div>
 
+        {/* Who's Behind THOR Signals Section */}
+        <section className="w-full py-8 md:py-16 lg:py-24">
+          <div className="container px-4 md:px-6 mx-auto max-w-7xl">
+            <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+              <div className="flex-1 space-y-6">
+                <h2 className="text-[42px] font-bold tracking-tight text-white">
+                  Who's Behind THOR Signals?
+                </h2>
+                <div className="space-y-4 text-gray-300 text-lg leading-relaxed">
+                  <p>
+                    Meet Brad Roth, Founder & CIO of THOR Financial Technologies (THOR Funds). With over 
+                    $1B+ in assets under management and two publicly traded ETFs (THLV and THIR), Brad has 
+                    built a reputation for delivering institutional-grade performance.
+                  </p>
+                  <p>
+                    "We built the THOR Signal Indicator to manage institutional money. Now we're making it 
+                    available to individual traders."
+                  </p>
+                  <p className="text-purple-400 font-semibold">
+                    This isn't another retail indicator. It's the same tool that runs real ETFs with real assets under management.
+                  </p>
+                </div>
+                <Link href="/about">
+                  <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white">
+                    Learn More About THOR Funds
+                  </Button>
+                </Link>
+              </div>
+              <div className="flex-1">
+                <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 rounded-2xl p-8 border border-gray-800">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <DollarSign className="h-6 w-6 text-green-400" />
+                      <span className="text-white font-semibold">$1B+ Assets Under Management</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <BarChart3 className="h-6 w-6 text-blue-400" />
+                      <span className="text-white font-semibold">2 Publicly Traded ETFs</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Shield className="h-6 w-6 text-purple-400" />
+                      <span className="text-white font-semibold">Institutional-Grade Technology</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Award className="h-6 w-6 text-yellow-400" />
+                      <span className="text-white font-semibold">CIO & Founder at THOR Funds</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="w-full flex items-center justify-center">
+          <div className="mark-point"></div>
+        </div>
+
         {/* FAQ Section */}
         <FAQSection />
         <div className="w-full flex items-center justify-center">
@@ -633,6 +582,12 @@ export default function HomePage() {
                 <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Home
                 </Link>
+                <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  About
+                </Link>
+                <Link href="/pricing" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  Pricing
+                </Link>
                 <Link href="/contact" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Contact
                 </Link>
@@ -646,7 +601,7 @@ export default function HomePage() {
 
               {/* Copyright */}
               <p className="text-sm text-gray-500">
-                Copyright © 2025 THOR Signals
+                Copyright © 2026 THOR Signals
               </p>
             </div>
           </div>

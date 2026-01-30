@@ -26,6 +26,7 @@ export default function SignUpPage() {
     password: "",
     confirmPassword: "",
     plan: "thor",
+    billingCycle: "monthly", // monthly or annual
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -247,7 +248,7 @@ export default function SignUpPage() {
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-xl sm:text-2xl text-center text-white">Create Your Account</CardTitle>
             <CardDescription className="text-center text-sm sm:text-base text-gray-300">
-              Join thousands of successful traders today
+              Start your 7-day free trial. Cancel anytime.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -352,18 +353,66 @@ export default function SignUpPage() {
                 />
               </div>
 
-              <div className="space-y-2 bg-gray-700 p-4 rounded-lg border border-purple-500">
+              <div className="space-y-4">
                 <Label className="text-sm text-gray-300">
-                  Subscription Plan
+                  Choose Your Plan
                 </Label>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-white font-semibold">THOR Signal Indicator</p>
-                    <p className="text-sm text-gray-400">Full access to institutional-grade signals</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-2xl font-bold text-white">$99</p>
-                    <p className="text-sm text-gray-400">/month</p>
+                
+                {/* Plan Toggle */}
+                <div className="flex bg-gray-800 rounded-lg p-1 border border-gray-700">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, billingCycle: "monthly" })}
+                    className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                      formData.billingCycle === "monthly"
+                        ? "bg-purple-600 text-white"
+                        : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    Monthly
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, billingCycle: "annual" })}
+                    className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                      formData.billingCycle === "annual"
+                        ? "bg-purple-600 text-white"
+                        : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    Annual
+                    <span className="ml-1 text-xs bg-green-600 text-white px-1.5 py-0.5 rounded-full">
+                      SAVE 20%
+                    </span>
+                  </button>
+                </div>
+
+                {/* Plan Details */}
+                <div className="bg-gray-700 p-4 rounded-lg border border-purple-500">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-white font-semibold">THOR Signal Indicator</p>
+                      <p className="text-sm text-gray-400">
+                        Full access to institutional-grade signals • 7-day free trial
+                      </p>
+                      {formData.billingCycle === "annual" && (
+                        <p className="text-xs text-green-400 mt-1">Save $240/year with annual billing</p>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      {formData.billingCycle === "monthly" ? (
+                        <>
+                          <p className="text-2xl font-bold text-white">$99</p>
+                          <p className="text-sm text-gray-400">/month</p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-2xl font-bold text-white">$79</p>
+                          <p className="text-sm text-gray-400">/month</p>
+                          <p className="text-xs text-gray-500">Billed annually at $948</p>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
