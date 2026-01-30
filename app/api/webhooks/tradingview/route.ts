@@ -1,0 +1,144 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { supabase } from '@/lib/supabase/admin'
+
+// TradingView sends webhooks as POST requests
+// Alert message format we expect (set in TradingView):
+// {"ticker":"AAPL","signal":"long","price":"198.50","timeframe":"W","name":"THOR Signal"}
+// or
+// {"ticker":"AAPL","signal":"exit","price":"185.20","timeframe":"W","name":"THOR Signal"}
+
+// Simple auth token to prevent random POSTs
+const WEBHOOK_SECRET = process.env.TRADINGVIEW_WEBHOOK_SECRET || 'thor-signal-webhook-2026'
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.text()
+    let data: any
+
+    // Try parsing as JSON first
+    try {
+      data = JSON.parse(body)
+    } catch {
+      // If not JSON, try to parse as plain text
+      // Format: "TICKER SIGNAL PRICE"
+      const parts = body.trim().split(' ')
+      if (parts.length >= 3) {
+        data = {
+          ticker: parts[0],
+          signal: parts[1],
+          price: parts[2],
+        }
+      } else {
+        console.error('Invalid webhook body:', body)
+        return NextResponse.json({ error: 'Invalid format' }, { status: 400 })
+      }
+    }
+
+    // Validate secret if provided
+    if (data.secret && data.secret !== WEBHOOK_SECRET) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const ticker = (data.ticker || '').toUpperCase().replace('$', '')
+    const signal = (data.signal || '').toLowerCase()
+    const price = data.price || ''
+    const timeframe = data.timeframe || 'W'
+    const name = data.name || 'THOR Signal'
+
+    if (!ticker || !signal) {
+      return NextResponse.json({ error: 'Missing ticker or signal' }, { status: 400 })
+    }
+
+    // Determine signal type
+    const isLong = ['long', 'buy', 'green', 'entry'].includes(signal)
+    const isExit = ['exit', 'sell', 'red', 'short', 'close'].includes(signal)
+
+    if (!isLong && !isExit) {
+      return NextResponse.json({ error: 'Invalid signal type' }, { status: 400 })
+    }
+
+    const signalType = isLong ? 'long' : 'exit'
+    const signalEmoji = isLong ? '🟢' : '🔴'
+    const signalText = isLong ? 'Go Long' : 'Exit / Sell'
+    const timeframeLabels: Record<string, string> = {
+      'W': 'Weekly',
+      'D': 'Daily',
+      '1W': 'Weekly',
+      '1D': 'Daily',
+      '4H': '4-Hour',
+      '1H': '1-Hour',
+    }
+    const timeframeLabel = timeframeLabels[timeframe] || timeframe
+
+    // Store in Supabase
+    const { error: insertError } = await supabase
+      .from('signals')
+      .insert({
+        ticker,
+        signal_type: signalType,
+        price: parseFloat(price) || null,
+        timeframe,
+        source: 'tradingview',
+        raw_data: data,
+      })
+
+    if (insertError) {
+      console.error('Error storing signal:', insertError)
+      // Don't fail - still want to process even if DB write fails
+    }
+
+    // Format tweet text (ready for when X API is connected)
+    const tweetText = `${signalEmoji} THOR Signal Alert: $${ticker}
+
+${signalText} at $${price}
+${timeframeLabel} chart
+
+The same signal managing $1B+ in institutional assets.
+
+Get signals for every ticker: thorsignals.com/signup`
+
+    // Store the formatted tweet for later posting
+    const { error: tweetError } = await supabase
+      .from('pending_tweets')
+      .insert({
+        ticker,
+        signal_type: signalType,
+        tweet_text: tweetText,
+        status: 'pending',
+      })
+
+    if (tweetError) {
+      console.error('Error storing pending tweet:', tweetError)
+    }
+
+    // TODO: When X API is connected, post tweet here
+    // await postTweet(tweetText)
+
+    console.log(`Signal received: ${ticker} ${signalType} at ${price}`)
+
+    return NextResponse.json({
+      success: true,
+      ticker,
+      signal: signalType,
+      price,
+      tweet: tweetText,
+    })
+
+  } catch (error) {
+    console.error('Webhook error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+// Also handle GET for testing
+export async function GET() {
+  return NextResponse.json({ 
+    status: 'ok', 
+    message: 'TradingView webhook endpoint is active',
+    format: {
+      json: '{"ticker":"AAPL","signal":"long","price":"198.50","timeframe":"W","secret":"your-secret"}',
+      signals: ['long', 'buy', 'green', 'entry', 'exit', 'sell', 'red', 'short', 'close'],
+      timeframes: ['W', 'D', '4H', '1H'],
+    }
+  })
+}
