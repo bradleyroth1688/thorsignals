@@ -422,6 +422,9 @@ export default function HomePage() {
           <div className="container px-4 md:px-6 mx-auto max-w-7xl">
             <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
               <div className="flex-1 space-y-6">
+                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-purple-600">
+                  <img src="/brad-headshot.jpg" alt="Brad Roth" className="w-full h-full object-cover" />
+                </div>
                 <h2 className="text-[42px] font-bold tracking-tight text-white">
                   Who's Behind THOR Signals?
                 </h2>

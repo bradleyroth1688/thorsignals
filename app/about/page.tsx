@@ -56,6 +56,9 @@ export default function AboutPage() {
           <div className="container px-4 md:px-6 mx-auto max-w-7xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
+                <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-purple-600 mb-4">
+                  <img src="/brad-headshot.jpg" alt="Brad Roth" className="w-full h-full object-cover" />
+                </div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white">
                   Meet Brad Roth
                 </h2>
