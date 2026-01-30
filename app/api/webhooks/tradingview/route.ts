@@ -139,8 +139,17 @@ Get signals for every ticker: thorsignals.com/signup`
         }
         
         console.log(`Tweet posted for ${ticker} ${signalType}`)
-      } catch (tweetPostError) {
+      } catch (tweetPostError: any) {
         console.error('Error posting tweet:', tweetPostError)
+        return NextResponse.json({
+          success: true,
+          ticker,
+          signal: signalType,
+          price,
+          tweet: tweetText,
+          tweetPosted: false,
+          tweetError: tweetPostError?.message || tweetPostError?.data || String(tweetPostError),
+        })
       }
     }
 
