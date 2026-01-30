@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase/admin'
+import { TwitterApi } from 'twitter-api-v2'
 
 // TradingView sends webhooks as POST requests
 // Alert message format we expect (set in TradingView):
@@ -112,8 +113,36 @@ Get signals for every ticker: thorsignals.com/signup`
       console.error('Error storing pending tweet:', tweetError)
     }
 
-    // TODO: When X API is connected, post tweet here
-    // await postTweet(tweetText)
+    // Post tweet via X API
+    let tweetPosted = false
+    if (process.env.X_API_KEY && process.env.X_ACCESS_TOKEN) {
+      try {
+        const twitterClient = new TwitterApi({
+          appKey: process.env.X_API_KEY!,
+          appSecret: process.env.X_API_SECRET!,
+          accessToken: process.env.X_ACCESS_TOKEN!,
+          accessSecret: process.env.X_ACCESS_SECRET!,
+        })
+        
+        await twitterClient.v2.tweet(tweetText)
+        tweetPosted = true
+        
+        // Update pending tweet status
+        if (!tweetError) {
+          await supabase
+            .from('pending_tweets')
+            .update({ status: 'posted', posted_at: new Date().toISOString() })
+            .eq('ticker', ticker)
+            .eq('status', 'pending')
+            .order('created_at', { ascending: false })
+            .limit(1)
+        }
+        
+        console.log(`Tweet posted for ${ticker} ${signalType}`)
+      } catch (tweetPostError) {
+        console.error('Error posting tweet:', tweetPostError)
+      }
+    }
 
     console.log(`Signal received: ${ticker} ${signalType} at ${price}`)
 
@@ -123,6 +152,7 @@ Get signals for every ticker: thorsignals.com/signup`
       signal: signalType,
       price,
       tweet: tweetText,
+      tweetPosted,
     })
 
   } catch (error) {
