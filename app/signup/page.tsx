@@ -110,21 +110,26 @@ export default function SignUpPage() {
     const customerData = await customerResponse.json()
     customerID = customerData.customer.id;
     console.log("customerID--------------",customerID);
+    const priceId = formData.billingCycle === "annual" 
+      ? process.env.NEXT_PUBLIC_STRIPE_ANNUAL_PLAN 
+      : process.env.NEXT_PUBLIC_STRIPE_BASIC_PLAN;
+
     let session_params = {
       "customer": customerID,
       "payment_method_types": ["card"],
       "line_items": [
         {
-          "price": process.env.NEXT_PUBLIC_STRIPE_BASIC_PLAN,
+          "price": priceId,
           "quantity": 1,
         }
       ],
       "mode": "subscription",
       "success_url": `${process.env.NEXT_PUBLIC_SITE_URL}/confirm-email?email=${encodeURIComponent(formData.email)}`, 
       "cancel_url": `${process.env.NEXT_PUBLIC_SITE_URL}/signup`,
-      "metadata": metadata,
+      "metadata": { ...metadata, "billing_cycle": formData.billingCycle },
       "subscription_data": {
-        "metadata": metadata
+        "trial_period_days": 7,
+        "metadata": { ...metadata, "billing_cycle": formData.billingCycle }
       }
     }
 

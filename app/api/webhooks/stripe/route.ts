@@ -165,12 +165,13 @@ export async function POST(req: Request) {
           // }
           
           // Send payment notification to server email
+          const paidAmount = metadata.billing_cycle === "annual" ? 948 : 99;
           const notificationResult = await sendPaymentNotificationEmail(
             metadata.tradingviewUsername,
             customerEmail, 
             metadata.firstName, 
             metadata.lastName, 
-            99
+            paidAmount
           );
           if (notificationResult.success) {
             console.log("✅ Payment notification sent successfully to server email");
@@ -179,12 +180,13 @@ export async function POST(req: Request) {
           }
 
           // Insert notification into database
+          const planLabel = metadata.billing_cycle === "annual" ? "Annual ($948/yr)" : "Monthly ($99/mo)";
           const { error: notificationError } = await supabase
             .from('notifications')
             .insert([
               {
-                title: `New $99 Payment Received`,
-                content: `User ${metadata.firstName} ${metadata.lastName} (${customerEmail}) has successfully paid $99 and signed up for the service.`,
+                title: `New ${planLabel} Subscription`,
+                content: `User ${metadata.firstName} ${metadata.lastName} (${customerEmail}) signed up for the ${planLabel} plan.`,
                 viewed: false
               }
             ]);
