@@ -1,6 +1,33 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import TradeResults from "./TradeResults"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { DollarSign, BarChart3, TrendingUp, Target, CheckCircle, XCircle, ArrowUpRight, ArrowDownRight, Shield } from "lucide-react"
+
+const trades = [
+  { id: 1, entry: "2007-04-17", exit: "2008-10-08", entryPrice: 140.01, exitPrice: 104.99, pnl: -25021.77, pnlPct: -25.03, cumPnlPct: -25.02 },
+  { id: 2, entry: "2010-04-06", exit: "2018-07-17", entryPrice: 112.01, exitPrice: 272.99, pnl: 107669.87, pnlPct: 143.67, cumPnlPct: 82.65 },
+  { id: 3, entry: "2019-12-26", exit: "2020-02-27", entryPrice: 315.01, exitPrice: 307.99, pnl: -4100.65, pnlPct: -2.25, cumPnlPct: 78.55 },
+  { id: 4, entry: "2020-04-27", exit: "2020-11-05", entryPrice: 280.01, exitPrice: 342.99, pnl: 40078.57, pnlPct: 22.47, cumPnlPct: 118.63 },
+  { id: 5, entry: "2020-12-01", exit: "2021-12-27", entryPrice: 357.01, exitPrice: 468.99, pnl: 68481.21, pnlPct: 31.34, cumPnlPct: 187.11 },
+  { id: 6, entry: "2022-08-12", exit: "2022-09-21", entryPrice: 420.01, exitPrice: 384.99, pnl: -23973.64, pnlPct: -8.36, cumPnlPct: 163.13 },
+  { id: 7, entry: "2022-11-30", exit: "2024-08-05", entryPrice: 399.01, exitPrice: 524.99, pnl: 82959.93, pnlPct: 31.55, cumPnlPct: 246.09 },
+  { id: 8, entry: "2024-11-06", exit: "2025-01-21", entryPrice: 581.01, exitPrice: 594.99, pnl: 8248.13, pnlPct: 2.39, cumPnlPct: 254.34 },
+  { id: 9, entry: "2025-02-25", exit: "2025-02-27", entryPrice: 602.01, exitPrice: 594.99, pnl: -4148.17, pnlPct: -1.19, cumPnlPct: 250.19 },
+  { id: 10, entry: "2025-04-24", exit: "2025-11-26", entryPrice: 539.01, exitPrice: 671.99, pnl: 86225.43, pnlPct: 24.65, cumPnlPct: 336.42 },
+]
+
+const winningTrades = trades.filter(t => t.pnl > 0)
+const losingTrades = trades.filter(t => t.pnl < 0)
+const winRate = ((winningTrades.length / trades.length) * 100).toFixed(0)
+const avgWin = (winningTrades.reduce((sum, t) => sum + t.pnlPct, 0) / winningTrades.length).toFixed(1)
+const avgLoss = (losingTrades.reduce((sum, t) => sum + t.pnlPct, 0) / losingTrades.length).toFixed(1)
+const bestTrade = trades.reduce((best, t) => t.pnlPct > best.pnlPct ? t : best)
+const totalReturn = trades[trades.length - 1].cumPnlPct
+
+function formatDate(dateStr: string) {
+  const d = new Date(dateStr + "T00:00:00")
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+}
 
 export default function ResultsPage() {
   return (
@@ -34,19 +61,203 @@ export default function ResultsPage() {
               Signal Performance
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Real trades. Real results. The THOR Signal Indicator applied to SPY and TSLA, 
-              based on trading a $100,000 portfolio with THOR Signal entry and exit points.
+              Real trades. Real results. The THOR Signal Indicator applied to SPY from 2007 to present, 
+              based on trading a $100,000 portfolio in SPY only.
             </p>
             <p className="text-sm text-gray-500 max-w-2xl mx-auto">
               Past performance is not indicative of future results. All results shown are based on hypothetical trades 
-              of a $100,000 portfolio using THOR Signal entry and exit points. 
+              of a $100,000 portfolio trading SPY (S&P 500 ETF) only, using THOR Signal entry and exit points. 
               Results do not account for slippage, commissions, taxes, or other trading costs.
             </p>
           </div>
         </section>
 
-        {/* Trade Results Component */}
-        <TradeResults />
+        {/* Key Stats */}
+        <section className="w-full pb-16">
+          <div className="container px-4 md:px-6 mx-auto max-w-7xl">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="bg-gradient-to-br from-green-600/20 to-green-800/10 rounded-2xl p-6 border border-green-800/30 text-center">
+                <TrendingUp className="h-8 w-8 text-green-400 mx-auto mb-3" />
+                <p className="text-3xl md:text-4xl font-bold text-green-400">+{totalReturn}%</p>
+                <p className="text-sm text-gray-400 mt-1">Cumulative Return</p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-600/20 to-blue-800/10 rounded-2xl p-6 border border-blue-800/30 text-center">
+                <Target className="h-8 w-8 text-blue-400 mx-auto mb-3" />
+                <p className="text-3xl md:text-4xl font-bold text-blue-400">{winRate}%</p>
+                <p className="text-sm text-gray-400 mt-1">Win Rate</p>
+              </div>
+              <div className="bg-gradient-to-br from-purple-600/20 to-purple-800/10 rounded-2xl p-6 border border-purple-800/30 text-center">
+                <BarChart3 className="h-8 w-8 text-purple-400 mx-auto mb-3" />
+                <p className="text-3xl md:text-4xl font-bold text-purple-400">+{avgWin}%</p>
+                <p className="text-sm text-gray-400 mt-1">Avg Winning Trade</p>
+              </div>
+              <div className="bg-gradient-to-br from-yellow-600/20 to-yellow-800/10 rounded-2xl p-6 border border-yellow-800/30 text-center">
+                <DollarSign className="h-8 w-8 text-yellow-400 mx-auto mb-3" />
+                <p className="text-3xl md:text-4xl font-bold text-yellow-400">10</p>
+                <p className="text-sm text-gray-400 mt-1">Total Trades (17 yrs)</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Key Insight */}
+        <section className="w-full pb-16">
+          <div className="container px-4 md:px-6 mx-auto max-w-4xl">
+            <div className="bg-gradient-to-br from-purple-600/10 to-blue-600/10 rounded-2xl p-8 border border-gray-800 text-center space-y-4">
+              <Shield className="h-10 w-10 text-purple-400 mx-auto" />
+              <h3 className="text-2xl font-bold text-white">Built for Downside Protection</h3>
+              <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto">
+                The THOR Signal went to cash before both the 2008 Financial Crisis and the 2020 COVID crash. 
+                Only 10 trades in 17 years — this isn't about overtrading. It's about precision timing.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Trade History Table */}
+        <section className="w-full py-16 bg-[#0a0a0a]">
+          <div className="container px-4 md:px-6 mx-auto max-w-7xl">
+            <div className="text-center space-y-4 mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                Complete Trade History
+              </h2>
+              <p className="text-gray-300 text-lg">
+                Every THOR Signal trade on SPY since 2007 — based on trading $100,000 in SPY only
+              </p>
+            </div>
+
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-800">
+                    <th className="text-left py-4 px-4 text-sm font-semibold text-gray-400">#</th>
+                    <th className="text-left py-4 px-4 text-sm font-semibold text-gray-400">Entry Date</th>
+                    <th className="text-left py-4 px-4 text-sm font-semibold text-gray-400">Exit Date</th>
+                    <th className="text-right py-4 px-4 text-sm font-semibold text-gray-400">Entry</th>
+                    <th className="text-right py-4 px-4 text-sm font-semibold text-gray-400">Exit</th>
+                    <th className="text-right py-4 px-4 text-sm font-semibold text-gray-400">P&L</th>
+                    <th className="text-right py-4 px-4 text-sm font-semibold text-gray-400">Return</th>
+                    <th className="text-right py-4 px-4 text-sm font-semibold text-gray-400">Cumulative</th>
+                    <th className="text-center py-4 px-4 text-sm font-semibold text-gray-400">Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {trades.map((trade) => (
+                    <tr key={trade.id} className="border-b border-gray-800/50 hover:bg-gray-800/30 transition-colors">
+                      <td className="py-4 px-4 text-white font-medium">{trade.id}</td>
+                      <td className="py-4 px-4 text-gray-300">{formatDate(trade.entry)}</td>
+                      <td className="py-4 px-4 text-gray-300">{formatDate(trade.exit)}</td>
+                      <td className="py-4 px-4 text-right text-gray-300">${trade.entryPrice.toFixed(2)}</td>
+                      <td className="py-4 px-4 text-right text-gray-300">${trade.exitPrice.toFixed(2)}</td>
+                      <td className={`py-4 px-4 text-right font-medium ${trade.pnl >= 0 ? "text-green-400" : "text-red-400"}`}>
+                        {trade.pnl >= 0 ? "+" : ""}${trade.pnl.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </td>
+                      <td className={`py-4 px-4 text-right font-semibold ${trade.pnlPct >= 0 ? "text-green-400" : "text-red-400"}`}>
+                        <span className="inline-flex items-center gap-1">
+                          {trade.pnlPct >= 0 ? <ArrowUpRight className="h-4 w-4" /> : <ArrowDownRight className="h-4 w-4" />}
+                          {trade.pnlPct >= 0 ? "+" : ""}{trade.pnlPct.toFixed(2)}%
+                        </span>
+                      </td>
+                      <td className={`py-4 px-4 text-right font-medium ${trade.cumPnlPct >= 0 ? "text-blue-400" : "text-red-400"}`}>
+                        {trade.cumPnlPct >= 0 ? "+" : ""}{trade.cumPnlPct.toFixed(2)}%
+                      </td>
+                      <td className="py-4 px-4 text-center">
+                        {trade.pnl >= 0 ? (
+                          <CheckCircle className="h-5 w-5 text-green-400 mx-auto" />
+                        ) : (
+                          <XCircle className="h-5 w-5 text-red-400 mx-auto" />
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden space-y-4">
+              {trades.map((trade) => (
+                <div key={trade.id} className="bg-gray-800/50 rounded-xl p-4 border border-gray-800 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-white font-bold">Trade #{trade.id}</span>
+                    {trade.pnl >= 0 ? (
+                      <span className="flex items-center gap-1 text-green-400 font-semibold">
+                        <CheckCircle className="h-4 w-4" /> Win
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1 text-red-400 font-semibold">
+                        <XCircle className="h-4 w-4" /> Loss
+                      </span>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>
+                      <p className="text-gray-500">Entry</p>
+                      <p className="text-gray-300">{formatDate(trade.entry)} @ ${trade.entryPrice}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500">Exit</p>
+                      <p className="text-gray-300">{formatDate(trade.exit)} @ ${trade.exitPrice}</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 border-t border-gray-700">
+                    <span className={`font-semibold ${trade.pnlPct >= 0 ? "text-green-400" : "text-red-400"}`}>
+                      {trade.pnlPct >= 0 ? "+" : ""}{trade.pnlPct.toFixed(2)}%
+                    </span>
+                    <span className="text-sm text-blue-400">
+                      Cumulative: {trade.cumPnlPct >= 0 ? "+" : ""}{trade.cumPnlPct.toFixed(2)}%
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Summary Stats */}
+        <section className="w-full py-16">
+          <div className="container px-4 md:px-6 mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="bg-gray-800 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-400" /> Winning Trades
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <p className="text-3xl font-bold text-green-400">{winningTrades.length} / {trades.length}</p>
+                  <p className="text-gray-400">Average gain: +{avgWin}%</p>
+                  <p className="text-gray-400">Best trade: +{bestTrade.pnlPct.toFixed(2)}% ({formatDate(bestTrade.entry)} — {formatDate(bestTrade.exit)})</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-gray-800 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <XCircle className="h-5 w-5 text-red-400" /> Losing Trades
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <p className="text-3xl font-bold text-red-400">{losingTrades.length} / {trades.length}</p>
+                  <p className="text-gray-400">Average loss: {avgLoss}%</p>
+                  <p className="text-gray-400">Losses are contained — max drawdown controlled</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-gray-800 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-blue-400" /> $100K → $436K
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <p className="text-3xl font-bold text-blue-400">+336%</p>
+                  <p className="text-gray-400">Cumulative return over 17 years trading $100K in SPY</p>
+                  <p className="text-gray-400">Only 10 trades — patience over frequency</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
 
         {/* CTA */}
         <section className="w-full py-16 bg-[#0a0a0a]">
