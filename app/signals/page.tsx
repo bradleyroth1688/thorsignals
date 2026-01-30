@@ -1,5 +1,7 @@
+import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import SignalsDashboard from './SignalsDashboard'
+import { redirect } from 'next/navigation'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -9,7 +11,14 @@ const supabase = createClient(
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-export default async function SignalsPage() {
+export default async function SignalsPage({ searchParams }: { searchParams: Promise<{ key?: string }> }) {
+  const params = await searchParams
+  
+  // Simple auth: require secret key in URL
+  if (params.key !== process.env.SIGNALS_ADMIN_KEY) {
+    redirect('/')
+  }
+
   const { data: signals } = await supabase
     .from('signals')
     .select('*')
