@@ -1,5 +1,7 @@
 import { DatabaseCheck } from "@/components/database-check"
 
+export const dynamic = 'force-dynamic'
+
 export default function DatabaseTestPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
