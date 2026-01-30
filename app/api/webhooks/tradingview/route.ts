@@ -3,9 +3,10 @@ import { supabase } from '@/lib/supabase/admin'
 
 // TradingView sends webhooks as POST requests
 // Alert message format we expect (set in TradingView):
-// {"ticker":"AAPL","signal":"long","price":"198.50","timeframe":"W","name":"THOR Signal"}
-// or
-// {"ticker":"AAPL","signal":"exit","price":"185.20","timeframe":"W","name":"THOR Signal"}
+// {"ticker":"{{ticker}}","signal":"{{strategy.order.action}}","price":"{{close}}","timeframe":"{{interval}}","secret":"thor-signal-webhook-2026"}
+// 
+// {{strategy.order.action}} returns "buy" or "sell" automatically
+// This means ONE alert message handles both long and exit signals
 
 // Simple auth token to prevent random POSTs
 const WEBHOOK_SECRET = process.env.TRADINGVIEW_WEBHOOK_SECRET || 'thor-signal-webhook-2026'
