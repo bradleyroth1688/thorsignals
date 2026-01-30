@@ -61,11 +61,13 @@ export default function ResultsPage() {
               Signal Performance
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Real trades. Real results. The THOR Signal Indicator applied to SPY from 2007 to present.
+              Real trades. Real results. The THOR Signal Indicator applied to SPY from 2007 to present, 
+              based on trading a $100,000 portfolio in SPY only.
             </p>
             <p className="text-sm text-gray-500 max-w-2xl mx-auto">
-              Past performance is not indicative of future results. These results are based on historical signal data 
-              and do not account for slippage, commissions, or other trading costs.
+              Past performance is not indicative of future results. All results shown are based on hypothetical trades 
+              of a $100,000 portfolio trading SPY (S&P 500 ETF) only, using THOR Signal entry and exit points. 
+              Results do not account for slippage, commissions, taxes, or other trading costs.
             </p>
           </div>
         </section>
@@ -120,7 +122,7 @@ export default function ResultsPage() {
                 Complete Trade History
               </h2>
               <p className="text-gray-300 text-lg">
-                Every THOR Signal trade on SPY since 2007 — starting with $100,000
+                Every THOR Signal trade on SPY since 2007 — based on trading $100,000 in SPY only
               </p>
             </div>
 
@@ -249,7 +251,7 @@ export default function ResultsPage() {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <p className="text-3xl font-bold text-blue-400">+336%</p>
-                  <p className="text-gray-400">Cumulative return over 17 years</p>
+                  <p className="text-gray-400">Cumulative return over 17 years trading $100K in SPY</p>
                   <p className="text-gray-400">Only 10 trades — patience over frequency</p>
                 </CardContent>
               </Card>
