@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { DollarSign, BarChart3, TrendingUp, Target, CheckCircle, XCircle, ArrowUpRight, ArrowDownRight, Shield } from "lucide-react"
+import { Clock, BarChart3, TrendingUp, Target, CheckCircle, XCircle, ArrowUpRight, ArrowDownRight, Shield } from "lucide-react"
 
 const trades = [
   { id: 1, entry: "2007-04-17", exit: "2008-10-08", entryPrice: 140.01, exitPrice: 104.99, pnl: -25021.77, pnlPct: -25.03, cumPnlPct: -25.02 },
@@ -64,6 +64,10 @@ export default function ResultsPage() {
               Real trades. Real results. The THOR Signal Indicator applied to SPY from 2007 to present, 
               based on trading a $100,000 portfolio in SPY only.
             </p>
+            <p className="text-sm text-gray-400 max-w-3xl mx-auto">
+              This is an example of our SPY long-term model. Results can vary based on your trading frequency 
+              preference — this is just one example of many different variations of what you can do with our signals.
+            </p>
             <p className="text-sm text-gray-500 max-w-2xl mx-auto">
               Past performance is not indicative of future results. All results shown are based on hypothetical trades 
               of a $100,000 portfolio trading SPY (S&P 500 ETF) only, using THOR Signal entry and exit points. 
@@ -92,7 +96,7 @@ export default function ResultsPage() {
                 <p className="text-sm text-gray-400 mt-1">Avg Winning Trade</p>
               </div>
               <div className="bg-gradient-to-br from-yellow-600/20 to-yellow-800/10 rounded-2xl p-6 border border-yellow-800/30 text-center">
-                <DollarSign className="h-8 w-8 text-yellow-400 mx-auto mb-3" />
+                <Clock className="h-8 w-8 text-yellow-400 mx-auto mb-3" />
                 <p className="text-3xl md:text-4xl font-bold text-yellow-400">10</p>
                 <p className="text-sm text-gray-400 mt-1">Total Trades (17 yrs)</p>
               </div>
