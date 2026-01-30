@@ -166,10 +166,12 @@ export async function GET() {
   return NextResponse.json({ 
     status: 'ok', 
     message: 'TradingView webhook endpoint is active',
-    format: {
-      json: '{"ticker":"AAPL","signal":"long","price":"198.50","timeframe":"W","secret":"your-secret"}',
-      signals: ['long', 'buy', 'green', 'entry', 'exit', 'sell', 'red', 'short', 'close'],
-      timeframes: ['W', 'D', '4H', '1H'],
-    }
+    xApiConfigured: !!(process.env.X_API_KEY && process.env.X_ACCESS_TOKEN),
+    envCheck: {
+      X_API_KEY: !!process.env.X_API_KEY,
+      X_API_SECRET: !!process.env.X_API_SECRET,
+      X_ACCESS_TOKEN: !!process.env.X_ACCESS_TOKEN,
+      X_ACCESS_SECRET: !!process.env.X_ACCESS_SECRET,
+    },
   })
 }
