@@ -26,6 +26,9 @@ export default function AboutPage() {
             <Link href="/results" className="text-gray-300 hover:text-white transition-colors">
               Results
             </Link>
+            <Link href="/how-it-works" className="text-gray-300 hover:text-white transition-colors">
+              How It Works
+            </Link>
             <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">
               Pricing
             </Link>
@@ -283,6 +286,12 @@ export default function AboutPage() {
                 </Link>
                 <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">
                   About
+                </Link>
+                <Link href="/results" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  Results
+                </Link>
+                <Link href="/how-it-works" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  How It Works
                 </Link>
                 <Link href="/pricing" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Pricing

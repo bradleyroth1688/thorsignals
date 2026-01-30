@@ -26,6 +26,9 @@ export default function PricingPage() {
             <Link href="/results" className="text-gray-300 hover:text-white transition-colors">
               Results
             </Link>
+            <Link href="/how-it-works" className="text-gray-300 hover:text-white transition-colors">
+              How It Works
+            </Link>
             <Link href="/pricing" className="text-white border-b-2 border-purple-600 pb-1">
               Pricing
             </Link>
@@ -181,11 +184,11 @@ export default function PricingPage() {
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>
                   <BookOpen className="h-12 w-12 text-green-400 mb-4" />
-                  <CardTitle className="text-white">Detailed Strategy Guides</CardTitle>
+                  <CardTitle className="text-white">Strategy Documentation</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-300">
-                    Comprehensive guides covering the indicator suite and our proprietary in-house trading strategies.
+                    Complete user manual and advanced strategy guide to master the THOR Signal Indicator.
                   </p>
                 </CardContent>
               </Card>
@@ -357,6 +360,12 @@ export default function PricingPage() {
                 </Link>
                 <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">
                   About
+                </Link>
+                <Link href="/results" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  Results
+                </Link>
+                <Link href="/how-it-works" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  How It Works
                 </Link>
                 <Link href="/pricing" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Pricing

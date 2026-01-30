@@ -43,6 +43,7 @@ export default function ResultsPage() {
             <Link href="/" className="text-gray-300 hover:text-white transition-colors">Home</Link>
             <Link href="/about" className="text-gray-300 hover:text-white transition-colors">About</Link>
             <Link href="/results" className="text-white border-b-2 border-purple-600 pb-1">Results</Link>
+            <Link href="/how-it-works" className="text-gray-300 hover:text-white transition-colors">How It Works</Link>
             <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</Link>
             <Link href="/login" className="text-gray-300 hover:text-white transition-colors">Login</Link>
             <Link href="/signup">
@@ -296,6 +297,7 @@ export default function ResultsPage() {
                 <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">Home</Link>
                 <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">About</Link>
                 <Link href="/results" className="text-sm text-gray-400 hover:text-white transition-colors">Results</Link>
+                <Link href="/how-it-works" className="text-sm text-gray-400 hover:text-white transition-colors">How It Works</Link>
                 <Link href="/pricing" className="text-sm text-gray-400 hover:text-white transition-colors">Pricing</Link>
                 <Link href="/contact" className="text-sm text-gray-400 hover:text-white transition-colors">Contact</Link>
                 <Link href="/privacy" className="text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
