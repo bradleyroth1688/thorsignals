@@ -1,3 +1,4 @@
+import { MobileNav } from "@/components/mobile-nav"
 "use client"
 
 import Link from "next/link"
@@ -182,12 +183,13 @@ export default function ContactPage() {
               <div className="flex items-center">
                 <img src="/ico.png" alt="THOR Signals" className="w-8 h-8 object-contain" />
               </div>
-              <nav className="flex gap-6 items-center">
+              <nav className="flex flex-wrap justify-center gap-4 md:gap-6 items-center">
                 <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">Home</Link>
                 <Link href="/contact" className="text-sm text-gray-400 hover:text-white transition-colors">Contact</Link>
                 <Link href="/privacy" className="text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
                 <Link href="/terms-and-conditions" className="text-sm text-gray-400 hover:text-white transition-colors">Terms</Link>
               </nav>
+          <div className="md:hidden"><MobileNav /></div>
               <p className="text-sm text-gray-500">Copyright © 2025 THOR Signals</p>
             </div>
           </div>

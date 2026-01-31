@@ -34,11 +34,32 @@ export function MobileNav() {
             About
           </Link>
           <Link
+            href="/results"
+            className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
+            onClick={() => setOpen(false)}
+          >
+            Results
+          </Link>
+          <Link
+            href="/how-it-works"
+            className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
+            onClick={() => setOpen(false)}
+          >
+            How It Works
+          </Link>
+          <Link
             href="/pricing"
             className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
             onClick={() => setOpen(false)}
           >
             Pricing
+          </Link>
+          <Link
+            href="/contact"
+            className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
+            onClick={() => setOpen(false)}
+          >
+            Contact
           </Link>
           <Link
             href="/login"

@@ -1,3 +1,4 @@
+import { MobileNav } from "@/components/mobile-nav"
 "use client"
 
 import type React from "react"
@@ -136,6 +137,7 @@ export default function LoginPage() {
               <Button className="bg-purple-600 hover:bg-purple-700 text-white">Get Started</Button>
             </Link>
           </nav>
+          <div className="md:hidden"><MobileNav /></div>
         </div>
       </header>
 
@@ -245,7 +247,7 @@ export default function LoginPage() {
               </Link>
 
               {/* Navigation Links */}
-              <nav className="flex gap-6 items-center">
+              <nav className="flex flex-wrap justify-center gap-4 md:gap-6 items-center">
                 <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Home
                 </Link>
@@ -271,7 +273,7 @@ export default function LoginPage() {
                   Terms
                 </Link>
               </nav>
-
+          
               {/* Copyright */}
               <p className="text-sm text-gray-500">
                 Copyright © 2026 THOR Signals

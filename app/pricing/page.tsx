@@ -1,3 +1,4 @@
+import { MobileNav } from "@/components/mobile-nav"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -39,6 +40,7 @@ export default function PricingPage() {
               <Button className="bg-purple-600 hover:bg-purple-700 text-white">Get Started</Button>
             </Link>
           </nav>
+          <div className="md:hidden"><MobileNav /></div>
         </div>
       </header>
 
@@ -354,7 +356,7 @@ export default function PricingPage() {
               </Link>
 
               {/* Navigation Links */}
-              <nav className="flex gap-6 items-center">
+              <nav className="flex flex-wrap justify-center gap-4 md:gap-6 items-center">
                 <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Home
                 </Link>
@@ -380,7 +382,7 @@ export default function PricingPage() {
                   Terms
                 </Link>
               </nav>
-
+          
               {/* Copyright */}
               <p className="text-sm text-gray-500">
                 Copyright © 2026 THOR Signals

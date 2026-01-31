@@ -299,7 +299,7 @@ export default function ResultsPage() {
               <Link href="/" className="flex items-center">
                 <img src="/ico.png" alt="THOR Signals" className="w-8 h-8 object-contain" />
               </Link>
-              <nav className="flex gap-6 items-center">
+              <nav className="flex flex-wrap justify-center gap-4 md:gap-6 items-center">
                 <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">Home</Link>
                 <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">About</Link>
                 <Link href="/results" className="text-sm text-gray-400 hover:text-white transition-colors">Results</Link>

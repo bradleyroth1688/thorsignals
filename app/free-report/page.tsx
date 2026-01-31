@@ -221,7 +221,7 @@ export default function FreeReportPage() {
               </Link>
 
               {/* Navigation Links */}
-              <nav className="flex gap-6 items-center">
+              <nav className="flex flex-wrap justify-center gap-4 md:gap-6 items-center">
                 <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Home
                 </Link>

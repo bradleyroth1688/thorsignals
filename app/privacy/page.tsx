@@ -1,3 +1,4 @@
+import { MobileNav } from "@/components/mobile-nav"
 import Link from "next/link"
 import { Clock } from "lucide-react"
 import "../page.css"
@@ -64,7 +65,7 @@ export default function PrivacyPolicyPage() {
                             </div>
 
                             {/* Navigation Links */}
-                            <nav className="flex gap-6 items-center">
+                            <nav className="flex flex-wrap justify-center gap-4 md:gap-6 items-center">
                                 <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">
                                     Home
                                 </Link>
@@ -78,6 +79,7 @@ export default function PrivacyPolicyPage() {
                                     Terms
                                 </Link>
                             </nav>
+          <div className="md:hidden"><MobileNav /></div>
 
                             {/* Copyright */}
                             <p className="text-sm text-gray-500">
