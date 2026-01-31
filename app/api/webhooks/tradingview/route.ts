@@ -140,7 +140,7 @@ Get signals for every ticker: thorsignals.com/signup`
         
         console.log(`Tweet posted for ${ticker} ${signalType}`)
       } catch (tweetPostError: any) {
-        console.error('Error posting tweet:', tweetPostError)
+        console.error('Error posting tweet:', JSON.stringify(tweetPostError?.data || tweetPostError))
         return NextResponse.json({
           success: true,
           ticker,
@@ -148,7 +148,9 @@ Get signals for every ticker: thorsignals.com/signup`
           price,
           tweet: tweetText,
           tweetPosted: false,
-          tweetError: tweetPostError?.message || tweetPostError?.data || String(tweetPostError),
+          tweetError: tweetPostError?.message || 'Unknown error',
+          tweetErrorDetail: tweetPostError?.data || tweetPostError?.code || null,
+          tweetErrorStatus: tweetPostError?.statusCode || tweetPostError?.code || null,
         })
       }
     }
