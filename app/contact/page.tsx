@@ -1,5 +1,6 @@
-import { MobileNav } from "@/components/mobile-nav"
 "use client"
+
+import { MobileNav } from "@/components/mobile-nav"
 
 import Link from "next/link"
 import { useState } from "react"
