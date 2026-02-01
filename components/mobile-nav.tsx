@@ -48,6 +48,13 @@ export function MobileNav() {
             How It Works
           </Link>
           <Link
+            href="/signal-101"
+            className="text-lg font-medium text-purple-400 hover:text-purple-300 transition-colors py-2"
+            onClick={() => setOpen(false)}
+          >
+            Free Guide
+          </Link>
+          <Link
             href="/pricing"
             className="text-lg font-medium hover:text-purple-400 transition-colors py-2"
             onClick={() => setOpen(false)}

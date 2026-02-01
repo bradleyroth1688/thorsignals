@@ -30,6 +30,9 @@ export default function AboutPage() {
             <Link href="/how-it-works" className="text-gray-300 hover:text-white transition-colors">
               How It Works
             </Link>
+            <Link href="/signal-101" className="text-purple-400 hover:text-purple-300 transition-colors font-medium">
+              Free Guide
+            </Link>
             <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">
               Pricing
             </Link>
@@ -294,6 +297,9 @@ export default function AboutPage() {
                 </Link>
                 <Link href="/how-it-works" className="text-sm text-gray-400 hover:text-white transition-colors">
                   How It Works
+                </Link>
+                <Link href="/signal-101" className="text-sm text-purple-400 hover:text-purple-300 transition-colors">
+                  Free Guide
                 </Link>
                 <Link href="/pricing" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Pricing

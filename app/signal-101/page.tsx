@@ -56,6 +56,7 @@ export default function Signal101Page() {
             <Link href="/about" className="text-gray-300 hover:text-white transition-colors">About</Link>
             <Link href="/results" className="text-gray-300 hover:text-white transition-colors">Results</Link>
             <Link href="/how-it-works" className="text-gray-300 hover:text-white transition-colors">How It Works</Link>
+            <Link href="/signal-101" className="text-purple-400 border-b-2 border-purple-600 pb-1 font-medium">Free Guide</Link>
             <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</Link>
             <Link href="/login" className="text-gray-300 hover:text-white transition-colors">Login</Link>
             <Link href="/signup">
