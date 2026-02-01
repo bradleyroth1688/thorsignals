@@ -108,6 +108,32 @@ export default function HomePage() {
           <div className="mark-point"></div>
         </div>
 
+        {/* Free Guide CTA */}
+        <section className="w-full py-12 md:py-20">
+          <div className="container px-4 md:px-6 mx-auto max-w-4xl">
+            <div className="bg-gradient-to-br from-purple-900/20 to-blue-900/10 border border-purple-500/20 rounded-3xl p-8 md:p-12 text-center">
+              <p className="text-purple-400 font-semibold tracking-widest uppercase text-sm mb-4">Free Guide</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Your Portfolio Has a Noise Problem.
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                Learn the science behind signal processing for markets. Our free guide explains how we manage money without gut feelings, predictions, or CNBC.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/signal-101">
+                  <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8">
+                    Download Signal Processing 101
+                  </Button>
+                </Link>
+              </div>
+              <p className="text-gray-500 text-sm mt-4">Free. No credit card required.</p>
+            </div>
+          </div>
+        </section>
+        <div className="w-full flex items-center justify-center">
+          <div className="mark-point"></div>
+        </div>
+
         {/* THOR Signal Indicator Suite Section */}
         <section id="about" className="w-full py-8 md:py-16 lg:py-24">
           <div className="container px-4 md:px-6 mx-auto max-w-7xl">
@@ -235,32 +261,6 @@ export default function HomePage() {
         </section>
 
         {/* Removed large commented section - Seamless Integrations for a Smarter Workflow */}
-        <div className="w-full flex items-center justify-center">
-          <div className="mark-point"></div>
-        </div>
-
-        {/* Free Guide CTA */}
-        <section className="w-full py-12 md:py-20">
-          <div className="container px-4 md:px-6 mx-auto max-w-4xl">
-            <div className="bg-gradient-to-br from-purple-900/20 to-blue-900/10 border border-purple-500/20 rounded-3xl p-8 md:p-12 text-center">
-              <p className="text-purple-400 font-semibold tracking-widest uppercase text-sm mb-4">Free Guide</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Your Portfolio Has a Noise Problem.
-              </h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-                Learn the science behind signal processing for markets. Our free guide explains how we manage money without gut feelings, predictions, or CNBC.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/signal-101">
-                  <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8">
-                    Download Signal Processing 101
-                  </Button>
-                </Link>
-              </div>
-              <p className="text-gray-500 text-sm mt-4">Free. No credit card required.</p>
-            </div>
-          </div>
-        </section>
         <div className="w-full flex items-center justify-center">
           <div className="mark-point"></div>
         </div>
