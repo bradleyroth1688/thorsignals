@@ -11,20 +11,20 @@ interface FAQItem {
 
 const leftColumnFAQs: FAQItem[] = [
   {
+    question: "How is THOR different from other indicators?",
+    answer: "Most indicators use moving averages and traditional technical analysis. THOR uses digital signal processing — the same science behind noise-canceling technology — to filter price data into a clean waveform. We detect structural regime changes, not just price crosses. The result: fewer trades, better timing at turning points."
+  },
+  {
+    question: "Does THOR predict where markets are going?",
+    answer: "No. We don't predict — we detect. THOR identifies when the character of the market changes by confirming turning points, not reacting to every daily move. The system has a slight long bias: stay invested unless evidence mounts to flip."
+  },
+  {
     question: "What is TradingView?",
-    answer: "TradingView is the world's largest charting platform and site. All the elite traders in our network use it. Our suite integrates seamlessly."
+    answer: "TradingView is the world's largest charting platform. Our THOR Signal Indicator integrates seamlessly with TradingView and works across all markets and timeframes."
   },
   {
     question: "Do I need to pay for TradingView?",
-    answer: "Not needed. We aim to minimize costs for our clients. Besides our one time setup fee, there aren't any recurring costs."
-  },
-  {
-    question: "Who is the indicator suite built for?",
-    answer: "Our suite is suitable for both beginners and experts, who want to take their trading to the next level. Get instant access to the toolkits we personally use."
-  },
-  {
-    question: "Any requirements to get started?",
-    answer: "Anyone from any country can use our indicator suite. It works on any device. Not much capital, experience, or time is required (to start trading) either."
+    answer: "A free TradingView account works. We aim to minimize costs for our clients. Besides our one time setup fee, there aren't any recurring costs."
   }
 ]
 
@@ -35,15 +35,15 @@ const rightColumnFAQs: FAQItem[] = [
   },
   {
     question: "What markets are supported?",
-    answer: "Our indicator suite works for any symbol, on any market, globally. This includes cryptocurrency, stocks, and forex."
+    answer: "Our indicator suite works for any symbol, on any market, globally. This includes cryptocurrency, stocks, and forex. The same signal processing logic travels well across indices and liquid ETFs."
   },
   {
     question: "Will I be getting on-going updates?",
     answer: "Of course. We'll update your indicator suite in a fully automated manner. Updates are sent directly via TradingView and installed automatically."
   },
   {
-    question: "What payment methods do you take?",
-    answer: "We accept credit cards, debit cards, PayPal."
+    question: "This manages real money?",
+    answer: "Yes. The THOR Signal is the same system used to manage over $1B in client assets through two publicly traded ETFs — THLV and THIR. This isn't a backtest project. It's battle-tested with real capital."
   }
 ]
 

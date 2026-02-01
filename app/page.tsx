@@ -74,7 +74,7 @@ export default function HomePage() {
                   THOR Signal Indicator
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-300 text-base sm:text-lg md:text-xl px-4">
-                  The same proprietary indicator suite used to manage $1B+ in institutional assets and two publicly traded ETFs — now available on TradingView.
+                  The same signal processing technology used to manage $1B+ in institutional assets and two publicly traded ETFs — now available on TradingView. We don't predict markets. We detect when they change.
                 </p>
               </div>
               <div className="flex flex-col gap-6 mt-10 w-full max-w-md sm:max-w-none sm:flex-col">
@@ -114,7 +114,7 @@ export default function HomePage() {
                 THOR Signal Indicator
               </h2>
               <p className="max-w-4xl text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed">
-              Our proprietary THOR Signal Indicator is used to advise on over $1 billion in client assets and two publicly traded ETFs. Get institutional-grade performance indicators that give you the edge of professional asset management.
+              Most indicators try to predict where markets are going. THOR does something different — it detects when the character of the market actually changes. Using signal processing technology borrowed from engineering, THOR filters out daily noise to find structural turning points. The same system used to manage over $1 billion in client assets and two publicly traded ETFs.
               </p>
             </div>
 
@@ -126,9 +126,9 @@ export default function HomePage() {
                   <div className="w-16 h-16 signal-indicator-icon rounded-xl flex items-center justify-center mb-2">
                     <BarChart3 className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">#1 Indicator Suite</h3>
+                  <h3 className="text-xl font-bold text-white mb-2">Regime Detection System</h3>
                   <p className="text-[#797b85] text-base leading-relaxed">
-                    Instant access to our #1 indicator suite with TradingView, for all markets and timeframes.
+                    Instant access to THOR's regime detection system on TradingView. Built to identify structural turns — not react to every wiggle.
                   </p>
                 </div>
               </div>
@@ -216,7 +216,7 @@ export default function HomePage() {
                 Interpret Markets at Lightning Speed
               </h2>
               <p className="max-w-2xl text-gray-400 text-base leading-relaxed">
-                Perfect for beginners and experts, we empower you to focus on what drives trades – pure market flow. With auto-pattern recognition, volumetric order blocks, and advanced market structure insights, it's your solution to making smart money simple.
+                THOR converts noisy price data into a clean signal — like noise-canceling headphones filter out background sound. The system identifies regime changes and confirmed turning points, helping you stay invested during trends and step aside during breakdowns. Fewer trades. Better timing. A systematic edge.
               </p>
             </div>
 
@@ -265,10 +265,10 @@ export default function HomePage() {
                   </div>
                   <div className="px-6 pb-10">
                     <h3 className="text-xl font-bold text-white mb-3">
-                      See Moves Before They Unfold
+                      Detect Regime Changes Early
                     </h3>
                     <p className="text-gray-400 text-sm leading-relaxed">
-                      Tap into real-time market insights and anticipate shifts with precision before they happen.
+                      THOR identifies when the character of the market shifts — at confirmed turning points, not on every daily wiggle.
                     </p>
                   </div>
                 </div>
@@ -287,10 +287,10 @@ export default function HomePage() {
                   </div>
                   <div className="px-6 pb-10">
                     <h3 className="text-xl font-bold text-white mb-3">
-                      Elite-Level Trading Precision
+                      Signal Processing, Not Indicator Soup
                     </h3>
                     <p className="text-gray-400 text-sm leading-relaxed">
-                      With multiple algorithms, overlays, and full customization, you're equipped to trade like a pro.
+                      THOR uses engineering-grade signal processing to filter noise from price data — the same science behind noise-canceling technology.
                     </p>
                   </div>
                 </div>
@@ -309,10 +309,10 @@ export default function HomePage() {
                   </div>
                   <div className="px-6 pb-10">
                     <h3 className="text-xl font-bold text-white mb-3">
-                      Smart Signals, Live on Chart
+                      Structural Turns, Live on Chart
                     </h3>
                     <p className="text-gray-400 text-sm leading-relaxed">
-                      Gain access to divergence labels, smart money flow, and hype-wave trend signals—directly on your chart.
+                      See regime flips and confirmed turning points directly on your TradingView chart. Green when trending up, red when risk-off.
                     </p>
                   </div>
                 </div>
@@ -355,10 +355,10 @@ export default function HomePage() {
                   </div>
                   <div className="px-6 pb-10">
                     <h3 className="text-xl font-bold text-white mb-3">
-                      Clear Direction, Zero Noise
+                      Own the Trend, Avoid the Damage
                     </h3>
                     <p className="text-gray-400 text-sm leading-relaxed">
-                      We show you a clean trajectory with perfect confluence, cutting through market confusion.
+                      Built to stay invested during the bulk of uptrends and step aside during major drawdowns. Few trades, structural turns only.
                     </p>
                   </div>
                 </div>
@@ -440,12 +440,13 @@ export default function HomePage() {
                     $1B+ in assets under management and two publicly traded ETFs (THLV and THIR), Brad has 
                     built a reputation for delivering institutional-grade performance.
                   </p>
-                  <p>
-                    "We built the THOR Signal Indicator to manage institutional money. Now we're making it 
-                    available to individual traders."
+                  <p className="italic">
+                    "We built THOR to solve a real problem — how do you know when the market's character has actually 
+                    changed versus just noise? Signal processing gave us the answer. The same system that manages our 
+                    ETFs is now available to you."
                   </p>
                   <p className="text-purple-400 font-semibold">
-                    This isn't another retail indicator. It's the same tool that runs real ETFs with real assets under management.
+                    This isn't another retail indicator. It's the same signal processing technology that runs real ETFs with real assets under management.
                   </p>
                 </div>
                 <Link href="/about">
