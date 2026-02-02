@@ -86,8 +86,25 @@ export default function HomePage() {
                 </Link>
               </div>
 
+              {/* Tutorial Video */}
+              <div className="w-full max-w-4xl mt-10 sm:mt-14 px-4">
+                <div className="relative rounded-2xl overflow-hidden border border-gray-700/50 shadow-2xl shadow-purple-900/20">
+                  <video
+                    controls
+                    preload="metadata"
+                    poster="/thor-signals-tutorial-poster.jpg"
+                    className="w-full h-auto"
+                    playsInline
+                  >
+                    <source src="/thor-signals-tutorial.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <p className="text-gray-500 text-sm mt-3">Watch: A quick walkthrough of THOR Signals and what you get</p>
+              </div>
+
               {/* Trust Indicators */}
-              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6 sm:gap-10 mt-12 sm:mt-16 text-sm text-gray-300 px-4">
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6 sm:gap-10 mt-8 sm:mt-12 text-sm text-gray-300 px-4">
                 <div className="flex items-center justify-center gap-2">
                   <DollarSign className="h-4 w-4 text-green-400" />
                   <span>$1B+ Assets Under Advisement</span>
