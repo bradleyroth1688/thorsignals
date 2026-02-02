@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
 ${signalText} at $${price}
 ${timeframeLabel} chart
 
-The same signal managing $1B+ in institutional assets.
+Learn how signal processing replaces gut feelings: thorsignals.com/signal-processing-101
 
 Get signals for every ticker: thorsignals.com/signup`
 
