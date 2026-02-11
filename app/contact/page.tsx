@@ -3,7 +3,8 @@
 import { MobileNav } from "@/components/mobile-nav"
 
 import Link from "next/link"
-import { useState } from "react"
+import Script from "next/script"
+import { useState, useRef, useCallback } from "react"
 import { useToast } from "@/hooks/use-toast"
 import { FAQSection } from "@/components/home/faq-section"
 import "../page.css"
@@ -20,9 +21,18 @@ export default function ContactPage() {
   const [emailError, setEmailError] = useState("")
   const [formError, setFormError] = useState("")
   const [formSuccess, setFormSuccess] = useState("")
+  const [honeypot, setHoneypot] = useState("")
   const { toast } = useToast()
+  const turnstileRef = useRef<string>("")
 
-  
+  const onTurnstileCallback = useCallback((token: string) => {
+    turnstileRef.current = token
+  }, [])
+
+  // Expose callback globally for Turnstile
+  if (typeof window !== 'undefined') {
+    (window as any).onTurnstileContact = onTurnstileCallback
+  }
 
   function update<K extends keyof typeof form>(key: K, value: string) {
     setForm((prev) => ({ ...prev, [key]: value }))
@@ -47,7 +57,7 @@ export default function ContactPage() {
     fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ ...form, honeypot, turnstileToken: turnstileRef.current }),
     })
       .then(async (res) => {
         if (!res.ok) {
@@ -66,6 +76,11 @@ export default function ContactPage() {
         })
         setFormSuccess('Your message has been sent successfully.')
         setForm({ firstName: '', lastName: '', email: '', subject: '', message: '' })
+        setHoneypot('')
+        // Reset Turnstile widget
+        if (typeof window !== 'undefined' && (window as any).turnstile) {
+          (window as any).turnstile.reset()
+        }
         setTimeout(() => setFormSuccess(''), 5000)
       })
       .catch((err) => {
@@ -80,6 +95,8 @@ export default function ContactPage() {
   }
 
   return (
+    <>
+      <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
     <div className="flex flex-col min-h-screen bg-[#020204]">
       {/* Header with Logo */}
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col pt-5">
@@ -141,6 +158,18 @@ export default function ContactPage() {
                 onChange={(e) => update("subject", e.target.value)}
               />
 
+              {/* Honeypot - hidden from real users */}
+              <div style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
+              </div>
+
               <textarea
                 rows={6}
                 className="w-full rounded-xl bg-[#0b0b11] border border-gray-800 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-gray-600"
@@ -160,6 +189,15 @@ export default function ContactPage() {
                   {formSuccess}
                 </div>
               )}
+
+              {/* Cloudflare Turnstile (managed/invisible) */}
+              <div
+                className="cf-turnstile"
+                data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                data-callback="onTurnstileContact"
+                data-theme="dark"
+                data-size="flexible"
+              />
 
               <button
                 type="submit"
@@ -197,6 +235,7 @@ export default function ContactPage() {
         </div>
       </footer>
     </div>
+    </>
   )
 }
 

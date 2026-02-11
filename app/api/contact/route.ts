@@ -1,11 +1,33 @@
 import { NextResponse } from 'next/server'
 import { sendContactEmail } from '@/lib/email'
 import { supabase } from "@/lib/supabase/admin"
+import { verifyTurnstile } from '@/lib/turnstile'
+import { rateLimit } from '@/lib/rate-limit'
 
 export async function POST(request: Request) {
   try {
+    // Rate limit: 5 per 10 minutes per IP
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    if (!rateLimit(ip, 'contact', 5, 10 * 60 * 1000)) {
+      return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 })
+    }
+
     const body = await request.json()
-    const { firstName, lastName, email, subject, message } = body || {}
+    const { firstName, lastName, email, subject, message, honeypot, turnstileToken } = body || {}
+
+    // Honeypot check - silently reject bots
+    if (honeypot) {
+      return NextResponse.json({ ok: true }) // Fake success to confuse bots
+    }
+
+    // Turnstile verification
+    if (!turnstileToken) {
+      return NextResponse.json({ error: 'CAPTCHA verification required' }, { status: 400 })
+    }
+    const turnstileValid = await verifyTurnstile(turnstileToken)
+    if (!turnstileValid) {
+      return NextResponse.json({ error: 'CAPTCHA verification failed. Please try again.' }, { status: 403 })
+    }
 
     if (!firstName || !lastName || !email || !message) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })

@@ -1,10 +1,31 @@
 import { supabase } from "@/lib/supabase/admin"
 import { getBaseUrl } from "@/lib/utils/site-config"
 import { type NextRequest, NextResponse } from "next/server"
+import { verifyTurnstile } from '@/lib/turnstile'
+import { rateLimit } from '@/lib/rate-limit'
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, firstName, lastName, tradingviewUsername } = await request.json()
+    // Rate limit: 3 per hour per IP
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    if (!rateLimit(ip, 'signup', 3, 60 * 60 * 1000)) {
+      return NextResponse.json({ error: 'Too many signup attempts. Please try again later.' }, { status: 429 })
+    }
+
+    const { email, password, firstName, lastName, tradingviewUsername, honeypot, turnstileToken } = await request.json()
+
+    // Honeypot check
+    if (honeypot) {
+      return NextResponse.json({ message: "User created successfully.", needsEmailVerification: true })
+    }
+
+    // Turnstile verification
+    if (turnstileToken) {
+      const turnstileValid = await verifyTurnstile(turnstileToken)
+      if (!turnstileValid) {
+        return NextResponse.json({ error: 'CAPTCHA verification failed.' }, { status: 403 })
+      }
+    }
 
     if (!email || !password || !firstName || !lastName || !tradingviewUsername) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 })

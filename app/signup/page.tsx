@@ -1,8 +1,9 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useRef, useCallback } from "react"
 import Link from "next/link"
+import Script from "next/script"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -18,6 +19,17 @@ export default function SignUpPage() {
   const [loading, setLoading] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
   const [error, setError] = useState("")
+  const [honeypot, setHoneypot] = useState("")
+  const turnstileRef = useRef<string>("")
+
+  const onTurnstileCallback = useCallback((token: string) => {
+    turnstileRef.current = token
+  }, [])
+
+  if (typeof window !== 'undefined') {
+    (window as any).onTurnstileSignup = onTurnstileCallback
+  }
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,6 +44,12 @@ export default function SignUpPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+
+    // Honeypot check - silently "succeed" for bots
+    if (honeypot) {
+      setEmailSent(true)
+      return
+    }
 
     if (formData.password !== formData.confirmPassword) {
       const errorMsg = "Passwords do not match"
@@ -239,6 +257,8 @@ export default function SignUpPage() {
   }
 
   return (
+    <>
+    <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
     <div className="min-h-screen flex items-center justify-center bg-black py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
@@ -422,6 +442,20 @@ export default function SignUpPage() {
                 </div>
               </div>
 
+              {/* Honeypot */}
+              <div style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+                <input type="text" name="company" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+              </div>
+
+              {/* Cloudflare Turnstile */}
+              <div
+                className="cf-turnstile"
+                data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                data-callback="onTurnstileSignup"
+                data-theme="dark"
+                data-size="flexible"
+              />
+
               <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 border border-purple-400/20 h-10 sm:h-11" disabled={loading}>
                 {loading ? "Creating Account..." : "Create Account & Subscribe"}
               </Button>
@@ -430,5 +464,6 @@ export default function SignUpPage() {
         </Card>
       </div>
     </div>
+    </>
   )
 }
