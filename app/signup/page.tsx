@@ -114,46 +114,21 @@ export default function SignUpPage() {
       return
     }
     try{
-     let customerID, metadata = { 
-      "email": (formData.email),
-      "password" : (formData.password),
-      "firstName" : (formData.firstName),
-      "lastName" : (formData.lastName),
-      "tradingviewUsername" : (formData.tradingviewUsername),
-      "plan_type": "Basic_plan" };
-    const customerResponse = await fetch("/api/stripe/create-customer", {
-      method: "POST",
-      body: JSON.stringify({ email: formData.email, name: formData.firstName + " " + formData.lastName, metadata: metadata }),
-    })
-    const customerData = await customerResponse.json()
-    customerID = customerData.customer.id;
-    console.log("customerID--------------",customerID);
-    const priceId = formData.billingCycle === "annual" 
-      ? process.env.NEXT_PUBLIC_STRIPE_ANNUAL_PLAN 
-      : process.env.NEXT_PUBLIC_STRIPE_BASIC_PLAN;
-
-    let session_params = {
-      "customer": customerID,
-      "payment_method_types": ["card"],
-      "line_items": [
-        {
-          "price": priceId,
-          "quantity": 1,
-        }
-      ],
-      "mode": "subscription",
-      "success_url": `${process.env.NEXT_PUBLIC_SITE_URL}/confirm-email?email=${encodeURIComponent(formData.email)}`, 
-      "cancel_url": `${process.env.NEXT_PUBLIC_SITE_URL}/signup`,
-      "metadata": { ...metadata, "billing_cycle": formData.billingCycle },
-      "subscription_data": {
-        "trial_period_days": 7,
-        "metadata": { ...metadata, "billing_cycle": formData.billingCycle }
-      }
-    }
-
+    // The server defines the plan/price/trial. The password is NEVER sent to
+    // Stripe (no metadata) — accounts are provisioned by the Stripe webhook
+    // and users set their password via the reset flow.
     const session = await fetch("/api/stripe/checkout-session", {
       method: "POST",
-      body: JSON.stringify(session_params),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        plan: formData.billingCycle === "annual" ? "annual" : "monthly",
+        email: formData.email,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        tradingviewUsername: formData.tradingviewUsername,
+      }),
     })
     const sessionData = await session.json();
     if (sessionData.session?.url) {

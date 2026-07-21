@@ -97,14 +97,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Failed to create account. Please try again." }, { status: 400 })
     }
 
-    // Insert user data into profiles table
-    // WARNING: Storing plain text passwords is NOT recommended for security reasons
+    // Insert user data into profiles table.
+    // The password is handled exclusively by Supabase Auth (hashed) and is
+    // never written to the profiles table.
     const { error: profileInsertError } = await supabase
       .from("profiles")
       .insert({
         id: authData.user.id,
         email: email.toLowerCase(),
-        password: password, // Storing plain text password
         first_name: firstName,
         last_name: lastName,
         tradingview_username: tradingviewUsername,

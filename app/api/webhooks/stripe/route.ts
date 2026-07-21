@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { randomBytes } from 'crypto';
 import { supabase } from "@/lib/supabase/admin"
 import { sendPaymentNotificationEmail } from "@/lib/email"
 
@@ -7,9 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-08-27.basil",
 });
 
-// This is your Stripe CLI webhook secret for testing your endpoint locally.
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-// const endpointSecret = "whsec_567df1c5518fec2aeb599299c96d33b3d7ac1935a15d7f8ffaf59b371dfdf386";
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -19,26 +18,23 @@ export async function POST(req: Request) {
   let data: any;
   let eventType: string;
 
-  if (signature && endpointSecret) {
-    try {
-      event = stripe.webhooks.constructEvent(
-        body,
-        signature,
-        endpointSecret,
-        300 // Time difference tolerance in seconds
-      );
-      data = event.data;
-      eventType = event.type;
-    } catch (err: any) {
-      console.log(`⚠️  Webhook signature verification failed.`);
-      console.log(err);
-      return NextResponse.json({ error: 'Webhook signature verification failed' }, { status: 400 });
-    }
-  } else {
-    // Fallback if webhook secret is not configured
-    const jsonBody = JSON.parse(body);
-    data = jsonBody.data;
-    eventType = jsonBody.type;
+  // Fail closed: every event MUST be signature-verified. No unsigned fallback.
+  if (!endpointSecret || !signature) {
+    return NextResponse.json({ error: 'Webhook signature verification failed' }, { status: 400 });
+  }
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      endpointSecret,
+      300 // Time difference tolerance in seconds
+    );
+    data = event.data;
+    eventType = event.type;
+  } catch (err: any) {
+    console.log(`⚠️  Webhook signature verification failed.`);
+    return NextResponse.json({ error: 'Webhook signature verification failed' }, { status: 400 });
   }
 
   try {
@@ -65,11 +61,10 @@ export async function POST(req: Request) {
       case 'invoice.paid':
         console.log("💰 Payment captured!");
 
-        // Get user data from metadata
-        console.log("Invoice data:", data.object)
-        console.log("subscription_item_details",data.object.lines.data[0].parent.subscription_item_details)
-        
-        // Get metadata from subscription
+        // Get metadata from subscription.
+        // NOTE: never log data.object or metadata here — legacy subscriptions
+        // still carry plaintext passwords in metadata and logging them puts
+        // passwords into Vercel logs.
         const metadata = data.object.parent.subscription_details.metadata;
         const customerEmail = data.object.customer_email;
         
@@ -102,10 +97,13 @@ export async function POST(req: Request) {
           break;
         }
         console.log("create new user account")
-        // Create new user account
+        // Create new user account with a random throwaway password.
+        // Plaintext passwords are never carried in Stripe metadata; the user
+        // sets their real password via the password-reset flow.
+        const generatedPassword = randomBytes(32).toString('base64url');
         const { data: authData, error: authError } = await supabase.auth.signUp({
           email: customerEmail,
-          password: metadata.password,
+          password: generatedPassword,
           options: {
             data: {
               first_name: metadata.firstName,
@@ -125,7 +123,6 @@ export async function POST(req: Request) {
           .insert({
             id: authData.user.id,
             email: customerEmail.toLowerCase(),
-            password: metadata.password,
             first_name: metadata.firstName,
             last_name: metadata.lastName,
             tradingview_username: metadata.tradingviewUsername,
@@ -201,7 +198,6 @@ export async function POST(req: Request) {
         break;
 
       case 'invoice.payment_failed':
-        console.log(data.object)
         const failedCustomerId = data.object.customer;
         const failedSubscriptionId = data.object.subscription;
         const userEmail_2 = data.object.customer_email;
